@@ -2,9 +2,10 @@ import { useState, useCallback } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
+import pdfjsWorker from "pdfjs-dist/build/pdf.worker?url";
 
-// Set up the worker for PDF.js
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+// Set up the worker for PDF.js using local dependency
+pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 interface ConstitutionModalProps {
   isOpen: boolean;
@@ -149,7 +150,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
                 )}
 
                 <Document
-                  file="/ncc_constitution.pdf"
+                  file="./ncc_constitution.pdf"
                   onLoadSuccess={onDocumentLoadSuccess}
                   onLoadError={onDocumentLoadError}
                   className="flex justify-center"
@@ -168,37 +169,38 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
               {/* Navigation Controls */}
               {numPages && (
                 <div className="flex-shrink-0 flex items-center justify-between p-4 bg-white border-t border-gray-200">
-                  <button
-                    onClick={goToPrevPage}
-                    disabled={pageNumber <= 1}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                  >
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                  {pageNumber > 1 ? (
+                    <button
+                      onClick={goToPrevPage}
+                      disabled={pageNumber <= 1}
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 19l-7-7 7-7"
-                      />
-                    </svg>
-                    Previous
-                  </button>
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M15 19l-7-7 7-7"
+                        />
+                      </svg>
+                      <span className="hidden md:inline">Previous</span>
+                    </button>
+                  ) : (
+                    <div className="inline-flex items-center gap-2 px-4 py-2 w-12 md:w-30"></div>
+                  )}
 
                   <div className="flex items-center gap-4">
-                    <span className="text-sm text-gray-600">
-                      Page {pageNumber} of {numPages}
-                    </span>
                     <div className="flex items-center gap-2">
                       <label
                         htmlFor="pageInput"
                         className="text-sm text-gray-600"
                       >
-                        Go to page:
+                        Page
                       </label>
                       <input
                         id="pageInput"
@@ -214,29 +216,36 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
                         }}
                         className="w-16 px-2 py-1 text-sm border border-gray-300 rounded text-center"
                       />
+                      <span className="text-sm text-gray-600">
+                        of {numPages}
+                      </span>
                     </div>
                   </div>
 
-                  <button
-                    onClick={goToNextPage}
-                    disabled={pageNumber >= numPages}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                  >
-                    Next
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                  {pageNumber < numPages ? (
+                    <button
+                      onClick={goToNextPage}
+                      disabled={pageNumber >= numPages}
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
+                      <span className="hidden md:inline">Next</span>
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </button>
+                  ) : (
+                    <div className="inline-flex items-center gap-2 px-4 py-2 w-12 md:w-30"></div>
+                  )}
                 </div>
               )}
             </>
