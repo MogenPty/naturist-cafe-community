@@ -1,3 +1,7 @@
+import WalkIcon from "../assets/walk.svg";
+import MarketIcon from "../assets/market.svg";
+import WorkshopIcon from "../assets/workshop.svg";
+
 const MarketsWalks = () => {
   return (
     <section
@@ -117,19 +121,11 @@ const MarketsWalks = () => {
             {/* Nature Walks */}
             <div className="bg-nature-100 p-8 rounded-xl text-center shadow-sm border border-nature-200">
               <div className="w-16 h-16 bg-nature-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg
-                  className="w-8 h-8 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M13 12a1 1 0 11-2 0 1 1 0 012 0z"
-                  />
-                </svg>
+                <img
+                  src={WalkIcon}
+                  alt="Walking people"
+                  className="w-8 h-8 filter brightness-0 invert"
+                />
               </div>
               <h4 className="text-xl font-semibold text-nature-800 mb-3">
                 Nature Walks
@@ -142,19 +138,11 @@ const MarketsWalks = () => {
             {/* Community Markets */}
             <div className="bg-earth-100 p-8 rounded-xl text-center shadow-sm border border-earth-200">
               <div className="w-16 h-16 bg-earth-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg
-                  className="w-8 h-8 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                  />
-                </svg>
+                <img
+                  src={MarketIcon}
+                  alt="Market basket"
+                  className="w-8 h-8 filter brightness-0 invert"
+                />
               </div>
               <h4 className="text-xl font-semibold text-earth-800 mb-3">
                 Community Markets
@@ -167,19 +155,11 @@ const MarketsWalks = () => {
             {/* Wellness Workshops */}
             <div className="bg-gray-100 p-8 rounded-xl text-center shadow-sm border border-gray-200">
               <div className="w-16 h-16 bg-gray-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg
-                  className="w-8 h-8 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                  />
-                </svg>
+                <img
+                  src={WorkshopIcon}
+                  alt="Workshop tools"
+                  className="w-8 h-8 filter brightness-0 invert"
+                />
               </div>
               <h4 className="text-xl font-semibold text-gray-800 mb-3">
                 Wellness Workshops
