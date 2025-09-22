@@ -21,7 +21,9 @@ A modern, single-page website for the Naturist Cafe Community association in Sou
 ## 📱 Website Structure
 
 ### Navigation
+
 Fixed header with smooth scroll navigation to all sections:
+
 - Home, Constitution, Markets & Walks, Board, Join, Login
 
 ### Sections
@@ -36,25 +38,29 @@ Fixed header with smooth scroll navigation to all sections:
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js (v18 or higher)
 - npm or yarn
 
 ### Installation
 
 1. Navigate to the project directory:
-```bash
-cd c:\Projects\ncc
-```
+
+    ```bash
+    cd c:\Projects\ncc
+    ```
 
 2. Install dependencies:
-```bash
-npm install
-```
+
+    ```bash
+    npm install
+    ```
 
 3. Start the development server:
-```bash
-npm run dev
-```
+
+    ```bash
+    npm run dev
+    ```
 
 4. Open your browser to `http://localhost:5173`
 
@@ -77,7 +83,8 @@ npm run build
 ## 📞 Contact
 
 For questions about this website or the Naturist Cafe Community:
-- Email: membership@naturistcafe.co.za
+
+- Email: <membership@naturistcafe.co.za>
 
 ---
 
