@@ -1,3 +1,5 @@
+import { ImageLoader } from "./ImageLoader";
+
 const Hero = () => {
   return (
     <section id="home" className="hero-section">
@@ -42,9 +44,10 @@ const Hero = () => {
 
           {/* Hero Image */}
           <div className="relative">
-            <div className="hero-image">
+            <div>
+              <ImageLoader className="hero-image" />
               {/* Placeholder for hero image */}
-              <div className="text-center hero-image-text">
+              {/* <div className="text-center hero-image-text">
                 <svg
                   className="icon-2xl mx-auto mb-4 nature-svg"
                   fill="currentColor"
@@ -62,26 +65,28 @@ const Hero = () => {
                 <p className="hero-image-caption">
                   Tasteful outdoor setting conveying tranquility
                 </p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
 
         {/* Scroll indicator */}
-        <div className="scroll-indicator animate-bounce">
-          <svg
-            className="icon-md nature-color"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 14l-7 7m0 0l-7-7m7 7V3"
-            />
-          </svg>
+        <div className="flex justify-center mt-8 md:mt-12 pb-8">
+          <div className="animate-bounce">
+            <svg
+              className="icon-md nature-color"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              />
+            </svg>
+          </div>
         </div>
       </div>
     </section>

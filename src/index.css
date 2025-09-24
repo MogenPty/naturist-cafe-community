@@ -671,7 +671,6 @@ input[type="password"]:focus {
 
 /* Specific Component Styles */
 .hero-section {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   background: linear-gradient(135deg, var(--nature-50), var(--earth-50));
@@ -709,13 +708,6 @@ input[type="password"]:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.scroll-indicator {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 .board-member {
