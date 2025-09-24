@@ -3,6 +3,124 @@ import MarketIcon from "../assets/market.svg";
 import WorkshopIcon from "../assets/workshop.svg";
 
 const MarketsWalks = () => {
+  // Sample events data with dates and types
+  const upcomingEvents = [
+    {
+      id: 1,
+      title: "Weekend Nature Walk",
+      type: "walk",
+      startDate: "2025-09-28",
+      endDate: "2025-09-28",
+      startTime: "09:00",
+      endTime: "12:00",
+      location: "Botanical Gardens",
+    },
+    {
+      id: 2,
+      title: "Community Market Day",
+      type: "market",
+      startDate: "2025-10-05",
+      endDate: "2025-10-05",
+      startTime: "08:00",
+      endTime: "16:00",
+      location: "Community Center",
+    },
+    {
+      id: 3,
+      title: "Wellness Workshop",
+      type: "workshop",
+      startDate: "2025-10-12",
+      endDate: "2025-10-12",
+      startTime: "14:00",
+      endTime: "17:00",
+      location: "NCC Hall",
+    },
+    {
+      id: 4,
+      title: "Weekend Nature Camp",
+      type: "walk",
+      startDate: "2025-10-20",
+      endDate: "2025-10-22",
+      startTime: "17:00",
+      endTime: "14:00",
+      location: "Mountain Resort",
+    },
+    {
+      id: 5,
+      title: "Mindfulness Session",
+      type: "workshop",
+      startDate: "2025-11-15",
+      endDate: "2025-11-15",
+      startTime: "10:00",
+      endTime: "12:00",
+      location: "NCC Hall",
+    },
+  ];
+
+  // Function to get event type styling
+  const getEventTypeStyle = (type: string) => {
+    switch (type) {
+      case "walk":
+        return "bg-nature-500 text-white";
+      case "market":
+        return "bg-earth-500 text-white";
+      case "workshop":
+        return "bg-gray-500 text-white";
+      default:
+        return "bg-gray-400 text-white";
+    }
+  };
+
+  // Function to get urgency styling based on proximity to current date
+  const getUrgencyStyle = (startDate: string) => {
+    const today = new Date();
+    const eventDate = new Date(startDate);
+    const diffTime = eventDate.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays <= 7) {
+      return "border-red-300 bg-red-50";
+    } else if (diffDays <= 14) {
+      return "border-yellow-300 bg-yellow-50";
+    } else {
+      return "border-green-300 bg-green-50";
+    }
+  };
+
+  // Function to format date range
+  const formatDateRange = (
+    startDate: string,
+    endDate: string,
+    startTime: string,
+    endTime: string
+  ) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    const formatOptions: Intl.DateTimeFormatOptions = {
+      month: "short",
+      day: "numeric",
+      weekday: "short",
+    };
+
+    if (startDate === endDate) {
+      // Single day event
+      return {
+        dateText: start.toLocaleDateString("en-US", formatOptions),
+        timeText: `${startTime} - ${endTime}`,
+      };
+    } else {
+      // Multi-day event - show full start date/time to end date/time
+      const startDateText = start.toLocaleDateString("en-US", formatOptions);
+      const endDateText = end.toLocaleDateString("en-US", formatOptions);
+
+      return {
+        dateText: `${startDateText} ${startTime} - ${endDateText} ${endTime}`,
+        timeText: "", // Empty since time is included in dateText for multi-day events
+      };
+    }
+  };
+
   return (
     <section
       id="markets-walks"
@@ -55,23 +173,78 @@ const MarketsWalks = () => {
                   events will be available here
                 </p>
 
-                {/* Sample Event Preview */}
-                <div className="bg-white/80 border-2 border-dashed border-nature-300 rounded-lg p-4 max-w-sm mx-auto backdrop-blur-sm">
-                  <h4 className="font-semibold text-nature-800 mb-3">
-                    Upcoming Event Types
+                {/* Upcoming Events List */}
+                <div className="bg-white/80 border-2 border-dashed border-nature-300 rounded-lg p-4 max-w-lg mx-auto backdrop-blur-sm">
+                  <h4 className="font-semibold text-nature-800 mb-4 text-center">
+                    Upcoming Events
                   </h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex items-center gap-2 text-left">
-                      <div className="w-2 h-2 bg-nature-400 rounded-full"></div>
-                      <span>Weekend Nature Walks</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-left">
-                      <div className="w-2 h-2 bg-earth-400 rounded-full"></div>
-                      <span>Community Market Days</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-left">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-                      <span>Wellness Workshops</span>
+                  <div className="space-y-3 max-h-64 overflow-y-auto">
+                    {upcomingEvents.map((event) => {
+                      const { dateText, timeText } = formatDateRange(
+                        event.startDate,
+                        event.endDate,
+                        event.startTime,
+                        event.endTime
+                      );
+
+                      return (
+                        <div
+                          key={event.id}
+                          className={`p-3 rounded-lg border-2 ${getUrgencyStyle(
+                            event.startDate
+                          )} transition-all hover:shadow-sm`}
+                        >
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-1">
+                                <span
+                                  className={`px-2 py-1 rounded-full text-xs font-medium ${getEventTypeStyle(
+                                    event.type
+                                  )}`}
+                                >
+                                  {event.type === "walk"
+                                    ? "Walk"
+                                    : event.type === "market"
+                                    ? "Market"
+                                    : "Workshop"}
+                                </span>
+                              </div>
+                              <h5 className="font-medium text-gray-900 text-sm truncate">
+                                {event.title}
+                              </h5>
+                              <p className="text-xs text-gray-600 mt-1">
+                                {dateText}
+                              </p>
+                              {timeText && (
+                                <p className="text-xs text-gray-500">
+                                  {timeText} • {event.location}
+                                </p>
+                              )}
+                              {!timeText && (
+                                <p className="text-xs text-gray-500">
+                                  {event.location}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-gray-200">
+                    <div className="flex justify-center items-center gap-4 text-xs text-gray-600">
+                      <div className="flex items-center gap-1">
+                        <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+                        <span>This week</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                        <span>Next 2 weeks</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                        <span>Later</span>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -1,53 +1,63 @@
+import { MemberCard } from "./MemberCard";
+
 const Board = () => {
   // Sample board member data
   const boardMembers = [
     {
       id: 1,
-      name: "Sarah Williams",
+      name: "Vonks Nkuna",
       yearsInNaturism: 8,
-      otherOrganizations: ["SANAT"],
+      otherOrganizations: ["GNA", "SANNA", "INF-FNI"],
       communityCouncil: true,
-      role: "Chairperson",
+      role: "Director",
     },
     {
       id: 2,
-      name: "Michael Johnson",
+      name: "Layla",
       yearsInNaturism: 12,
-      otherOrganizations: ["SANAT", "Cape Naturist Society"],
+      otherOrganizations: ["GNA"],
       communityCouncil: true,
-      role: "Vice-Chair",
+      role: "Director",
     },
     {
       id: 3,
-      name: "Lisa Thompson",
+      name: "Solly M",
       yearsInNaturism: 6,
-      otherOrganizations: ["SANAT"],
+      otherOrganizations: [],
       communityCouncil: false,
-      role: "Secretary",
+      role: "Director",
     },
     {
       id: 4,
-      name: "David Roberts",
+      name: "Valencia",
       yearsInNaturism: 15,
-      otherOrganizations: ["SANAT", "Western Cape Naturists"],
+      otherOrganizations: ["KZNNA"],
       communityCouncil: true,
-      role: "Treasurer",
+      role: "Councillor",
     },
     {
       id: 5,
-      name: "Emma Davis",
+      name: "Aobakwe",
       yearsInNaturism: 4,
       otherOrganizations: [],
-      communityCouncil: false,
-      role: "Events Coordinator",
+      communityCouncil: true,
+      role: "Director",
     },
     {
       id: 6,
-      name: "James Wilson",
+      name: "Ree",
       yearsInNaturism: 10,
-      otherOrganizations: ["SANAT"],
+      otherOrganizations: [],
       communityCouncil: true,
-      role: "Community Relations",
+      role: "Councillor",
+    },
+    {
+      id: 7,
+      name: "Vee",
+      yearsInNaturism: 15,
+      otherOrganizations: ["Western Cape Naturists"],
+      communityCouncil: true,
+      role: "Director",
     },
   ];
 
@@ -68,101 +78,12 @@ const Board = () => {
         </div>
 
         {/* Board Members Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {boardMembers.map((member) => (
-            <div
-              key={member.id}
-              className="bg-gray-50 rounded-lg p-6 text-center hover:shadow-lg transition-shadow duration-200"
-            >
-              {/* Profile Picture Placeholder */}
-              <div className="avatar-lg bg-gradient-to-br from-nature-200 to-earth-200 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <svg
-                  className="icon-2xl text-nature-600"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-
-              {/* Member Info */}
-              <h3 className="font-semibold text-lg text-gray-900 mb-2">
-                {member.name}
-              </h3>
-              <p className="text-nature-600 font-medium mb-3">{member.role}</p>
-
-              {/* Details */}
-              <div className="space-y-2 text-sm">
-                <div className="flex items-center justify-center gap-2">
-                  <svg
-                    className="icon-sm text-gray-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  <span className="text-gray-700">
-                    {member.yearsInNaturism} years in naturism
-                  </span>
-                </div>
-
-                {member.otherOrganizations.length > 0 && (
-                  <div className="flex items-center justify-center gap-2">
-                    <svg
-                      className="icon-sm text-gray-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                      />
-                    </svg>
-                    <span className="text-gray-700">
-                      {member.otherOrganizations.join(", ")}
-                    </span>
-                  </div>
-                )}
-
-                <div className="flex items-center justify-center gap-2">
-                  <svg
-                    className="icon-sm text-gray-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  <span className="text-gray-700">
-                    Community Council:{" "}
-                    {member.communityCouncil ? (
-                      <span className="text-nature-600 font-medium">Yes</span>
-                    ) : (
-                      <span className="text-gray-500">No</span>
-                    )}
-                  </span>
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+          {boardMembers
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map((member) => (
+              <MemberCard key={member.id} {...member} />
+            ))}
         </div>
 
         {/* Board Information */}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Hero from "./components/Hero";
 import Constitution from "./components/Constitution";
 import MarketsWalks from "./components/MarketsWalks";
@@ -6,32 +6,69 @@ import Board from "./components/Board";
 import Join from "./components/Join";
 import Login from "./components/Login";
 
+const navigationItems = [
+  { id: "home", label: "Home" },
+  { id: "constitution", label: "Constitution" },
+  { id: "markets-walks", label: "Markets & Walks" },
+  { id: "board", label: "Board" },
+  { id: "join", label: "Join" },
+  { id: "login", label: "Login" },
+];
+
 function App() {
   const [activeSection, setActiveSection] = useState("home");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
       setActiveSection(sectionId);
+      setIsMobileMenuOpen(false); // Close mobile menu after navigation
     }
   };
 
-  const navigationItems = [
-    { id: "home", label: "Home" },
-    { id: "constitution", label: "Constitution" },
-    { id: "markets-walks", label: "Markets & Walks" },
-    { id: "board", label: "Board" },
-    { id: "join", label: "Join" },
-    { id: "login", label: "Login" },
-  ];
+  // Scroll-based navigation detection for larger screens
+  useEffect(() => {
+    const handleScroll = () => {
+      // Only apply on lg screens and above
+      if (window.innerWidth < 1024) return;
+
+      const sections = navigationItems.map((item) => item.id);
+      const scrollPosition = window.scrollY + 100; // Offset for header
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i]);
+        if (section && scrollPosition >= section.offsetTop) {
+          setActiveSection(sections[i]);
+          break;
+        }
+      }
+    };
+
+    const handleResize = () => {
+      // Trigger scroll handler on resize to check screen size
+      handleScroll();
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+
+    // Initial check
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation Header */}
       <nav className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-md shadow-sm z-50">
         <div className="container-custom">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between w-full h-16">
             {/* Logo */}
             <div className="flex-shrink-0">
               <h1 className="text-xl md:text-2xl font-serif font-bold text-nature-700">
@@ -40,16 +77,16 @@ function App() {
             </div>
 
             {/* Navigation Links */}
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-8">
+            <div className="hidden lg:block">
+              <div className="ml-10 flex items-baseline space-x-2">
                 {navigationItems.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
+                    className={`px-4 py-3 text-sm font-medium transition-all duration-200 rounded-md ${
                       activeSection === item.id
-                        ? "text-nature-700 border-b-2 border-nature-500"
-                        : "text-gray-600 hover:text-nature-600"
+                        ? "!text-white !bg-blue-600 hover:!bg-blue-700"
+                        : "text-gray-600 hover:text-nature-600 hover:bg-gray-100"
                     }`}
                   >
                     {item.label}
@@ -59,9 +96,10 @@ function App() {
             </div>
 
             {/* Mobile menu button */}
-            <div className="md:hidden">
+            <div className="lg:hidden">
               <button
-                title="Open menu"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                title="Toggle menu"
                 className="text-gray-600 hover:text-nature-600 p-2"
               >
                 <svg
@@ -74,7 +112,11 @@ function App() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
+                    d={
+                      isMobileMenuOpen
+                        ? "M6 18L18 6M6 6l12 12"
+                        : "M4 6h16M4 12h16M4 18h16"
+                    }
                   />
                 </svg>
               </button>
@@ -82,6 +124,36 @@ function App() {
           </div>
         </div>
       </nav>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-40 md:hidden">
+          {/* Background overlay */}
+          <div
+            className="fixed inset-0 bg-black bg-opacity-25"
+            onClick={() => setIsMobileMenuOpen(false)}
+          ></div>
+
+          {/* Menu panel */}
+          <div className="fixed top-16 left-0 right-0 bg-white shadow-lg border-t">
+            <div className="px-4 py-2 space-y-1">
+              {navigationItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`w-full text-left px-3 py-3 text-sm font-medium transition-colors duration-200 rounded-md ${
+                    activeSection === item.id
+                      ? "text-nature-700 bg-nature-50"
+                      : "text-gray-600 hover:text-nature-600 hover:bg-gray-50"
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main Content */}
       <main className="pt-16">

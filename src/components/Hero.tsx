@@ -1,3 +1,5 @@
+import { ImageLoader } from "./ImageLoader";
+
 const Hero = () => {
   return (
     <section id="home" className="hero-section">
@@ -7,8 +9,7 @@ const Hero = () => {
           <div className="hero-content">
             <h1 className="hero-title">
               Welcome to the{" "}
-              <span style={{ color: "var(--nature-600)" }}>Naturist Cafe</span>{" "}
-              Community
+              <span className="nature-highlight">Naturist Cafe</span> Community
             </h1>
 
             <p className="hero-subtitle">
@@ -43,14 +44,17 @@ const Hero = () => {
 
           {/* Hero Image */}
           <div className="relative">
-            <div className="hero-image">
+            <div>
+              <ImageLoader
+                className="hero-image"
+                alt="NCC Directors"
+                publicId="ncc_001"
+                aspectRatio="4:3"
+              />
               {/* Placeholder for hero image */}
-              <div className="text-center" style={{ color: "#4b5563" }}>
+              {/* <div className="text-center hero-image-text">
                 <svg
-                  className="icon-2xl mx-auto mb-4"
-                  style={{
-                    color: "var(--nature-400)",
-                  }}
+                  className="icon-2xl mx-auto mb-4 nature-svg"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -60,41 +64,34 @@ const Hero = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-                <p style={{ fontSize: "0.875rem", fontWeight: "500" }}>
+                <p className="hero-image-title">
                   Serene Nature Community Image
                 </p>
-                <p
-                  style={{
-                    fontSize: "0.75rem",
-                    color: "#6b7280",
-                    marginTop: "0.25rem",
-                  }}
-                >
+                <p className="hero-image-caption">
                   Tasteful outdoor setting conveying tranquility
                 </p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
 
         {/* Scroll indicator */}
-        <div className="scroll-indicator animate-bounce">
-          <svg
-            className="icon-md"
-            style={{
-              color: "var(--nature-600)",
-            }}
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 14l-7 7m0 0l-7-7m7 7V3"
-            />
-          </svg>
+        <div className="flex justify-center mt-8 md:mt-12 pb-8">
+          <div className="animate-bounce">
+            <svg
+              className="icon-md nature-color"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              />
+            </svg>
+          </div>
         </div>
       </div>
     </section>
