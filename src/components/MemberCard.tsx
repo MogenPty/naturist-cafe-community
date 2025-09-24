@@ -10,10 +10,7 @@ interface MemberCardProps {
 // React Function called MemberCard
 export const MemberCard = (member: MemberCardProps) => {
   return (
-    <div
-      key={member.id}
-      className="bg-gray-50 rounded-lg p-6 text-center hover:shadow-lg transition-shadow duration-200"
-    >
+    <div className="bg-gray-50 rounded-lg p-6 text-center hover:shadow-lg transition-shadow duration-200">
       {/* Profile Picture Placeholder */}
       <div className="avatar-lg bg-gradient-to-br from-nature-200 to-earth-200 rounded-full mx-auto mb-4 flex items-center justify-center">
         <svg

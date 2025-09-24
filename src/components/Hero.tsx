@@ -45,7 +45,12 @@ const Hero = () => {
           {/* Hero Image */}
           <div className="relative">
             <div>
-              <ImageLoader className="hero-image" />
+              <ImageLoader
+                className="hero-image"
+                alt="NCC Directors"
+                publicId="ncc_001"
+                aspectRatio="4:3"
+              />
               {/* Placeholder for hero image */}
               {/* <div className="text-center hero-image-text">
                 <svg

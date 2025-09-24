@@ -81,7 +81,9 @@ const Board = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
           {boardMembers
             .sort((a, b) => a.name.localeCompare(b.name))
-            .map((member) => MemberCard(member))}
+            .map((member) => (
+              <MemberCard key={member.id} {...member} />
+            ))}
         </div>
 
         {/* Board Information */}
