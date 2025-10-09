@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { getCookie, setCookie } from "../utils/cookie-utils";
 import { calculateAge } from "../utils/age-utils";
 
+const COOKIE_EXPIRY_HOURS = 24;
+const REDIRECT_URL = "https://web.mogen.co.za";
+
 function AgeGate({ children }: { children: React.ReactNode }) {
   const [verified, setVerified] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState("");
@@ -12,18 +15,25 @@ function AgeGate({ children }: { children: React.ReactNode }) {
     // Check if user has already verified their age
     const storedDOB = getCookie("dateOfBirth");
     if (storedDOB) {
-      const birthDate = new Date(storedDOB);
-      const age = calculateAge(birthDate);
+      try {
+        const birthDate = new Date(storedDOB);
+        if (isNaN(birthDate.getTime())) {
+          throw new Error("Invalid date in cookie");
+        }
+        const age = calculateAge(birthDate);
 
-      if (age >= 18) {
-        // Extend cookie expiry on each visit
-        setCookie("dateOfBirth", storedDOB, 24);
-        setVerified(true);
+        if (age >= 18) {
+          // Extend cookie expiry on each visit
+          setCookie("dateOfBirth", storedDOB, COOKIE_EXPIRY_HOURS);
+          setVerified(true);
+        }
+      } catch {
+        // Clear invalid cookie and continue to verification form
+        setCookie("dateOfBirth", "", -1);
       }
     }
     setLoading(false);
   }, []);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -46,12 +56,12 @@ function AgeGate({ children }: { children: React.ReactNode }) {
 
     if (age < 18) {
       // Redirect minors away
-      window.location.href = "https://web.mogen.co.za";
+      window.location.href = REDIRECT_URL;
       return;
     }
 
     // Store date of birth in cookie (expires in 24 hours)
-    setCookie("dateOfBirth", dateOfBirth, 24);
+    setCookie("dateOfBirth", dateOfBirth, COOKIE_EXPIRY_HOURS);
     setVerified(true);
   };
 
@@ -157,9 +167,7 @@ function AgeGate({ children }: { children: React.ReactNode }) {
               </button>
               <button
                 type="button"
-                onClick={() =>
-                  (window.location.href = "https://web.mogen.co.za")
-                }
+                onClick={() => (window.location.href = REDIRECT_URL)}
                 className="flex-1 btn-secondary"
               >
                 Exit
