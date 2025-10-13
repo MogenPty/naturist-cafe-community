@@ -150,6 +150,7 @@ const MarketsWalks = () => {
           {/* Calendar Container */}
           <div className="relative bg-white rounded-xl shadow-lg min-h-[600px] border border-gray-200 overflow-hidden">
             {/* Coming Soon Overlay */}
+            {/* TODO: Implement an interactive calendar and remove the overlay */}
             <div className="coming-soon-overlay">
               <div className="text-center p-8">
                 <svg
@@ -166,12 +167,12 @@ const MarketsWalks = () => {
                   />
                 </svg>
                 <h3 className="text-2xl font-semibold text-gray-800 mb-3">
-                  Events Calendar Coming Soon
+                  Events Calendar
                 </h3>
-                <p className="text-gray-600 mb-6 max-w-md mx-auto">
+                {/* <p className="text-gray-600 mb-6 max-w-md mx-auto">
                   Interactive calendar with markets, nature walks, and community
                   events will be available here
-                </p>
+                </p> */}
 
                 {/* Upcoming Events List */}
                 <div className="bg-white/80 border-2 border-dashed border-nature-300 rounded-lg p-4 max-w-lg mx-auto backdrop-blur-sm">
@@ -304,7 +305,7 @@ const MarketsWalks = () => {
                 Culture Walks
               </h4>
               <p className="text-nature-700 text-base leading-relaxed">
-                Fun, wellness naturism group walks
+                Naturism group walks
               </p>
             </div>
 
@@ -338,7 +339,7 @@ const MarketsWalks = () => {
                 Gymnology
               </h4>
               <p className="text-gray-700 text-base leading-relaxed">
-                Studies and research of naturism and nudity
+                Research on naturism
               </p>
             </div>
           </div>

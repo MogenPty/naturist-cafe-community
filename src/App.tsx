@@ -79,7 +79,7 @@ function App() {
                 height={36}
               />
               {/* <h1 className="text-xl md:text-2xl font-serif font-bold text-nature-700">
-                Naturist Cafe Community
+                Naturist Café Community
               </h1> */}
             </div>
 
@@ -177,7 +177,7 @@ function App() {
         <div className="container-custom">
           <div className="text-center">
             <p className="text-sm">
-              &copy; 2025 Naturist Cafe Community. All rights reserved.
+              &copy; 2025 Naturist Café Community. All rights reserved.
             </p>
             <p className="text-xs text-gray-400 mt-2">
               Based in South Africa • Promoting naturist culture and community

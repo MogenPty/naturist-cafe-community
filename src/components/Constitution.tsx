@@ -20,7 +20,7 @@ const Constitution = () => {
     <>
       <section id="constitution" className="section-padding bg-white">
         <div className="container-custom">
-          <div className="text-center mb-12">
+          {/* <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4">
               Our Constitution
             </h2>
@@ -29,7 +29,7 @@ const Constitution = () => {
               guidelines, and commitment to creating a respectful naturist
               environment.
             </p>
-          </div>
+          </div> */}
 
           <div className="max-w-4xl mx-auto">
             {/* Constitution Preview Card */}
@@ -50,14 +50,14 @@ const Constitution = () => {
                 </div>
 
                 <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                  NCC Constitution & Guidelines
+                  Constitution & Guidelines
                 </h3>
 
-                <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+                {/* <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
                   Read our complete constitution including community values,
                   membership guidelines, governance structure, and code of
                   conduct. Available for viewing and download.
-                </p>
+                </p> */}
 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -132,7 +132,7 @@ const Constitution = () => {
                   Our Values
                 </h4>
                 <ul className="list-disc list-inside text-nature-700 leading-relaxed">
-                  <li>Respect for others and their bodies</li>
+                  <li>Respect for others</li>
                   <li>Respect for ourselves</li>
                   <li>Non-judgmentalism</li>
                   <li>Non-discrimination</li>

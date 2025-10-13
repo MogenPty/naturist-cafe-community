@@ -8,7 +8,7 @@ const Board = () => {
       sortId: 5,
       name: "Vongani (Vonks) Nkuna",
       yearsInNaturism: 8,
-      otherOrganizations: ["Naturist Cafe"],
+      otherOrganizations: ["Naturist Café Arthouse Films"],
       communityCouncil: true,
       role: "Director",
     },
@@ -17,7 +17,7 @@ const Board = () => {
       sortId: 2,
       name: "Linah (Layla) Mahlomuza",
       yearsInNaturism: 12,
-      otherOrganizations: ["Naturist Cafe"],
+      otherOrganizations: ["Naturist Café Arthouse Films"],
       communityCouncil: true,
       role: "Director",
     },
@@ -112,14 +112,14 @@ const Board = () => {
               </svg>
               Community Leadership
             </h3>
-            <p className="text-sm text-nature-700">
+            <p className="text-base text-nature-700">
               Our board consists of experienced naturists committed to fostering
               a welcoming, respectful community environment guided by naturist
               principles and values.
             </p>
           </div>
 
-          <div className="bg-earth-50 p-6 rounded-lg">
+          {/* <div className="bg-earth-50 p-6 rounded-lg">
             <h3 className="font-semibold text-earth-800 mb-3 flex items-center gap-2">
               <svg
                 className="icon-sm"
@@ -141,7 +141,7 @@ const Board = () => {
               with organizations like SANAT, ensuring informed leadership and
               community representation.
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>
