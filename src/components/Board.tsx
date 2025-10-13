@@ -5,7 +5,8 @@ const Board = () => {
   const boardMembers = [
     {
       id: 1,
-      name: "Vonks Nkuna",
+      sortId: 5,
+      name: "Vongani (Vonks) Nkuna",
       yearsInNaturism: 8,
       otherOrganizations: ["Naturist Cafe"],
       communityCouncil: true,
@@ -13,7 +14,8 @@ const Board = () => {
     },
     {
       id: 2,
-      name: "Layla",
+      sortId: 2,
+      name: "Linah (Layla) Mahlomuza",
       yearsInNaturism: 12,
       otherOrganizations: ["Naturist Cafe"],
       communityCouncil: true,
@@ -21,7 +23,8 @@ const Board = () => {
     },
     {
       id: 3,
-      name: "Solly M",
+      sortId: 3,
+      name: "Solomon (Solly) Motsoane",
       yearsInNaturism: 6,
       otherOrganizations: ["Bare Bliss Naturists Group"],
       communityCouncil: false,
@@ -29,7 +32,8 @@ const Board = () => {
     },
     {
       id: 4,
-      name: "Valencia",
+      sortId: 7,
+      name: "Valencia (Vally) Mabika",
       yearsInNaturism: 15,
       otherOrganizations: ["Bare Bliss Naturists Group"],
       communityCouncil: true,
@@ -37,7 +41,8 @@ const Board = () => {
     },
     {
       id: 5,
-      name: "Aobakwe",
+      sortId: 1,
+      name: "Aobakwe (Buks) Peter",
       yearsInNaturism: 4,
       otherOrganizations: [],
       communityCouncil: true,
@@ -45,6 +50,7 @@ const Board = () => {
     },
     {
       id: 6,
+      sortId: 6,
       name: "Ree",
       yearsInNaturism: 10,
       otherOrganizations: [],
@@ -53,7 +59,8 @@ const Board = () => {
     },
     {
       id: 7,
-      name: "Vee",
+      sortId: 4,
+      name: "Veronica Mabula",
       yearsInNaturism: 15,
       otherOrganizations: [],
       communityCouncil: true,
@@ -80,7 +87,7 @@ const Board = () => {
         {/* Board Members Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
           {boardMembers
-            .sort((a, b) => a.name.localeCompare(b.name))
+            .sort((a, b) => a.sortId - b.sortId)
             .map((member) => (
               <MemberCard key={member.id} {...member} />
             ))}

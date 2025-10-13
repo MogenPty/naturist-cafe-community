@@ -301,10 +301,10 @@ const MarketsWalks = () => {
                 />
               </div>
               <h4 className="text-xl font-semibold text-nature-800 mb-3">
-                Nature Walks
+                Culture Walks
               </h4>
               <p className="text-nature-700 text-base leading-relaxed">
-                Peaceful group walks through scenic natural settings
+                Fun, wellness naturism group walks
               </p>
             </div>
 
@@ -318,10 +318,10 @@ const MarketsWalks = () => {
                 />
               </div>
               <h4 className="text-xl font-semibold text-earth-800 mb-3">
-                Community Markets
+                Naturism Markets
               </h4>
               <p className="text-earth-700 text-base leading-relaxed">
-                Local markets supporting community members and values
+                Naturist-friendly marketplaces
               </p>
             </div>
 
@@ -335,10 +335,10 @@ const MarketsWalks = () => {
                 />
               </div>
               <h4 className="text-xl font-semibold text-gray-800 mb-3">
-                Wellness Workshops
+                Gymnology
               </h4>
               <p className="text-gray-700 text-base leading-relaxed">
-                Educational sessions on wellness and naturist philosophy
+                Studies and research of naturism and nudity
               </p>
             </div>
           </div>

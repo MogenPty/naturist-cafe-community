@@ -5,6 +5,7 @@ import MarketsWalks from "./components/MarketsWalks";
 import Board from "./components/Board";
 import Join from "./components/Join";
 import Login from "./components/Login";
+import { ImageLoader } from "./components/ImageLoader";
 
 const navigationItems = [
   { id: "home", label: "Home" },
@@ -66,14 +67,20 @@ function App() {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation Header */}
-      <nav className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-md shadow-sm z-50">
+      <nav className="fixed top-0 left-0 right-0 !bg-[#343f56]/95 backdrop-blur-md shadow-sm z-50">
         <div className="container-custom">
           <div className="flex items-center justify-between w-full h-16">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <h1 className="text-xl md:text-2xl font-serif font-bold text-nature-700">
+              <ImageLoader
+                className="logo"
+                alt="NCC Logo"
+                publicId="ncc_logo_h156"
+                height={36}
+              />
+              {/* <h1 className="text-xl md:text-2xl font-serif font-bold text-nature-700">
                 Naturist Cafe Community
-              </h1>
+              </h1> */}
             </div>
 
             {/* Navigation Links */}
@@ -86,7 +93,7 @@ function App() {
                     className={`px-4 py-3 text-sm font-medium transition-all duration-200 rounded-md ${
                       activeSection === item.id
                         ? "!text-white !bg-blue-600 hover:!bg-blue-700"
-                        : "text-gray-600 hover:text-nature-600 hover:bg-gray-100"
+                        : "text-white hover:text-nature-600 hover:bg-gray-100"
                     }`}
                   >
                     {item.label}
@@ -100,7 +107,7 @@ function App() {
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 title="Toggle menu"
-                className="text-gray-600 hover:text-nature-600 p-2"
+                className="!text-white hover:text-nature-600 p-2"
               >
                 <svg
                   className="icon-md"

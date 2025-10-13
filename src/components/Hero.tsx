@@ -2,7 +2,7 @@ import { ImageLoader } from "./ImageLoader";
 
 const Hero = () => {
   return (
-    <section id="home" className="hero-section">
+    <section id="home" className="hero-section mt-4 lg:mt-12">
       <div className="container-custom">
         <div className="grid grid-2">
           {/* Content */}
@@ -13,9 +13,9 @@ const Hero = () => {
             </h1>
 
             <p className="hero-subtitle">
-              A peaceful association in South Africa dedicated to promoting
-              naturist culture, wellness, and community connection through our
-              shared values of living authentically in harmony with nature.
+              A national cultural association of naturists and nudists in terms
+              of sections 30 and 31 of the Constitution of the Republic of South
+              Africa.
             </p>
 
             <div className="hero-buttons">

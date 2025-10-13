@@ -34,7 +34,7 @@ export const MemberCard = (member: MemberCardProps) => {
 
       {/* Details */}
       <div className="space-y-2 text-sm">
-        <div className="flex items-center justify-center gap-2">
+        {/* <div className="flex items-center justify-center gap-2">
           <svg
             className="icon-sm text-gray-500"
             fill="none"
@@ -51,7 +51,7 @@ export const MemberCard = (member: MemberCardProps) => {
           <span className="text-gray-700">
             {member.yearsInNaturism} years in Naturism
           </span>
-        </div>
+        </div> */}
 
         {member.otherOrganizations.length > 0 && (
           <div className="flex items-center justify-center gap-2">
@@ -74,7 +74,7 @@ export const MemberCard = (member: MemberCardProps) => {
           </div>
         )}
 
-        <div className="flex items-center justify-center gap-2">
+        {/* <div className="flex items-center justify-center gap-2">
           <svg
             className="icon-sm text-gray-500"
             fill="none"
@@ -96,7 +96,7 @@ export const MemberCard = (member: MemberCardProps) => {
               <span className="text-gray-500">No</span>
             )}
           </span>
-        </div>
+        </div> */}
       </div>
     </div>
   );
