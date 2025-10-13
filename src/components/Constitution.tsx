@@ -131,11 +131,18 @@ const Constitution = () => {
                 <h4 className="text-xl font-semibold text-nature-800 mb-3">
                   Our Values
                 </h4>
-                <p className="text-nature-700 leading-relaxed">
-                  Respect, acceptance, and authentic living in harmony with
-                  nature and community. Creating a safe space for all body types
-                  and backgrounds.
-                </p>
+                <ul className="list-disc list-inside text-nature-700 leading-relaxed">
+                  <li>Respect for others and their bodies</li>
+                  <li>Respect for ourselves</li>
+                  <li>Non-judgmentalism</li>
+                  <li>Non-discrimination</li>
+                  <li>Non-racialism</li>
+                  <li>Non-sexualism</li>
+                  <li>Family-friendliness</li>
+                  <li>Peace</li>
+                  <li>Safety</li>
+                  <li>Respect for nature</li>
+                </ul>
               </div>
 
               <div className="bg-earth-100 p-8 rounded-xl border border-earth-200 shadow-sm">

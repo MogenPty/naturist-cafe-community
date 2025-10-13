@@ -12,12 +12,16 @@ export interface ImageLoaderProps extends React.HTMLAttributes<HTMLDivElement> {
   publicId?: string;
   alt?: string;
   aspectRatio?: string;
+  height?: string | number;
+  width?: string | number;
 }
 
 export const ImageLoader = ({
   cloudName = "dq4rxwjrh",
   publicId = "ncc_001",
-  aspectRatio = "4:3",
+  aspectRatio = "none",
+  height = "auto",
+  width = "auto",
   ...rest
 }: ImageLoaderProps) => {
   // Create and configure your Cloudinary instance.
@@ -30,14 +34,22 @@ export const ImageLoader = ({
   // Use the image with public ID, 'front_face'.
   const myImage = cld.image(publicId);
 
-  myImage
-    .delivery(quality("auto:best"))
-    .resize(fill().aspectRatio(aspectRatio));
+  myImage.delivery(quality("auto:best"));
 
+  if (aspectRatio === "none") {
+    const resizeTransform = fill();
+    if (typeof width === "number") resizeTransform.width(width);
+    if (typeof height === "number") resizeTransform.height(height);
+    if (typeof width === "number" || typeof height === "number") {
+      myImage.resize(resizeTransform);
+    }
+  } else {
+    myImage.resize(fill().aspectRatio(aspectRatio));
+  }
   // Render the transformed image in a React component.
   return (
     <AdvancedImage
-      style={{ width: "100%", height: "auto" }}
+      style={{ width: width, height: height }}
       cldImg={myImage}
       plugins={[responsive({ steps: 100 })]}
       {...rest}
