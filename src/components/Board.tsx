@@ -8,7 +8,7 @@ const Board = () => {
       sortId: 5,
       name: "Vongani (Vonks) Nkuna",
       yearsInNaturism: 8,
-      otherOrganizations: ["Naturist Cafe"],
+      otherOrganizations: ["Naturist Café Arthouse Films"],
       communityCouncil: true,
       role: "Director",
     },
@@ -17,7 +17,7 @@ const Board = () => {
       sortId: 2,
       name: "Linah (Layla) Mahlomuza",
       yearsInNaturism: 12,
-      otherOrganizations: ["Naturist Cafe"],
+      otherOrganizations: ["Naturist Café Arthouse Films"],
       communityCouncil: true,
       role: "Director",
     },
@@ -119,7 +119,7 @@ const Board = () => {
             </p>
           </div>
 
-          <div className="bg-earth-50 p-6 rounded-lg">
+          {/* <div className="bg-earth-50 p-6 rounded-lg">
             <h3 className="font-semibold text-earth-800 mb-3 flex items-center gap-2">
               <svg
                 className="icon-sm"
@@ -141,7 +141,7 @@ const Board = () => {
               with organizations like SANAT, ensuring informed leadership and
               community representation.
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

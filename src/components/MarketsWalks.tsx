@@ -166,12 +166,12 @@ const MarketsWalks = () => {
                   />
                 </svg>
                 <h3 className="text-2xl font-semibold text-gray-800 mb-3">
-                  Events Calendar Coming Soon
+                  Events Calendar
                 </h3>
-                <p className="text-gray-600 mb-6 max-w-md mx-auto">
+                {/* <p className="text-gray-600 mb-6 max-w-md mx-auto">
                   Interactive calendar with markets, nature walks, and community
                   events will be available here
-                </p>
+                </p> */}
 
                 {/* Upcoming Events List */}
                 <div className="bg-white/80 border-2 border-dashed border-nature-300 rounded-lg p-4 max-w-lg mx-auto backdrop-blur-sm">
@@ -304,7 +304,7 @@ const MarketsWalks = () => {
                 Culture Walks
               </h4>
               <p className="text-nature-700 text-base leading-relaxed">
-                Fun, wellness naturism group walks
+                Naturism group walks
               </p>
             </div>
 

@@ -101,8 +101,9 @@ function AgeGate({ children }: { children: React.ReactNode }) {
               Age Verification Required
             </h1>
             <p className="text-gray-600 leading-relaxed">
-              Welcome to the Naturist Cafe Community website. This site contains
-              content related to naturism and may include artistic nudity.
+              Welcome to the official website of the Naturist Café Community.
+              This site is dedicated to the culture of naturism and contains
+              nonsexual nudity in accordance with our cultural code of conduct.
             </p>
           </div>
 
@@ -110,7 +111,7 @@ function AgeGate({ children }: { children: React.ReactNode }) {
           <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
             <div className="flex items-start">
               <svg
-                className="w-5 h-5 text-amber-600 mt-0.5 mr-3 flex-shrink-0"
+                className="w-8 h-8 text-amber-600 mt-0.5 mr-3 flex-shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -123,13 +124,8 @@ function AgeGate({ children }: { children: React.ReactNode }) {
                 />
               </svg>
               <div>
-                <h3 className="text-sm font-semibold text-amber-800 mb-1">
-                  Content Advisory
-                </h3>
                 <p className="text-sm text-amber-700">
-                  This website is dedicated to naturist philosophy and
-                  lifestyle. You must be 18 years or older to access this
-                  content.
+                  You must be over the age of 18 to access this website.
                 </p>
               </div>
             </div>
