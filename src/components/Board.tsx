@@ -24,7 +24,7 @@ const Board = () => {
     {
       id: 3,
       sortId: 3,
-      name: "Solomon (Solly) Motsoane",
+      name: "Solly (RealSollyM) Motsoane",
       yearsInNaturism: 6,
       otherOrganizations: ["Bare Bliss Naturists Group"],
       communityCouncil: false,
@@ -33,7 +33,7 @@ const Board = () => {
     {
       id: 4,
       sortId: 7,
-      name: "Valencia (Vally) Mabika",
+      name: "Valencia (Miss Vee) Mabika",
       yearsInNaturism: 15,
       otherOrganizations: ["Bare Bliss Naturists Group"],
       communityCouncil: true,
