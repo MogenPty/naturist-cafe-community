@@ -51,7 +51,7 @@ const Board = () => {
     {
       id: 6,
       sortId: 6,
-      name: "Ree",
+      name: "Rethabile (Ree) Oitsile",
       yearsInNaturism: 10,
       otherOrganizations: [],
       communityCouncil: true,
