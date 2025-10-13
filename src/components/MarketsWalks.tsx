@@ -150,6 +150,7 @@ const MarketsWalks = () => {
           {/* Calendar Container */}
           <div className="relative bg-white rounded-xl shadow-lg min-h-[600px] border border-gray-200 overflow-hidden">
             {/* Coming Soon Overlay */}
+            {/* TODO: Implement an interactive calendar and remove the overlay */}
             <div className="coming-soon-overlay">
               <div className="text-center p-8">
                 <svg
@@ -338,7 +339,7 @@ const MarketsWalks = () => {
                 Gymnology
               </h4>
               <p className="text-gray-700 text-base leading-relaxed">
-                Studies and research of naturism and nudity
+                Research on naturism
               </p>
             </div>
           </div>

@@ -8,7 +8,7 @@ const Board = () => {
       sortId: 5,
       name: "Vongani (Vonks) Nkuna",
       yearsInNaturism: 8,
-      otherOrganizations: ["Naturist Café Arthouse Films"],
+      otherOrganizations: ["Naturist Café Arthouse Films"],
       communityCouncil: true,
       role: "Director",
     },
@@ -17,7 +17,7 @@ const Board = () => {
       sortId: 2,
       name: "Linah (Layla) Mahlomuza",
       yearsInNaturism: 12,
-      otherOrganizations: ["Naturist Café Arthouse Films"],
+      otherOrganizations: ["Naturist Café Arthouse Films"],
       communityCouncil: true,
       role: "Director",
     },
@@ -112,7 +112,7 @@ const Board = () => {
               </svg>
               Community Leadership
             </h3>
-            <p className="text-sm text-nature-700">
+            <p className="text-base text-nature-700">
               Our board consists of experienced naturists committed to fostering
               a welcoming, respectful community environment guided by naturist
               principles and values.

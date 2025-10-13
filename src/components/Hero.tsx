@@ -8,7 +8,7 @@ const Hero = () => {
           {/* Content */}
           <div className="hero-content">
             <h1 className="hero-title">
-              The <span className="nature-highlight">Naturist Cafe</span>{" "}
+              The <span className="nature-highlight">Naturist Café</span>{" "}
               Community
             </h1>
 

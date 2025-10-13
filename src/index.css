@@ -590,7 +590,7 @@ input[type="password"]:focus {
 /* Responsive Design */
 @media (min-width: 768px) {
   .section-padding {
-    padding: 6rem 0;
+    padding: 4rem 0;
   }
   
   .container-custom {
@@ -612,7 +612,7 @@ input[type="password"]:focus {
 
 @media (min-width: 1024px) {
   .section-padding {
-    padding: 8rem 0;
+    padding: 6rem 0;
   }
   
   .container-custom {
