@@ -85,7 +85,7 @@ const Board = () => {
         </div>
 
         {/* Board Members Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 p-4 max-w-6xl mx-auto">
           {boardMembers
             .sort((a, b) => a.sortId - b.sortId)
             .map((member) => (

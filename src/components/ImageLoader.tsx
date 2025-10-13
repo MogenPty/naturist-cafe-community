@@ -36,10 +36,16 @@ export const ImageLoader = ({
 
   myImage.delivery(quality("auto:best"));
 
-  if (aspectRatio === "none")
-    myImage.resize(fill().width(width).height(height));
-  else myImage.resize(fill().aspectRatio(aspectRatio));
-
+  if (aspectRatio === "none") {
+    const resizeTransform = fill();
+    if (typeof width === "number") resizeTransform.width(width);
+    if (typeof height === "number") resizeTransform.height(height);
+    if (typeof width === "number" || typeof height === "number") {
+      myImage.resize(resizeTransform);
+    }
+  } else {
+    myImage.resize(fill().aspectRatio(aspectRatio));
+  }
   // Render the transformed image in a React component.
   return (
     <AdvancedImage
