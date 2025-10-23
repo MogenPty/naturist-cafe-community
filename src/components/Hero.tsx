@@ -13,8 +13,8 @@ const Hero = () => {
             </h1>
 
             <p className="hero-subtitle">
-              A national cultural association of naturists and nudists in terms
-              of sections 30 and 31 of the Constitution of the Republic of South
+              A cultural association of naturists and nudists in terms of
+              sections 30 and 31 of the Constitution of the Republic of South
               Africa.
             </p>
 

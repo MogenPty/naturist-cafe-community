@@ -94,9 +94,9 @@ const Board = () => {
         </div>
 
         {/* Board Information */}
-        <div className="grid md:grid-cols-2 gap-8 mt-16 max-w-4xl mx-auto">
+        <div className="grid gap-8 mt-16 max-w-4xl mx-auto">
           <div className="bg-nature-50 p-6 rounded-lg">
-            <h3 className="font-semibold text-nature-800 mb-3 flex items-center gap-2">
+            <h3 className="font-semibold text-nature-800 mb-3 flex items-center gap-2 text-2xl text-center">
               <svg
                 className="icon-sm"
                 fill="none"
@@ -112,7 +112,7 @@ const Board = () => {
               </svg>
               Community Leadership
             </h3>
-            <p className="text-base text-nature-700">
+            <p className="text-lg text-nature-700">
               Our board consists of experienced naturists committed to fostering
               a welcoming, respectful community environment guided by naturist
               principles and values.

@@ -3,7 +3,7 @@ import Hero from "./components/Hero";
 import Constitution from "./components/Constitution";
 import MarketsWalks from "./components/MarketsWalks";
 import Board from "./components/Board";
-import Join from "./components/Join";
+// import Join from "./components/Join";
 import Login from "./components/Login";
 import { ImageLoader } from "./components/ImageLoader";
 
@@ -75,7 +75,7 @@ function App() {
               <ImageLoader
                 className="logo"
                 alt="NCC Logo"
-                publicId="ncc_logo_h156"
+                publicId="ncc-logo-trans-h156"
                 height={36}
               />
               {/* <h1 className="text-xl md:text-2xl font-serif font-bold text-nature-700">
@@ -168,7 +168,7 @@ function App() {
         <Constitution />
         <MarketsWalks />
         <Board />
-        <Join />
+        {/* <Join /> */}
         <Login />
       </main>
 
