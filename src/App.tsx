@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Board from "./components/Board";
 import Constitution from "./components/Constitution";
-import ContactForm from "./components/contactForm";
 import Hero from "./components/Hero";
 import { ImageLoader } from "./components/ImageLoader";
 import JoinUs from "./components/JoinUs";
