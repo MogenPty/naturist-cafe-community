@@ -18,19 +18,8 @@ const Constitution = () => {
 
   return (
     <>
-      <section id="constitution" className="section-padding bg-white">
+      <section id={`constitution`} className="section-padding bg-white">
         <div className="container-custom">
-          {/* <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4">
-              Our Constitution
-            </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Our foundational document outlines our community values,
-              guidelines, and commitment to creating a respectful naturist
-              environment.
-            </p>
-          </div> */}
-
           <div className="max-w-4xl mx-auto">
             {/* Constitution Preview Card */}
             <div className="relative bg-gradient-to-br from-nature-50 to-earth-50 rounded-2xl border border-gray-200 p-8 shadow-lg">
@@ -41,6 +30,7 @@ const Constitution = () => {
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
+                    <title>Constitution and Guidelines Icon</title>
                     <path
                       fillRule="evenodd"
                       d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
@@ -62,6 +52,7 @@ const Constitution = () => {
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <button
+                    type="button"
                     onClick={handleViewConstitution}
                     className="inline-flex items-center gap-2 px-6 py-3 bg-nature-600 text-white rounded-xl font-semibold hover:bg-nature-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                   >
@@ -71,6 +62,7 @@ const Constitution = () => {
                       stroke="currentColor"
                       viewBox="0 0 24 24"
                     >
+                      <title>View Constitution Icon</title>
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -88,6 +80,7 @@ const Constitution = () => {
                   </button>
 
                   <button
+                    type="button"
                     onClick={handleDownload}
                     className="inline-flex items-center gap-2 px-6 py-3 bg-earth-600 text-white rounded-xl font-semibold hover:bg-earth-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                   >
@@ -97,6 +90,7 @@ const Constitution = () => {
                       stroke="currentColor"
                       viewBox="0 0 24 24"
                     >
+                      <title>Download PDF Icon</title>
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -120,6 +114,7 @@ const Constitution = () => {
                     stroke="currentColor"
                     viewBox="0 0 24 24"
                   >
+                    <title>Constitution Icon</title>
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -153,6 +148,7 @@ const Constitution = () => {
                     stroke="currentColor"
                     viewBox="0 0 24 24"
                   >
+                    <title>Community Guidelines Icon</title>
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -178,6 +174,7 @@ const Constitution = () => {
                     stroke="currentColor"
                     viewBox="0 0 24 24"
                   >
+                    <title>Governance Icon</title>
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
@@ -67,6 +67,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
           </div>
           <div className="flex items-center gap-3">
             <button
+              type="button"
               onClick={handleDownload}
               className="p-2 bg-blue-600 text-white hover:bg-blue-700 rounded-lg transition-colors"
               title="Download PDF"
@@ -77,6 +78,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
+                <title>Download PDF Icon</title>
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -86,6 +88,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
               </svg>
             </button>
             <button
+              type="button"
               onClick={onClose}
               className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
               title="Close"
@@ -96,6 +99,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
+                <title>Close Icon</title>
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -118,6 +122,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
+                  <title>Download Error Icon</title>
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -130,6 +135,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
                 </h3>
                 <p className="text-gray-600 mb-4">{error}</p>
                 <button
+                  type="button"
                   onClick={handleDownload}
                   className="px-4 py-2 bg-earth-600 text-white rounded-lg hover:bg-earth-700 transition-colors"
                 >
@@ -170,6 +176,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
                 <div className="flex-shrink-0 flex items-center justify-between p-4 bg-white border-t border-gray-200">
                   {pageNumber > 1 ? (
                     <button
+                      type="button"
                       onClick={goToPrevPage}
                       disabled={pageNumber <= 1}
                       className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -180,6 +187,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
                         stroke="currentColor"
                         viewBox="0 0 24 24"
                       >
+                        <title>Previous Icon</title>
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -202,9 +210,10 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
                         Page
                       </label>
                       <input
-                        id="pageInput"
+                        id={`pageInput`}
                         type="number"
                         min={1}
+                        placeholder="-"
                         max={numPages}
                         value={pageNumber}
                         onChange={(e) => {
@@ -223,6 +232,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
 
                   {pageNumber < numPages ? (
                     <button
+                      type="button"
                       onClick={goToNextPage}
                       disabled={pageNumber >= numPages}
                       className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -234,6 +244,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
                         stroke="currentColor"
                         viewBox="0 0 24 24"
                       >
+                        <title>Next Icon</title>
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
