@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { getCookie, setCookie } from "../utils/cookie-utils";
 import { calculateAge } from "../utils/age-utils";
 
-const COOKIE_EXPIRY_HOURS = 24;
 const REDIRECT_URL = "https://web.mogen.co.za";
+const SESSION_KEY = "ageVerified";
 
 function AgeGate({ children }: { children: React.ReactNode }) {
   const [verified, setVerified] = useState(false);
@@ -12,28 +11,14 @@ function AgeGate({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user has already verified their age
-    const storedDOB = getCookie("dateOfBirth");
-    if (storedDOB) {
-      try {
-        const birthDate = new Date(storedDOB);
-        if (isNaN(birthDate.getTime())) {
-          throw new Error("Invalid date in cookie");
-        }
-        const age = calculateAge(birthDate);
-
-        if (age >= 18) {
-          // Extend cookie expiry on each visit
-          setCookie("dateOfBirth", storedDOB, COOKIE_EXPIRY_HOURS);
-          setVerified(true);
-        }
-      } catch {
-        // Clear invalid cookie and continue to verification form
-        setCookie("dateOfBirth", "", -1);
-      }
+    // Check if user has already verified their age in this session
+    const sessionVerified = sessionStorage.getItem(SESSION_KEY);
+    if (sessionVerified === "true") {
+      setVerified(true);
     }
     setLoading(false);
   }, []);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -61,7 +46,7 @@ function AgeGate({ children }: { children: React.ReactNode }) {
     }
 
     // Store date of birth in cookie (expires in 24 hours)
-    setCookie("dateOfBirth", dateOfBirth, COOKIE_EXPIRY_HOURS);
+    sessionStorage.setItem(SESSION_KEY, "true");
     setVerified(true);
   };
 

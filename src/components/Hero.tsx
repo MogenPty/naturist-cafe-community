@@ -13,13 +13,13 @@ const Hero = () => {
             </h1>
 
             <p className="hero-subtitle">
-              A national cultural association of naturists and nudists in terms
-              of sections 30 and 31 of the Constitution of the Republic of South
+              A cultural association of naturists and nudists in terms of
+              sections 30 and 31 of the Constitution of the Republic of South
               Africa.
             </p>
 
             <div className="hero-buttons">
-              <button
+              {/* <button
                 onClick={() =>
                   document
                     .getElementById("join")
@@ -28,14 +28,14 @@ const Hero = () => {
                 className="btn-primary"
               >
                 Join Our Community
-              </button>
+              </button> */}
               <button
                 onClick={() =>
                   document
                     .getElementById("constitution")
                     ?.scrollIntoView({ behavior: "smooth" })
                 }
-                className="btn-secondary"
+                className="btn-primary"
               >
                 Learn About Us
               </button>

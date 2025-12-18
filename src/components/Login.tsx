@@ -12,7 +12,7 @@ const Login = () => {
 
   return (
     <section
-      id="login"
+      id={`login-section`}
       className="section-padding bg-gray-900 text-white relative overflow-hidden z-content"
     >
       {/* Background decoration */}
@@ -52,6 +52,7 @@ const Login = () => {
                     stroke="currentColor"
                     viewBox="0 0 24 24"
                   >
+                    <title>Form Icon</title>
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -83,6 +84,7 @@ const Login = () => {
                       stroke="currentColor"
                       viewBox="0 0 24 24"
                     >
+                      <title>Email Input Icon</title>
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -92,7 +94,7 @@ const Login = () => {
                     </svg>
                     <input
                       type="email"
-                      id="email"
+                      id={`email`}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="modern-input"
@@ -116,6 +118,7 @@ const Login = () => {
                       stroke="currentColor"
                       viewBox="0 0 24 24"
                     >
+                      <title>Password Input Icon</title>
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -125,7 +128,7 @@ const Login = () => {
                     </svg>
                     <input
                       type="password"
-                      id="password"
+                      id={`password`}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="modern-input"
@@ -146,7 +149,7 @@ const Login = () => {
                     </span>
                   </label>
                   <a
-                    href="#"
+                    href="/#"
                     className="text-xs text-blue-600 hover:text-blue-700 font-semibold transition-colors relative group"
                   >
                     Reset password
@@ -162,6 +165,7 @@ const Login = () => {
                       stroke="currentColor"
                       viewBox="0 0 24 24"
                     >
+                      <title>Sign In to Community Icon</title>
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -186,6 +190,7 @@ const Login = () => {
                   </div>
                 </div>
                 <button
+                  type="button"
                   onClick={() =>
                     document
                       .getElementById("join")
@@ -209,6 +214,7 @@ const Login = () => {
                     stroke="currentColor"
                     viewBox="0 0 24 24"
                   >
+                    <title>Exclusive Content Icon</title>
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"

@@ -1,18 +1,17 @@
-import { useState, useEffect } from "react";
-import Hero from "./components/Hero";
-import Constitution from "./components/Constitution";
-import MarketsWalks from "./components/MarketsWalks";
+import { useEffect, useState } from "react";
 import Board from "./components/Board";
-import Join from "./components/Join";
-import Login from "./components/Login";
+import Constitution from "./components/Constitution";
+import Hero from "./components/Hero";
 import { ImageLoader } from "./components/ImageLoader";
+import JoinUs from "./components/JoinUs";
+import Login from "./components/Login";
+import MarketsWalks from "./components/MarketsWalks";
 
 const navigationItems = [
   { id: "home", label: "Home" },
   { id: "constitution", label: "Constitution" },
   { id: "markets-walks", label: "Markets & Walks" },
   { id: "board", label: "Board" },
-  { id: "join", label: "Join" },
   { id: "login", label: "Login" },
 ];
 
@@ -75,12 +74,9 @@ function App() {
               <ImageLoader
                 className="logo"
                 alt="NCC Logo"
-                publicId="ncc_logo_h156"
+                publicId="ncc-logo-trans-h156"
                 height={36}
               />
-              {/* <h1 className="text-xl md:text-2xl font-serif font-bold text-nature-700">
-                Naturist Café Community
-              </h1> */}
             </div>
 
             {/* Navigation Links */}
@@ -88,6 +84,7 @@ function App() {
               <div className="ml-10 flex items-baseline space-x-2">
                 {navigationItems.map((item) => (
                   <button
+                    type="button"
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
                     className={`px-4 py-3 text-sm font-medium transition-all duration-200 rounded-md ${
@@ -105,6 +102,7 @@ function App() {
             {/* Mobile menu button */}
             <div className="lg:hidden">
               <button
+                type="button"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 title="Toggle menu"
                 className="!text-white hover:text-nature-600 p-2"
@@ -115,6 +113,7 @@ function App() {
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
+                  <title>Toggle menu</title>
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -135,17 +134,12 @@ function App() {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-40 md:hidden">
-          {/* Background overlay */}
-          <div
-            className="fixed inset-0 bg-black bg-opacity-25"
-            onClick={() => setIsMobileMenuOpen(false)}
-          ></div>
-
           {/* Menu panel */}
           <div className="fixed top-16 left-0 right-0 bg-white shadow-lg border-t">
             <div className="px-4 py-2 space-y-1">
               {navigationItems.map((item) => (
                 <button
+                  type="button"
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
                   className={`w-full text-left px-3 py-3 text-sm font-medium transition-colors duration-200 rounded-md ${
@@ -168,7 +162,7 @@ function App() {
         <Constitution />
         <MarketsWalks />
         <Board />
-        <Join />
+        <JoinUs />
         <Login />
       </main>
 

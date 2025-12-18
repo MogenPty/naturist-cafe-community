@@ -204,7 +204,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Modern Form Styles - Enhanced Browser Compatible */
 .modern-form-container {
-  background: #ffffff;
+  /* background: #ffffff; */
   background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
   border: 1px solid rgba(226, 232, 240, 0.8);
   border-radius: 20px;
@@ -253,7 +253,7 @@ h1, h2, h3, h4, h5, h6 {
 .modern-input {
   width: 100%;
   padding: 14px 14px 14px 44px;
-  background: #f8fafc;
+  /* background: #f8fafc; */
   background: linear-gradient(145deg, #f8fafc 0%, #f1f5f9 100%);
   border: 2px solid #e2e8f0;
   border-radius: 12px;
@@ -275,7 +275,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .modern-input:focus {
   border-color: #3b82f6;
-  background: #ffffff;
+  /* background: #ffffff; */
   background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
   box-shadow: 
     0 0 0 4px rgba(59, 130, 246, 0.15),
@@ -305,7 +305,7 @@ h1, h2, h3, h4, h5, h6 {
 .modern-button {
   width: 100%;
   padding: 16px 20px;
-  background: #3b82f6;
+  /* background: #3b82f6; */
   background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 50%, #1e40af 100%);
   color: white;
   border: none;

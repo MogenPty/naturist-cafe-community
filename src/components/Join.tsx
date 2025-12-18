@@ -1,6 +1,7 @@
 const Join = () => {
   const membershipBenefits = [
     {
+      id: "community-events",
       icon: (
         <svg
           className="icon-lg"
@@ -8,6 +9,7 @@ const Join = () => {
           stroke="currentColor"
           viewBox="0 0 24 24"
         >
+          <title>Community Events Icon</title>
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -21,6 +23,7 @@ const Join = () => {
         "Access to exclusive nature walks, markets, and community gatherings",
     },
     {
+      id: "educational-resources",
       icon: (
         <svg
           className="icon-md"
@@ -28,6 +31,7 @@ const Join = () => {
           stroke="currentColor"
           viewBox="0 0 24 24"
         >
+          <title>Educational Resources Icon</title>
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -41,6 +45,7 @@ const Join = () => {
         "Workshops on naturist philosophy, wellness practices, and community values",
     },
     {
+      id: "safe-environment",
       icon: (
         <svg
           className="icon-lg"
@@ -48,6 +53,7 @@ const Join = () => {
           stroke="currentColor"
           viewBox="0 0 24 24"
         >
+          <title>Safe Environment Icon</title>
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -61,6 +67,7 @@ const Join = () => {
         "Respectful, judgment-free community guided by clear principles and values",
     },
     {
+      id: "network-connections",
       icon: (
         <svg
           className="icon-lg"
@@ -68,6 +75,7 @@ const Join = () => {
           stroke="currentColor"
           viewBox="0 0 24 24"
         >
+          <title>Network Connections Icon</title>
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -84,8 +92,8 @@ const Join = () => {
 
   return (
     <section
-      id="join"
-      className="section-padding bg-gradient-to-br from-earth-50 to-nature-50"
+      id={`membership-join`}
+      className="bg-gradient-to-br from-earth-50 to-nature-50"
     >
       <div className="container-custom">
         <div className="text-center mb-12">
@@ -102,9 +110,9 @@ const Join = () => {
         <div className="max-w-6xl mx-auto">
           {/* Membership Benefits */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {membershipBenefits.map((benefit, index) => (
+            {membershipBenefits.map((benefit) => (
               <div
-                key={index}
+                key={benefit.id}
                 className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow duration-200"
               >
                 <div className="icon-container bg-nature-100 rounded-lg flex items-center justify-center mx-auto mb-4">
@@ -192,7 +200,7 @@ const Join = () => {
               </p>
 
               <div className="space-y-4">
-                <button className="btn-primary w-full">
+                <button type="button" className="btn-primary w-full">
                   Contact Us About Membership
                 </button>
 
@@ -201,10 +209,10 @@ const Join = () => {
                     Or reach out directly:
                   </p>
                   <a
-                    href="mailto:membership@naturistcafe.co.za"
+                    href="mailto:members@naturistcafecommunity.org?subject=Join+Request&body=I%20am%20interested%20in%20joining%20the%20Naturist%20Caf%C3%A9%20Community.%20Please%20provide%20me%20with%20more%20information."
                     className="text-nature-600 hover:text-nature-700 font-medium text-sm"
                   >
-                    membership@naturistcafe.co.za
+                    members@naturistcafecommunity.org
                   </a>
                 </div>
 
@@ -231,6 +239,7 @@ const Join = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button
+                  type="button"
                   onClick={() =>
                     document
                       .getElementById("constitution")
@@ -241,6 +250,7 @@ const Join = () => {
                   Read Our Constitution
                 </button>
                 <button
+                  type="button"
                   onClick={() =>
                     document
                       .getElementById("board")
