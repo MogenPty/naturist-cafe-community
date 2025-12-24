@@ -154,7 +154,7 @@ const MarketsWalks = () => {
             {/* TODO: Implement an interactive calendar and remove the overlay */}
             <Calendar />
 
-            <div className="">
+            <div className="hidden">
               <div className="text-center p-8">
                 <svg
                   className="icon-xl mx-auto mb-4 text-nature-400"
