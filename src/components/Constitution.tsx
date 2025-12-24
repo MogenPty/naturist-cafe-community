@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ConstitutionModal from "./ConstitutionModal";
+import { ImageLoader } from "./ImageLoader";
 
 const Constitution = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -11,8 +12,8 @@ const Constitution = () => {
   const handleDownload = () => {
     // Create a link to download the PDF
     const link = document.createElement("a");
-    link.href = "/ncc_constitution.pdf"; // You'll need to place the PDF in the public folder
-    link.download = "NCC_Constitution.pdf";
+    link.href = "/ncc_constitution_signed.pdf"; // You'll need to place the PDF in the public folder
+    link.download = "Naturist_Cafe_Community_Constitution.pdf";
     link.click();
   };
 
@@ -105,8 +106,8 @@ const Constitution = () => {
             </div>
 
             {/* Constitution Highlights */}
-            <div className="grid md:grid-cols-3 gap-8 mt-12">
-              <div className="bg-nature-100 p-8 rounded-xl border border-nature-200 shadow-sm">
+            <div className="grid md:grid-cols-3 gap-8 mt-12 items-stretch">
+              <div className="bg-nature-100 p-8 rounded-xl border border-nature-200 shadow-sm md:col-span-1">
                 <div className="w-12 h-12 bg-nature-500 rounded-full flex items-center justify-center mb-4">
                   <svg
                     className="w-6 h-6 text-white"
@@ -140,7 +141,16 @@ const Constitution = () => {
                 </ul>
               </div>
 
-              <div className="bg-earth-100 p-8 rounded-xl border border-earth-200 shadow-sm">
+              <div className="bg-earth-100 p-0 rounded-xl border border-earth-200 shadow-sm md:col-span-2 overflow-hidden">
+                <ImageLoader
+                  className="w-full h-full md:h-full object-cover rounded-xl"
+                  alt="Three Naturists"
+                  publicId="ncc_002"
+                  width={800}
+                />
+              </div>
+
+              {/* <div className="bg-earth-100 p-8 rounded-xl border border-earth-200 shadow-sm">
                 <div className="w-12 h-12 bg-earth-500 rounded-full flex items-center justify-center mb-4">
                   <svg
                     className="w-6 h-6 text-white"
@@ -191,17 +201,16 @@ const Constitution = () => {
                   participation, and democratic governance by elected board
                   members.
                 </p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
       </section>
-
-      {/* Constitution Modal */}
       <ConstitutionModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
+      ;
     </>
   );
 };

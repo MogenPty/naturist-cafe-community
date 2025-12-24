@@ -5,7 +5,7 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import { quality } from "@cloudinary/url-gen/actions/delivery";
 import { fill } from "@cloudinary/url-gen/actions/resize";
 
-import React from "react";
+import type React from "react";
 
 export interface ImageLoaderProps extends React.HTMLAttributes<HTMLDivElement> {
   cloudName?: string;
@@ -49,7 +49,6 @@ export const ImageLoader = ({
   // Render the transformed image in a React component.
   return (
     <AdvancedImage
-      style={{ width: width, height: height }}
       cldImg={myImage}
       plugins={[responsive({ steps: 100 })]}
       {...rest}

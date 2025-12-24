@@ -1,5 +1,5 @@
-import WalkIcon from "../assets/walk.svg";
 import MarketIcon from "../assets/market.svg";
+import WalkIcon from "../assets/walk.svg";
 import WorkshopIcon from "../assets/workshop.svg";
 
 const MarketsWalks = () => {
@@ -123,7 +123,7 @@ const MarketsWalks = () => {
 
   return (
     <section
-      id="markets-walks"
+      id={"markets-walks"}
       className="section-padding bg-gradient-to-br from-nature-50 to-earth-50 relative overflow-hidden z-content"
     >
       {/* Background decoration */}
@@ -159,6 +159,7 @@ const MarketsWalks = () => {
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
+                  <title>Events</title>
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -280,7 +281,7 @@ const MarketsWalks = () => {
               <div className="grid grid-cols-7 gap-2">
                 {Array.from({ length: 35 }, (_, i) => (
                   <div
-                    key={i}
+                    key={`calendar-{$i}`}
                     className="aspect-square bg-gray-50 rounded border p-2 text-sm"
                   >
                     {i > 5 && i < 32 ? i - 5 : ""}
