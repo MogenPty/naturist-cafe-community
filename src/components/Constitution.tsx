@@ -12,7 +12,7 @@ const Constitution = () => {
   const handleDownload = () => {
     // Create a link to download the PDF
     const link = document.createElement("a");
-    link.href = "/ncc_constitution_signed.pdf"; // You'll need to place the PDF in the public folder
+    link.href = "/community_constitution.pdf"; // You'll need to place the PDF in the public folder
     link.download = "Naturist_Cafe_Community_Constitution.pdf";
     link.click();
   };
@@ -149,59 +149,6 @@ const Constitution = () => {
                   width={800}
                 />
               </div>
-
-              {/* <div className="bg-earth-100 p-8 rounded-xl border border-earth-200 shadow-sm">
-                <div className="w-12 h-12 bg-earth-500 rounded-full flex items-center justify-center mb-4">
-                  <svg
-                    className="w-6 h-6 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <title>Community Guidelines Icon</title>
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </div>
-                <h4 className="text-xl font-semibold text-earth-800 mb-3">
-                  Community Guidelines
-                </h4>
-                <p className="text-earth-700 leading-relaxed">
-                  Clear principles for creating a safe, welcoming environment
-                  with guidelines for conduct, privacy, and mutual respect.
-                </p>
-              </div>
-
-              <div className="bg-gray-100 p-8 rounded-xl border border-gray-200 shadow-sm">
-                <div className="w-12 h-12 bg-gray-500 rounded-full flex items-center justify-center mb-4">
-                  <svg
-                    className="w-6 h-6 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <title>Governance Icon</title>
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                    />
-                  </svg>
-                </div>
-                <h4 className="text-xl font-semibold text-gray-800 mb-3">
-                  Governance
-                </h4>
-                <p className="text-gray-700 leading-relaxed">
-                  Transparent structure for community decisions, member
-                  participation, and democratic governance by elected board
-                  members.
-                </p>
-              </div> */}
             </div>
           </div>
         </div>
