@@ -146,7 +146,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
           ) : (
             <>
               {/* PDF Display Area */}
-              <div className="flex-1 overflow-auto flex items-center justify-center py-4 pt-80 pb-[10px]">
+              <div className="flex-1 overflow-auto flex items-center justify-center py-4 md:pt-80 md:pb-[10px]">
                 {loading && (
                   <div className="flex items-center justify-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-nature-600"></div>

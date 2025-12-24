@@ -69,7 +69,7 @@ export const MemberCard = (member: MemberCardProps) => {
 
 export const MemberBlankCard = (props: MemberBlankCardProps) => {
   return (
-    <div className="bg-gray-50 rounded-lg p-6 text-center hover:shadow-lg transition-shadow duration-200">
+    <div className="bg-gray-50 rounded-lg p-6 text-center hover:shadow-lg transition-shadow duration-200 flex items-center justify-center">
       {/* Member Info */}
       {props.title && (
         <h3 className="font-semibold text-lg text-gray-900 mb-2">
