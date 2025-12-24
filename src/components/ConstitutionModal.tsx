@@ -43,7 +43,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
 
   const handleDownload = () => {
     const link = document.createElement("a");
-    link.href = "/ncc_constitution.pdf";
+    link.href = "/community_constitution.pdf";
     link.download = "Naturist_Cafe_Community_Constitution.pdf";
     link.click();
   };
@@ -155,10 +155,10 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
                 )}
 
                 <Document
-                  file="./ncc_constitution_signed.pdf"
+                  file="./community_constitution.pdf"
                   onLoadSuccess={onDocumentLoadSuccess}
                   onLoadError={onDocumentLoadError}
-                  className="flex justify-center"
+                  className="flex justify-center px-1.5"
                   loading={null}
                 >
                   <Page
