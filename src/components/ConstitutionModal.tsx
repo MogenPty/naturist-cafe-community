@@ -43,8 +43,8 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
 
   const handleDownload = () => {
     const link = document.createElement("a");
-    link.href = "/ncc_constitution.pdf";
-    link.download = "NCC_Constitution.pdf";
+    link.href = "/community_constitution.pdf";
+    link.download = "Naturist_Cafe_Community_Constitution.pdf";
     link.click();
   };
 
@@ -57,7 +57,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
         <div className="flex items-center justify-between p-6 border-b border-gray-200 flex-shrink-0">
           <div>
             <h2 className="text-2xl font-serif font-bold text-gray-900">
-              NCC Constitution
+              Community Constitution
             </h2>
             {numPages && (
               <p className="text-sm text-gray-600 mt-1">
@@ -146,7 +146,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
           ) : (
             <>
               {/* PDF Display Area */}
-              <div className="flex-1 overflow-auto flex items-center justify-center p-4">
+              <div className="flex-1 overflow-auto flex items-center justify-center py-4 pt-80 pb-[10px]">
                 {loading && (
                   <div className="flex items-center justify-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-nature-600"></div>
@@ -155,10 +155,10 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
                 )}
 
                 <Document
-                  file="./ncc_constitution.pdf"
+                  file="./community_constitution.pdf"
                   onLoadSuccess={onDocumentLoadSuccess}
                   onLoadError={onDocumentLoadError}
-                  className="flex justify-center"
+                  className="flex justify-center px-1.5"
                   loading={null}
                 >
                   <Page

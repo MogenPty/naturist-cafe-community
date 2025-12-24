@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { calculateAge } from "../utils/age-utils";
 
 const REDIRECT_URL = "https://web.mogen.co.za";
@@ -32,7 +32,7 @@ function AgeGate({ children }: { children: React.ReactNode }) {
     const today = new Date();
 
     // Check if date is valid and not in the future
-    if (isNaN(birthDate.getTime()) || birthDate > today) {
+    if (Number.isNaN(birthDate.getTime()) || birthDate > today) {
       setError("Please enter a valid date of birth");
       return;
     }
@@ -48,6 +48,10 @@ function AgeGate({ children }: { children: React.ReactNode }) {
     // Store date of birth in cookie (expires in 24 hours)
     sessionStorage.setItem(SESSION_KEY, "true");
     setVerified(true);
+  };
+
+  const handleRedirect = () => {
+    window.location.href = REDIRECT_URL;
   };
 
   if (loading) {
@@ -74,6 +78,7 @@ function AgeGate({ children }: { children: React.ReactNode }) {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
+                <title>Age Verification</title>
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -101,6 +106,7 @@ function AgeGate({ children }: { children: React.ReactNode }) {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
+                <title>Warning</title>
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -127,7 +133,8 @@ function AgeGate({ children }: { children: React.ReactNode }) {
               </label>
               <input
                 type="date"
-                id="dateOfBirth"
+                title="dateOfBirth"
+                id={"dateOfBirth"}
                 value={dateOfBirth}
                 onChange={(e) => setDateOfBirth(e.target.value)}
                 max={new Date().toISOString().split("T")[0]} // Prevent future dates
@@ -148,7 +155,7 @@ function AgeGate({ children }: { children: React.ReactNode }) {
               </button>
               <button
                 type="button"
-                onClick={() => (window.location.href = REDIRECT_URL)}
+                onClick={handleRedirect}
                 className="flex-1 btn-secondary"
               >
                 Exit
@@ -159,9 +166,9 @@ function AgeGate({ children }: { children: React.ReactNode }) {
           {/* Privacy Notice */}
           <div className="mt-6 pt-6 border-t border-gray-200">
             <p className="text-xs text-gray-500 text-center">
-              Your date of birth is stored locally for 24 hours for age
-              verification purposes only. We respect your privacy and do not
-              share this information.
+              Your date of birth is stored on your device for age verification
+              purposes only. We respect your privacy and do not share this
+              information.
             </p>
           </div>
         </div>

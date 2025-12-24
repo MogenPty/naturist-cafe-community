@@ -1,6 +1,7 @@
-import WalkIcon from "../assets/walk.svg";
 import MarketIcon from "../assets/market.svg";
+import WalkIcon from "../assets/walk.svg";
 import WorkshopIcon from "../assets/workshop.svg";
+import Calendar from "./Calendar";
 
 const MarketsWalks = () => {
   // Sample events data with dates and types
@@ -123,7 +124,7 @@ const MarketsWalks = () => {
 
   return (
     <section
-      id="markets-walks"
+      id={"markets-walks"}
       className="section-padding bg-gradient-to-br from-nature-50 to-earth-50 relative overflow-hidden z-content"
     >
       {/* Background decoration */}
@@ -151,7 +152,9 @@ const MarketsWalks = () => {
           <div className="relative bg-white rounded-xl shadow-lg min-h-[600px] border border-gray-200 overflow-hidden">
             {/* Coming Soon Overlay */}
             {/* TODO: Implement an interactive calendar and remove the overlay */}
-            <div className="coming-soon-overlay">
+            <Calendar />
+
+            <div className="hidden">
               <div className="text-center p-8">
                 <svg
                   className="icon-xl mx-auto mb-4 text-nature-400"
@@ -159,6 +162,7 @@ const MarketsWalks = () => {
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
+                  <title>Events</title>
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -169,10 +173,6 @@ const MarketsWalks = () => {
                 <h3 className="text-2xl font-semibold text-gray-800 mb-3">
                   Events Calendar
                 </h3>
-                {/* <p className="text-gray-600 mb-6 max-w-md mx-auto">
-                  Interactive calendar with markets, nature walks, and community
-                  events will be available here
-                </p> */}
 
                 {/* Upcoming Events List */}
                 <div className="bg-white/80 border-2 border-dashed border-nature-300 rounded-lg p-4 max-w-lg mx-auto backdrop-blur-sm">
@@ -249,43 +249,6 @@ const MarketsWalks = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            {/* Placeholder calendar content (hidden behind overlay) */}
-            <div className="p-8">
-              <div className="grid grid-cols-7 gap-2 mb-4">
-                <div className="text-center font-semibold p-2 text-gray-600">
-                  Sun
-                </div>
-                <div className="text-center font-semibold p-2 text-gray-600">
-                  Mon
-                </div>
-                <div className="text-center font-semibold p-2 text-gray-600">
-                  Tue
-                </div>
-                <div className="text-center font-semibold p-2 text-gray-600">
-                  Wed
-                </div>
-                <div className="text-center font-semibold p-2 text-gray-600">
-                  Thu
-                </div>
-                <div className="text-center font-semibold p-2 text-gray-600">
-                  Fri
-                </div>
-                <div className="text-center font-semibold p-2 text-gray-600">
-                  Sat
-                </div>
-              </div>
-              <div className="grid grid-cols-7 gap-2">
-                {Array.from({ length: 35 }, (_, i) => (
-                  <div
-                    key={i}
-                    className="aspect-square bg-gray-50 rounded border p-2 text-sm"
-                  >
-                    {i > 5 && i < 32 ? i - 5 : ""}
-                  </div>
-                ))}
               </div>
             </div>
           </div>

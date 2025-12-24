@@ -9,19 +9,6 @@ const JoinUs = () => {
     >
       <div className="container-custom">
         <div className="max-w-6xl mx-auto">
-          {/* Membership Application Form */}
-          <div className="grid lg:grid-cols-2 gap-8 items-start">
-            <div>
-              {/* Contact/Application */}
-              <JoinOurCommunity />
-
-              {/* Call to Action */}
-              <CTA />
-            </div>
-
-            {/* Membership Information */}
-            <MemberInformation />
-          </div>
           <div className="mb-12">
             {/* Application Form */}
             <MembershipForm />
@@ -33,146 +20,6 @@ const JoinUs = () => {
 };
 
 export default JoinUs;
-
-const JoinOurCommunity = () => {
-  return (
-    <div className="bg-white p-8 rounded-xl shadow-lg">
-      <h3 className="text-2xl font-serif font-bold text-gray-900 mb-6">
-        Join our Community
-      </h3>
-
-      <p className="text-gray-700 mb-6">
-        Take the first step towards joining our community. We'll provide you
-        with all the information you need to get started and connect you with
-        current members who can answer your questions.
-      </p>
-      <div className="space-y-4">
-        <button type="button" className="btn-primary w-full">
-          Contact Us About Membership
-        </button>
-
-        <div className="text-center">
-          <p className="text-sm text-gray-600 mb-2">Or reach out directly:</p>
-          <a
-            href="mailto:members@naturistcafecommunity.org?subject=Join+Request&body=I%20am%20interested%20in%20joining%20the%20Naturist%20Caf%C3%A9%20Community.%20Please%20provide%20me%20with%20more%20information."
-            className="text-nature-600 hover:text-nature-700 font-medium text-sm"
-          >
-            members@naturistcafecommunity.org
-          </a>
-        </div>
-
-        <div className="border-t pt-4">
-          <p className="text-xs text-gray-500 text-center">
-            All inquiries are handled with complete confidentiality and respect
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const MemberInformation = () => {
-  return (
-    <div className="bg-white p-8 rounded-xl shadow-lg mt-12">
-      <h3 className="text-2xl font-serif font-bold text-gray-900 mb-6">
-        Membership Information
-      </h3>
-
-      <div className="space-y-4">
-        <div className="flex items-start gap-3">
-          <div className="w-2 h-2 bg-nature-500 rounded-full mt-2"></div>
-          <div>
-            <h4 className="font-medium text-gray-900">Open Membership</h4>
-            <p className="text-gray-600 text-sm">
-              Welcome to all who share our values of respect and authenticity
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-start gap-3">
-          <div className="w-2 h-2 bg-earth-500 rounded-full mt-2"></div>
-          <div>
-            <h4 className="font-medium text-gray-900">Community Guidelines</h4>
-            <p className="text-gray-600 text-sm">
-              All members agree to follow our constitution and community
-              principles
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-start gap-3">
-          <div className="w-2 h-2 bg-nature-500 rounded-full mt-2"></div>
-          <div>
-            <h4 className="font-medium text-gray-900">Active Participation</h4>
-            <p className="text-gray-600 text-sm">
-              Engage in events, workshops, and community activities
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-start gap-3">
-          <div className="w-2 h-2 bg-earth-500 rounded-full mt-2"></div>
-          <div>
-            <h4 className="font-medium text-gray-900">South African Focus</h4>
-            <p className="text-gray-600 text-sm">
-              Promoting naturist culture within the South African context
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-8 p-4 bg-nature-50 rounded-lg">
-        <h4 className="font-medium text-nature-800 mb-2">
-          Privacy & Confidentiality
-        </h4>
-        <p className="text-sm text-nature-700">
-          All personal information is kept strictly confidential and is only
-          used for membership purposes and community communication.
-        </p>
-      </div>
-    </div>
-  );
-};
-
-const CTA = () => {
-  return (
-    <div className="text-center mt-12">
-      <div className="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
-        <h3 className="text-xl font-serif font-bold text-gray-900 mb-4">
-          Questions About Membership?
-        </h3>
-        <p className="text-gray-600 mb-6">
-          We're here to help you understand our community and what membership
-          entails. Feel free to reach out with any questions or concerns.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button
-            type="button"
-            onClick={() =>
-              document
-                .getElementById("constitution")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }
-            className="btn-secondary"
-          >
-            Read Our Constitution
-          </button>
-          <button
-            type="button"
-            onClick={() =>
-              document
-                .getElementById("board")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }
-            className="btn-primary"
-          >
-            Meet Our Board
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const MembershipForm = () => {
   const [formData, setFormData] = useState({
@@ -743,8 +590,8 @@ const MembershipForm = () => {
             className="w-full btn-primary cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {state.submitting
-              ? "Submitting Application..."
-              : "Submit Application"}
+              ? "Submitting Application Form..."
+              : "Submit Application Form"}
           </button>
 
           <p className="text-xs text-gray-500 text-center mt-3">

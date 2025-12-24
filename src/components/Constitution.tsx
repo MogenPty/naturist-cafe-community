@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ConstitutionModal from "./ConstitutionModal";
+import { ImageLoader } from "./ImageLoader";
 
 const Constitution = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -11,8 +12,8 @@ const Constitution = () => {
   const handleDownload = () => {
     // Create a link to download the PDF
     const link = document.createElement("a");
-    link.href = "/ncc_constitution.pdf"; // You'll need to place the PDF in the public folder
-    link.download = "NCC_Constitution.pdf";
+    link.href = "/community_constitution.pdf"; // You'll need to place the PDF in the public folder
+    link.download = "Naturist_Cafe_Community_Constitution.pdf";
     link.click();
   };
 
@@ -105,8 +106,8 @@ const Constitution = () => {
             </div>
 
             {/* Constitution Highlights */}
-            <div className="grid md:grid-cols-3 gap-8 mt-12">
-              <div className="bg-nature-100 p-8 rounded-xl border border-nature-200 shadow-sm">
+            <div className="grid md:grid-cols-3 gap-8 mt-12 items-stretch">
+              <div className="bg-nature-100 p-8 rounded-xl border border-nature-200 shadow-sm md:col-span-1">
                 <div className="w-12 h-12 bg-nature-500 rounded-full flex items-center justify-center mb-4">
                   <svg
                     className="w-6 h-6 text-white"
@@ -140,68 +141,23 @@ const Constitution = () => {
                 </ul>
               </div>
 
-              <div className="bg-earth-100 p-8 rounded-xl border border-earth-200 shadow-sm">
-                <div className="w-12 h-12 bg-earth-500 rounded-full flex items-center justify-center mb-4">
-                  <svg
-                    className="w-6 h-6 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <title>Community Guidelines Icon</title>
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </div>
-                <h4 className="text-xl font-semibold text-earth-800 mb-3">
-                  Community Guidelines
-                </h4>
-                <p className="text-earth-700 leading-relaxed">
-                  Clear principles for creating a safe, welcoming environment
-                  with guidelines for conduct, privacy, and mutual respect.
-                </p>
-              </div>
-
-              <div className="bg-gray-100 p-8 rounded-xl border border-gray-200 shadow-sm">
-                <div className="w-12 h-12 bg-gray-500 rounded-full flex items-center justify-center mb-4">
-                  <svg
-                    className="w-6 h-6 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <title>Governance Icon</title>
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                    />
-                  </svg>
-                </div>
-                <h4 className="text-xl font-semibold text-gray-800 mb-3">
-                  Governance
-                </h4>
-                <p className="text-gray-700 leading-relaxed">
-                  Transparent structure for community decisions, member
-                  participation, and democratic governance by elected board
-                  members.
-                </p>
+              <div className="bg-earth-100 p-0 rounded-xl border border-earth-200 shadow-sm md:col-span-2 overflow-hidden">
+                <ImageLoader
+                  className="w-full h-full md:h-full object-cover rounded-xl"
+                  alt="Three Naturists"
+                  publicId="ncc_002"
+                  width={800}
+                />
               </div>
             </div>
           </div>
         </div>
       </section>
-
-      {/* Constitution Modal */}
       <ConstitutionModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
+      ;
     </>
   );
 };

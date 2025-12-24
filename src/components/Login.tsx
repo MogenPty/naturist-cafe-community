@@ -12,7 +12,7 @@ const Login = () => {
 
   return (
     <section
-      id={`login-section`}
+      id={"login-section"}
       className="section-padding bg-gray-900 text-white relative overflow-hidden z-content"
     >
       {/* Background decoration */}
@@ -25,14 +25,8 @@ const Login = () => {
       <div className="container-custom relative">
         <div className="text-center mb-8">
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-4">
-            Member Exclusive Content
+            Member Content
           </h2>
-
-          {/* Preamble Quote */}
-          <blockquote className="text-lg md:text-xl italic text-nature-200 max-w-4xl mx-auto mb-6 leading-relaxed">
-            "naturism is an awakening and a transformation that opens one to the
-            beauty of nature, of simplicity and of truth;"
-          </blockquote>
 
           <p className="text-gray-300 max-w-2xl mx-auto">
             Access exclusive content, discussions, and participate in online
@@ -177,30 +171,6 @@ const Login = () => {
                   </span>
                 </button>
               </form>
-
-              <div className="mt-6 text-center">
-                <div className="relative">
-                  <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-200"></div>
-                  </div>
-                  <div className="relative flex justify-center text-xs">
-                    <span className="px-3 bg-white text-gray-500 font-medium">
-                      New to our community?
-                    </span>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() =>
-                    document
-                      .getElementById("join")
-                      ?.scrollIntoView({ behavior: "smooth" })
-                  }
-                  className="mt-3 w-full bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-200 text-gray-800 font-semibold py-2.5 px-4 rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-300 transform hover:scale-[1.01] shadow-sm hover:shadow-md text-sm"
-                >
-                  Join Our Community
-                </button>
-              </div>
             </div>
 
             {/* Member Benefits Preview */}
