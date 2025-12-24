@@ -7,6 +7,12 @@ interface MemberCardProps {
   role: string;
 }
 
+interface MemberBlankCardProps {
+  title?: string;
+  subtitle?: string;
+  description?: string;
+}
+
 // React Function called MemberCard
 export const MemberCard = (member: MemberCardProps) => {
   return (
@@ -18,6 +24,7 @@ export const MemberCard = (member: MemberCardProps) => {
           fill="currentColor"
           viewBox="0 0 20 20"
         >
+          <title>Member Icon</title>
           <path
             fillRule="evenodd"
             d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
@@ -34,25 +41,6 @@ export const MemberCard = (member: MemberCardProps) => {
 
       {/* Details */}
       <div className="space-y-2 text-sm">
-        {/* <div className="flex items-center justify-center gap-2">
-          <svg
-            className="icon-sm text-gray-500"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span className="text-gray-700">
-            {member.yearsInNaturism} years in Naturism
-          </span>
-        </div> */}
-
         {member.otherOrganizations.length > 0 && (
           <div className="flex items-center justify-center gap-2">
             <svg
@@ -61,6 +49,7 @@ export const MemberCard = (member: MemberCardProps) => {
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
+              <title>Organisations</title>
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -73,31 +62,32 @@ export const MemberCard = (member: MemberCardProps) => {
             </span>
           </div>
         )}
-
-        {/* <div className="flex items-center justify-center gap-2">
-          <svg
-            className="icon-sm text-gray-500"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span className="text-gray-700">
-            Community Council:{" "}
-            {member.communityCouncil ? (
-              <span className="text-nature-600 font-medium">Yes</span>
-            ) : (
-              <span className="text-gray-500">No</span>
-            )}
-          </span>
-        </div> */}
       </div>
+    </div>
+  );
+};
+
+export const MemberBlankCard = (props: MemberBlankCardProps) => {
+  return (
+    <div className="bg-gray-50 rounded-lg p-6 text-center hover:shadow-lg transition-shadow duration-200">
+      {/* Member Info */}
+      {props.title && (
+        <h3 className="font-semibold text-lg text-gray-900 mb-2">
+          {props.title}
+        </h3>
+      )}
+      {props.subtitle && (
+        <p className="text-nature-600 font-medium mb-3">{props.subtitle}</p>
+      )}
+
+      {/* Details */}
+      {props.description && (
+        <div className="space-y-2 text-sm">
+          <div className="flex items-center justify-center gap-2">
+            <span className="text-gray-700">{props.description}</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

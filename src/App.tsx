@@ -174,7 +174,8 @@ function App() {
               &copy; 2025 Naturist Café Community. All rights reserved.
             </p>
             <p className="text-xs text-gray-400 mt-2">
-              Based in South Africa • Promoting naturist culture and community
+              Based in South Africa • Preserving, promoting, and developing the
+              culture and community of naturism.
             </p>
           </div>
         </div>
