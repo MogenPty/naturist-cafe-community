@@ -29,8 +29,9 @@ const Login = () => {
           </h2>
 
           <p className="text-gray-300 max-w-2xl mx-auto">
-            Access exclusive content, discussions, and participate in online
-            community discussions
+            Coming Soon, Under Construction
+            {/* Access exclusive content, discussions, and participate in online
+            community discussions */}
           </p>
         </div>
 
@@ -59,7 +60,8 @@ const Login = () => {
                   Welcome Back
                 </h3>
                 <p className="text-sm text-gray-600">
-                  Sign in to access exclusive member content
+                  Coming Soon, Under Construction
+                  {/* Sign in to access exclusive member content */}
                 </p>
               </div>
 
@@ -151,7 +153,11 @@ const Login = () => {
                   </a>
                 </div>
 
-                <button type="submit" className="modern-button">
+                <button
+                  type="submit"
+                  disabled
+                  className="modern-button cursor-not-allowed"
+                >
                   <span className="relative flex items-center justify-center gap-2">
                     <svg
                       className="w-5 h-5"
