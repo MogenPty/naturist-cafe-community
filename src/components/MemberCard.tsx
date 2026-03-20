@@ -37,7 +37,6 @@ export const MemberCard = (member: MemberCardProps) => {
       <h3 className="font-semibold text-lg text-gray-900 mb-2">
         {member.name}
       </h3>
-      <p className="text-nature-600 font-medium mb-3">{member.role}</p>
 
       {/* Details */}
       <div className="space-y-2 text-sm">

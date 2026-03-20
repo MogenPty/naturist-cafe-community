@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ImageLoader } from "./ImageLoader";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -29,8 +30,9 @@ const Login = () => {
           </h2>
 
           <p className="text-gray-300 max-w-2xl mx-auto">
-            Access exclusive content, discussions, and participate in online
-            community discussions
+            Coming Soon, Under Construction
+            {/* Access exclusive content, discussions, and participate in online
+            community discussions */}
           </p>
         </div>
 
@@ -59,7 +61,8 @@ const Login = () => {
                   Welcome Back
                 </h3>
                 <p className="text-sm text-gray-600">
-                  Sign in to access exclusive member content
+                  Coming Soon, Under Construction
+                  {/* Sign in to access exclusive member content */}
                 </p>
               </div>
 
@@ -151,7 +154,11 @@ const Login = () => {
                   </a>
                 </div>
 
-                <button type="submit" className="modern-button">
+                <button
+                  type="submit"
+                  disabled
+                  className="modern-button cursor-not-allowed"
+                >
                   <span className="relative flex items-center justify-center gap-2">
                     <svg
                       className="w-5 h-5"
@@ -172,73 +179,12 @@ const Login = () => {
                 </button>
               </form>
             </div>
-
-            {/* Member Benefits Preview */}
-            <div className="relative">
-              {/* Coming Soon Overlay */}
-              <div className="coming-soon-overlay">
-                <div className="text-center p-8">
-                  <svg
-                    className="icon-xl mx-auto mb-4 text-nature-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <title>Exclusive Content Icon</title>
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-                    />
-                  </svg>
-                  <h3 className="text-2xl font-semibold text-gray-800 mb-3">
-                    Exclusive Content
-                  </h3>
-                  <p className="text-gray-600 max-w-xs mx-auto text-sm leading-relaxed">
-                    Premium video content and discussions coming soon for
-                    verified members
-                  </p>
-                </div>
-              </div>
-
-              {/* Background content - hidden behind overlay */}
-              <div className="bg-gray-700 rounded-2xl p-8 min-h-[400px] overflow-hidden">
-                <h4 className="text-xl font-serif font-bold text-white mb-6">
-                  Member Content Preview
-                </h4>
-                <div className="space-y-6">
-                  <div className="bg-gray-600 p-4 rounded-lg">
-                    <h5 className="font-medium text-white mb-2">
-                      Video News & Updates
-                    </h5>
-                    <p className="text-gray-300 text-sm">
-                      Monthly video updates from the board and community
-                      highlights
-                    </p>
-                  </div>
-
-                  <div className="bg-gray-600 p-4 rounded-lg">
-                    <h5 className="font-medium text-white mb-2">
-                      Event Reviews
-                    </h5>
-                    <p className="text-gray-300 text-sm">
-                      Video reviews and photo galleries from recent community
-                      events
-                    </p>
-                  </div>
-
-                  <div className="bg-gray-600 p-4 rounded-lg">
-                    <h5 className="font-medium text-white mb-2">
-                      Educational Content
-                    </h5>
-                    <p className="text-gray-300 text-sm">
-                      Discussions on naturist philosophy, wellness, and
-                      community topics
-                    </p>
-                  </div>
-                </div>
-              </div>
+            <div className="rounded-2xl h-[475px] w-[500px] overflow-hidden">
+              <ImageLoader
+                className="w-full h-full object-cover rounded-2xl"
+                alt="Community Directors"
+                publicId="ncc_001"
+              />
             </div>
           </div>
         </div>

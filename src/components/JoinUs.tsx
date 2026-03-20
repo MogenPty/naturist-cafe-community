@@ -26,7 +26,6 @@ const MembershipForm = () => {
     // Required fields
     firstName: "",
     nickname: "",
-    contactMethod: "email", // 'email' or 'phone'
     email: "",
     phone: "",
     dateOfBirth: "",
@@ -50,21 +49,10 @@ const MembershipForm = () => {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const interestOptions = [
-    "Nature Walks",
-    "Community Markets",
-    "Wellness Workshops",
-    "Social Events",
-    "Educational Sessions",
-    "Work Opportunities",
-    "Board Participation",
-    "Event Organisation",
-  ];
-
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -73,15 +61,6 @@ const MembershipForm = () => {
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
-  };
-
-  const handleInterestChange = (interest: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      interests: prev.interests.includes(interest)
-        ? prev.interests.filter((i) => i !== interest)
-        : [...prev.interests, interest],
-    }));
   };
 
   const handleLocalSubmit = (e: FormEvent) => {
@@ -95,28 +74,6 @@ const MembershipForm = () => {
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-
-    // Required fields validation
-    // if (!formData.firstName.trim())
-    //   newErrors.firstName = "First name is required";
-    // if (!formData.nickname.trim()) newErrors.nickname = "Nickname is required";
-    // if (!formData.dateOfBirth)
-    //   newErrors.dateOfBirth = "Date of birth is required";
-
-    // Contact method validation
-    if (formData.contactMethod === "email") {
-      if (!formData.email.trim()) {
-        newErrors.email = "Email address is required";
-      } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-        newErrors.email = "Please enter a valid email address";
-      }
-    } else {
-      if (!formData.phone.trim()) {
-        newErrors.phone = "Phone number is required";
-      } else if (!/^[\d\s\-+()]+$/.test(formData.phone)) {
-        newErrors.phone = "Please enter a valid phone number";
-      }
-    }
 
     // Age validation
     if (formData.dateOfBirth) {
@@ -140,32 +97,6 @@ const MembershipForm = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
-  if (state.succeeded) {
-    //console.log("Form Data", formData, state);
-    // Reset form
-    // setFormData({
-    //   firstName: "",
-    //   nickname: "",
-    //   contactMethod: "email",
-    //   email: "",
-    //   phone: "",
-    //   dateOfBirth: "",
-    //   lastName: "",
-    //   gender: "",
-    //   city: "",
-    //   province: "",
-    //   emergencyContact: "",
-    //   emergencyPhone: "",
-    //   naturismExperience: "",
-    //   heardAboutUs: "",
-    //   interests: [],
-    //   otherAreasOfInterest: "",
-    //   medicalConditions: "",
-    //   additionalComments: "",
-    // });
-    // return "<p>Thank you for your application! We'll be in touch soon.</p>";
-  }
 
   return (
     <div className="bg-white p-8 rounded-xl shadow-lg">
@@ -213,6 +144,23 @@ const MembershipForm = () => {
 
             <div>
               <label
+                htmlFor="lastName"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Last Name
+              </label>
+              <input
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-nature-500 focus:border-nature-500"
+                placeholder="Your last name"
+              />
+            </div>
+
+            <div>
+              <label
                 htmlFor="nickname"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
@@ -237,147 +185,79 @@ const MembershipForm = () => {
                 errors={state.errors}
               />
             </div>
+            <div>
+              <label
+                htmlFor="dateOfBirth"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Date of Birth *
+              </label>
+              <input
+                type="date"
+                name="dateOfBirth"
+                value={formData.dateOfBirth}
+                onChange={handleInputChange}
+                max={new Date().toISOString().split("T")[0]}
+                title="Date of Birth"
+                aria-label="Date of Birth"
+                placeholder="YYYY-MM-DD"
+                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-nature-500 focus:border-nature-500 ${
+                  state.errors?.getFieldErrors("dateOfBirth")
+                    ? "border-red-300"
+                    : "border-gray-300"
+                }`}
+              />
+              <ValidationError
+                prefix="Date of Birth"
+                field="dateOfBirth"
+                className="text-red-500 text-xs mt-1"
+                errors={state.errors}
+              />
+              {errors.dateOfBirth && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.dateOfBirth}
+                </p>
+              )}
+            </div>
           </div>
 
           <div className="mt-4">
             <label
-              htmlFor="dateOfBirth"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Date of Birth *
-            </label>
-            <input
-              type="date"
-              name="dateOfBirth"
-              value={formData.dateOfBirth}
-              onChange={handleInputChange}
-              max={new Date().toISOString().split("T")[0]}
-              title="Date of Birth"
-              aria-label="Date of Birth"
-              placeholder="YYYY-MM-DD"
-              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-nature-500 focus:border-nature-500 ${
-                state.errors?.getFieldErrors("dateOfBirth")
-                  ? "border-red-300"
-                  : "border-gray-300"
-              }`}
-            />
-            <ValidationError
-              prefix="Date of Birth"
-              field="dateOfBirth"
-              className="text-red-500 text-xs mt-1"
-              errors={state.errors}
-            />
-            {errors.dateOfBirth && (
-              <p className="text-red-500 text-xs mt-1">{errors.dateOfBirth}</p>
-            )}
-          </div>
-
-          <div className="mt-4">
-            <label
-              htmlFor="contactMethod"
+              htmlFor="email"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Preferred Contact Method *
+              Email *
             </label>
-            <div className="flex gap-4 mb-3">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="contactMethod"
-                  value="email"
-                  checked={formData.contactMethod === "email"}
-                  onChange={handleInputChange}
-                  className="mr-2"
-                />
-                Email
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="contactMethod"
-                  value="phone"
-                  checked={formData.contactMethod === "phone"}
-                  onChange={handleInputChange}
-                  className="mr-2"
-                />
-                Phone
-              </label>
-            </div>
 
-            {formData.contactMethod === "email" ? (
-              <div>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-nature-500 focus:border-nature-500 ${
-                    state.errors?.getFieldErrors("email") || errors.phone
-                      ? "border-red-300"
-                      : "border-gray-300"
-                  }`}
-                  placeholder="your.email@example.com"
-                />
-                <ValidationError
-                  prefix="Email"
-                  field="email"
-                  className="text-red-500 text-xs mt-1"
-                  errors={state.errors}
-                />
-                {errors.email && (
-                  <p className="text-red-500 text-xs mt-1">{errors.email}</p>
-                )}
-              </div>
-            ) : (
-              <div>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-nature-500 focus:border-nature-500 ${
-                    errors.phone ? "border-red-300" : "border-gray-300"
-                  }`}
-                  placeholder="+27 XX XXX XXXX"
-                />
-                <ValidationError
-                  prefix="Phone Number"
-                  field="phone"
-                  className="text-red-500 text-xs mt-1"
-                  errors={state.errors}
-                />
-                {errors.phone && (
-                  <p className="text-red-500 text-xs mt-1">{errors.phone}</p>
-                )}
-              </div>
-            )}
+            <div>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-nature-500 focus:border-nature-500 ${
+                  state.errors?.getFieldErrors("email") || errors.phone
+                    ? "border-red-300"
+                    : "border-gray-300"
+                }`}
+                placeholder="your.email@example.com"
+              />
+              <ValidationError
+                prefix="Email"
+                field="email"
+                className="text-red-500 text-xs mt-1"
+                errors={state.errors}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+              )}
+            </div>
           </div>
         </div>
 
         {/* Optional Information */}
         <div>
-          <h4 className="text-lg font-semibold text-gray-800 mb-4 border-b border-gray-200 pb-2">
-            Additional Information (Optional)
-          </h4>
-
           <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <label
-                htmlFor="lastName"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Last Name
-              </label>
-              <input
-                type="text"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-nature-500 focus:border-nature-500"
-                placeholder="Your last name"
-              />
-            </div>
-
             <div>
               <label
                 htmlFor="gender"
@@ -392,11 +272,35 @@ const MembershipForm = () => {
                 title="Gender Identity"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-nature-500 focus:border-nature-500"
               >
-                <option value="">Prefer not to say</option>
+                <option value="">-- Please Select Gender --</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="non-binary">Non-binary</option>
                 <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                htmlFor="naturismExperience"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Naturism Experience
+              </label>
+              <select
+                name="naturismExperience"
+                value={formData.naturismExperience}
+                onChange={handleInputChange}
+                title="Naturism Experience"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-nature-500 focus:border-nature-500"
+              >
+                <option value="">Select your experience level</option>
+                <option value="new-to-naturism">New to naturism</option>
+                <option value="some-experience">Some experience</option>
+                <option value="experienced-naturist">
+                  Experienced naturist
+                </option>
+                <option value="longterm-naturist">Long-term naturist</option>
               </select>
             </div>
 
@@ -444,159 +348,25 @@ const MembershipForm = () => {
               </select>
             </div>
           </div>
-
-          <div className="grid md:grid-cols-2 gap-4 mt-4">
-            <div>
-              <label
-                htmlFor="emergencyContact"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Emergency Contact Name
-              </label>
-              <input
-                type="text"
-                name="emergencyContact"
-                value={formData.emergencyContact}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-nature-500 focus:border-nature-500"
-                placeholder="Full name"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="emergencyPhone"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Emergency Contact Phone
-              </label>
-              <input
-                type="tel"
-                name="emergencyPhone"
-                value={formData.emergencyPhone}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-nature-500 focus:border-nature-500"
-                placeholder="+27 XX XXX XXXX"
-              />
-            </div>
-          </div>
-
-          <div className="mt-4">
-            <label
-              htmlFor="naturismExperience"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Naturism Experience
-            </label>
-            <select
-              name="naturismExperience"
-              value={formData.naturismExperience}
-              onChange={handleInputChange}
-              title="Naturism Experience"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-nature-500 focus:border-nature-500"
-            >
-              <option value="">Select your experience level</option>
-              <option value="new-to-naturism">New to naturism</option>
-              <option value="some-experience">Some experience</option>
-              <option value="experienced-naturist">Experienced naturist</option>
-              <option value="longterm-naturist">Long-term naturist</option>
-            </select>
-          </div>
-
-          <div className="mt-4">
-            <label
-              htmlFor="heardAboutUs"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              How did you hear about us?
-            </label>
-            <input
-              type="text"
-              name="heardAboutUs"
-              value={formData.heardAboutUs}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-nature-500 focus:border-nature-500"
-              placeholder="Website, friend, social media, etc."
-            />
-          </div>
-
-          <div className="mt-4">
-            <label
-              htmlFor="interests"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Areas of Interest (Select all that apply)
-            </label>
-            <div className="grid grid-cols-2 gap-2">
-              {interestOptions.map((interest) => (
-                <label key={interest} className="flex items-center text-sm">
-                  <input
-                    type="checkbox"
-                    name="interests"
-                    value={interest}
-                    title={interest}
-                    aria-label={`Interest: ${interest}`}
-                    checked={formData.interests.includes(interest)}
-                    onChange={() => handleInterestChange(interest)}
-                    className="mr-2"
-                  />
-                  {interest}
-                </label>
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-4">
-            <label
-              htmlFor="otherAreasOfInterest"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Other Areas of Interest
-            </label>
-            <textarea
-              title="OtherAreasOfInterest"
-              name="otherAreasOfInterest"
-              value={formData.otherAreasOfInterest}
-              onChange={handleInputChange}
-              rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-nature-500 focus:border-nature-500"
-              placeholder=""
-            />
-          </div>
-
-          <div className="mt-4">
-            <label
-              htmlFor="additionalComments"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Additional Comments
-            </label>
-            <textarea
-              name="additionalComments"
-              value={formData.additionalComments}
-              onChange={handleInputChange}
-              rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-nature-500 focus:border-nature-500"
-              placeholder="Anything else you'd like us to know..."
-            />
-          </div>
         </div>
 
         {/* Submit Button */}
         <div className="pt-6">
           <button
-            type="submit"
-            disabled={state.submitting}
-            className="w-full btn-primary cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            type="button"
+            disabled={true}
+            className="w-full btn-default text-white bg-gray-600 opacity-50 cursor-not-allowed"
           >
             {state.submitting
               ? "Submitting Application Form..."
-              : "Submit Application Form"}
+              : "Membership Application Coming Soon"}
           </button>
 
           <p className="text-xs text-gray-500 text-center mt-3">
-            By submitting this application form, you agree to abide by our
-            community constitution and guidelines.
+            By submitting this application form, you confirm that you have read
+            and understand the terms of the Constitution of the Naturist Café
+            Community and, furthermore, agree to abide by the terms of the
+            Constitution of the Naturist Café Community.
           </p>
         </div>
       </form>
