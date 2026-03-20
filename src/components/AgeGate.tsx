@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import {
+  detectUserCountry,
+  getRequiredAdultAge,
+} from "../utils/age-restrictions";
 import { calculateAge } from "../utils/age-utils";
 
 const REDIRECT_URL = "https://web.mogen.co.za";
@@ -9,8 +13,16 @@ function AgeGate({ children }: { children: React.ReactNode }) {
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [requiredAge, setRequiredAge] = useState<number>(18);
+  const [detectedCountry, setDetectedCountry] = useState<string>("");
 
   useEffect(() => {
+    // Detect user's location and get required age
+    const country = detectUserCountry();
+    const age = getRequiredAdultAge();
+    setDetectedCountry(country);
+    setRequiredAge(age);
+
     // Check if user has already verified their age in this session
     const sessionVerified = sessionStorage.getItem(SESSION_KEY);
     if (sessionVerified === "true") {
@@ -39,7 +51,7 @@ function AgeGate({ children }: { children: React.ReactNode }) {
 
     const age = calculateAge(birthDate);
 
-    if (age < 18) {
+    if (age < requiredAge) {
       // Redirect minors away
       window.location.href = REDIRECT_URL;
       return;
@@ -116,7 +128,18 @@ function AgeGate({ children }: { children: React.ReactNode }) {
               </svg>
               <div>
                 <p className="text-sm text-amber-700">
-                  You must be over the age of 18 to access this website.
+                  You must be {requiredAge}+ years old to access this website
+                  (based on your location: {detectedCountry || "detecting..."}).
+                  {detectedCountry && requiredAge > 18 && (
+                    <span className="block mt-1">
+                      The legal adult age in your country is {requiredAge}.
+                    </span>
+                  )}
+                  {detectedCountry && requiredAge === 18 && (
+                    <span className="block mt-1">
+                      The legal adult age in your country is {requiredAge}.
+                    </span>
+                  )}
                 </p>
               </div>
             </div>
