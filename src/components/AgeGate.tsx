@@ -62,7 +62,7 @@ function AgeGate({ children }: { children: React.ReactNode }) {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gradient-to-br from-nature-50 to-earth-50">
+      <div className="flex items-center justify-center h-screen bg-gradient-to-br from-sky-100 to-amber-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-nature-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading...</p>
@@ -73,7 +73,7 @@ function AgeGate({ children }: { children: React.ReactNode }) {
 
   if (!verified) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-nature-50 to-earth-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-sky-100 to-amber-50 flex items-center justify-center p-4">
         <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
           {/* Header */}
           <div className="text-center mb-8">
@@ -123,7 +123,8 @@ function AgeGate({ children }: { children: React.ReactNode }) {
               <div>
                 <p className="text-sm text-amber-700">
                   To access this website, you must be over the age of 18 and of
-                  adult age within your country or state.
+                  adult age within the country or state from which you're
+                  accessing our website.
                 </p>
               </div>
             </div>
