@@ -1,3 +1,4 @@
+import { FileText, Download, Heart } from "lucide-react";
 import { ImageLoader } from "./ImageLoader";
 
 const Constitution = () => {
@@ -17,18 +18,7 @@ const Constitution = () => {
           <div className="relative bg-gradient-to-br from-nature-50 to-earth-50 rounded-2xl border border-gray-200 p-8 shadow-lg">
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full shadow-md mb-6">
-                <svg
-                  className="w-10 h-10 text-nature-600"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <title>Constitution and Guidelines Icon</title>
-                  <path
-                    fillRule="evenodd"
-                    d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                <FileText className="w-10 h-10 text-nature-600" />
               </div>
 
               <h3 className="text-2xl font-bold text-gray-800 mb-4">
@@ -48,20 +38,7 @@ const Constitution = () => {
                   onClick={handleDownload}
                   className="inline-flex items-center gap-2 px-6 py-3 bg-earth-600 text-white rounded-xl font-semibold hover:bg-earth-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                 >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <title>Download PDF Icon</title>
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                    />
-                  </svg>
+                  <Download className="w-5 h-5" />
                   Download PDF
                 </button>
               </div>
@@ -72,20 +49,7 @@ const Constitution = () => {
           <div className="grid md:grid-cols-3 gap-8 mt-12 items-stretch">
             <div className="bg-nature-100 p-8 rounded-xl border border-nature-200 shadow-sm md:col-span-1">
               <div className="w-12 h-12 bg-nature-500 rounded-full flex items-center justify-center mb-4">
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <title>Constitution Icon</title>
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
-                </svg>
+                <Heart className="w-6 h-6 text-white fill-current" />
               </div>
               <h4 className="text-xl font-semibold text-nature-800 mb-3">
                 Our Values
