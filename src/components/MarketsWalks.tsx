@@ -1,3 +1,4 @@
+import { CalendarIcon } from "lucide-react";
 import MarketIcon from "../assets/market.svg";
 import WalkIcon from "../assets/walk.svg";
 import WorkshopIcon from "../assets/workshop.svg";
@@ -93,7 +94,7 @@ const MarketsWalks = () => {
     startDate: string,
     endDate: string,
     startTime: string,
-    endTime: string
+    endTime: string,
   ) => {
     const start = new Date(startDate);
     const end = new Date(endDate);
@@ -156,20 +157,7 @@ const MarketsWalks = () => {
 
             <div className="hidden">
               <div className="text-center p-8">
-                <svg
-                  className="icon-xl mx-auto mb-4 text-nature-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <title>Events</title>
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
+                <CalendarIcon className="icon-xl mx-auto mb-4 text-nature-400" />
                 <h3 className="text-2xl font-semibold text-gray-800 mb-3">
                   Events Calendar
                 </h3>
@@ -185,14 +173,14 @@ const MarketsWalks = () => {
                         event.startDate,
                         event.endDate,
                         event.startTime,
-                        event.endTime
+                        event.endTime,
                       );
 
                       return (
                         <div
                           key={event.id}
                           className={`p-3 rounded-lg border-2 ${getUrgencyStyle(
-                            event.startDate
+                            event.startDate,
                           )} transition-all hover:shadow-sm`}
                         >
                           <div className="flex items-start justify-between gap-3">
@@ -200,14 +188,14 @@ const MarketsWalks = () => {
                               <div className="flex items-center gap-2 mb-1">
                                 <span
                                   className={`px-2 py-1 rounded-full text-xs font-medium ${getEventTypeStyle(
-                                    event.type
+                                    event.type,
                                   )}`}
                                 >
                                   {event.type === "walk"
                                     ? "Walk"
                                     : event.type === "market"
-                                    ? "Market"
-                                    : "Workshop"}
+                                      ? "Market"
+                                      : "Workshop"}
                                 </span>
                               </div>
                               <h5 className="font-medium text-gray-900 text-sm truncate">

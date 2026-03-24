@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { Download, X, AlertTriangle, ChevronLeft, ChevronRight } from "lucide-react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
@@ -72,20 +73,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
               className="p-2 bg-blue-600 text-white hover:bg-blue-700 rounded-lg transition-colors"
               title="Download PDF"
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <title>Download PDF Icon</title>
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
-              </svg>
+              <Download className="w-5 h-5" />
             </button>
             <button
               type="button"
@@ -93,20 +81,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
               className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
               title="Close"
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <title>Close Icon</title>
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              <X className="w-6 h-6" />
             </button>
           </div>
         </div>
@@ -116,20 +91,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
           {error ? (
             <div className="flex-1 flex items-center justify-center">
               <div className="text-center p-8">
-                <svg
-                  className="w-16 h-16 text-red-400 mx-auto mb-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <title>Download Error Icon</title>
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
-                  />
-                </svg>
+                <AlertTriangle className="w-16 h-16 text-red-400 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-gray-800 mb-2">
                   PDF Load Error
                 </h3>
@@ -181,20 +143,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
                       disabled={pageNumber <= 1}
                       className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <title>Previous Icon</title>
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M15 19l-7-7 7-7"
-                        />
-                      </svg>
+                      <ChevronLeft className="w-4 h-4" />
                       <span className="hidden md:inline">Previous</span>
                     </button>
                   ) : (
@@ -238,20 +187,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
                       className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
                       <span className="hidden md:inline">Next</span>
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <title>Next Icon</title>
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
+                      <ChevronRight className="w-4 h-4" />
                     </button>
                   ) : (
                     <div className="inline-flex items-center gap-2 px-4 py-2 w-12 md:w-30"></div>

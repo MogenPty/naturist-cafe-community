@@ -1,3 +1,4 @@
+import { LockIcon, LogIn, Mail, User } from "lucide-react";
 import { useState } from "react";
 import { ImageLoader } from "./ImageLoader";
 
@@ -13,7 +14,7 @@ const Login = () => {
 
   return (
     <section
-      id={"login-section"}
+      id={"login"}
       className="section-padding bg-gray-900 text-white relative overflow-hidden z-content"
     >
       {/* Background decoration */}
@@ -42,20 +43,7 @@ const Login = () => {
             <div className="modern-form-container max-w-md mx-auto">
               <div className="text-center mb-6">
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-100 to-green-100 rounded-lg mb-3">
-                  <svg
-                    className="w-6 h-6 text-blue-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <title>Form Icon</title>
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
-                  </svg>
+                  <User className="w-6 h-6 text-blue-600" />
                 </div>
                 <h3 className="text-xl font-serif font-bold text-gray-900 mb-1">
                   Welcome Back
@@ -75,20 +63,7 @@ const Login = () => {
                     Email Address
                   </label>
                   <div className="modern-input-group">
-                    <svg
-                      className="modern-input-icon"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <title>Email Input Icon</title>
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                      />
-                    </svg>
+                    <Mail className="modern-input-icon" />
                     <input
                       type="email"
                       id={`email`}
@@ -109,20 +84,7 @@ const Login = () => {
                     Password
                   </label>
                   <div className="modern-input-group">
-                    <svg
-                      className="modern-input-icon"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <title>Password Input Icon</title>
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                      />
-                    </svg>
+                    <LockIcon className="modern-input-icon" />
                     <input
                       type="password"
                       id={`password`}
@@ -160,20 +122,7 @@ const Login = () => {
                   className="modern-button cursor-not-allowed"
                 >
                   <span className="relative flex items-center justify-center gap-2">
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <title>Sign In to Community Icon</title>
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
-                      />
-                    </svg>
+                    <LogIn className="w-5 h-5" />
                     Sign In to Community
                   </span>
                 </button>
