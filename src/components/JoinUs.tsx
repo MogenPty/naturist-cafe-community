@@ -365,9 +365,9 @@ const MembershipForm = () => {
           <p className="text-xs text-gray-500 text-center mt-3">
             By submitting this application form, you (a) confirm that the
             accuracy of your details provided, (b) confirm that you have read
-            and understood the terms of the Constitution of the Naturist Cafe
+            and understood the terms of the Constitution of the Naturist Café
             Community, and (c) agree to abide by the terms of the Constitution
-            of the Naturist Cafe Community.
+            of the Naturist Café Community.
           </p>
         </div>
       </form>
