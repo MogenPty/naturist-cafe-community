@@ -96,7 +96,7 @@ const Constitution = () => {
                 <li>Non-judgmentalism</li>
                 <li>Non-discrimination</li>
                 <li>Non-racialism</li>
-                <li>Non-sexualism</li>
+                <li>Non-sexual</li>
                 <li>Family-friendliness</li>
                 <li>Peace</li>
                 <li>Safety</li>

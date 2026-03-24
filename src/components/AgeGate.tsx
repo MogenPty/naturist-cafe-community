@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getRequiredAdultAge } from "../utils/age-restrictions";
 import { calculateAge } from "../utils/age-utils";
 
 const REDIRECT_URL = "https://web.mogen.co.za";
@@ -9,8 +10,13 @@ function AgeGate({ children }: { children: React.ReactNode }) {
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [requiredAge, setRequiredAge] = useState<number>(18);
 
   useEffect(() => {
+    // Detect user's location and get required age automatically
+    const age = getRequiredAdultAge();
+    setRequiredAge(age);
+
     // Check if user has already verified their age in this session
     const sessionVerified = sessionStorage.getItem(SESSION_KEY);
     if (sessionVerified === "true") {
@@ -39,7 +45,7 @@ function AgeGate({ children }: { children: React.ReactNode }) {
 
     const age = calculateAge(birthDate);
 
-    if (age < 18) {
+    if (age < requiredAge) {
       // Redirect minors away
       window.location.href = REDIRECT_URL;
       return;
@@ -116,7 +122,8 @@ function AgeGate({ children }: { children: React.ReactNode }) {
               </svg>
               <div>
                 <p className="text-sm text-amber-700">
-                  You must be over the age of 18 to access this website.
+                  To access this website, you must be over the age of 18 and of
+                  adult age within your country or state.
                 </p>
               </div>
             </div>
