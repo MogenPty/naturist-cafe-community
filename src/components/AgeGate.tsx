@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  detectUserCountry,
-  getRequiredAdultAge,
-} from "../utils/age-restrictions";
+import { getRequiredAdultAge } from "../utils/age-restrictions";
 import { calculateAge } from "../utils/age-utils";
 
 const REDIRECT_URL = "https://web.mogen.co.za";
@@ -14,13 +11,10 @@ function AgeGate({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [requiredAge, setRequiredAge] = useState<number>(18);
-  const [detectedCountry, setDetectedCountry] = useState<string>("");
 
   useEffect(() => {
-    // Detect user's location and get required age
-    const country = detectUserCountry();
+    // Detect user's location and get required age automatically
     const age = getRequiredAdultAge();
-    setDetectedCountry(country);
     setRequiredAge(age);
 
     // Check if user has already verified their age in this session
@@ -128,18 +122,8 @@ function AgeGate({ children }: { children: React.ReactNode }) {
               </svg>
               <div>
                 <p className="text-sm text-amber-700">
-                  You must be {requiredAge}+ years old to access this website
-                  (based on your location: {detectedCountry || "detecting..."}).
-                  {detectedCountry && requiredAge > 18 && (
-                    <span className="block mt-1">
-                      The legal adult age in your country is {requiredAge}.
-                    </span>
-                  )}
-                  {detectedCountry && requiredAge === 18 && (
-                    <span className="block mt-1">
-                      The legal adult age in your country is {requiredAge}.
-                    </span>
-                  )}
+                  To access this website, you must be over the age of 18 and of
+                  adult age within your country or state.
                 </p>
               </div>
             </div>

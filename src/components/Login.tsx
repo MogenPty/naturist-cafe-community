@@ -183,7 +183,7 @@ const Login = () => {
               <ImageLoader
                 className="w-full h-full object-cover rounded-2xl"
                 alt="Community Directors"
-                publicId="ncc_001"
+                publicId="ncc_004"
               />
             </div>
           </div>
