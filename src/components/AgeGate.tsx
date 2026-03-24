@@ -123,7 +123,8 @@ function AgeGate({ children }: { children: React.ReactNode }) {
               <div>
                 <p className="text-sm text-amber-700">
                   To access this website, you must be over the age of 18 and of
-                  adult age within your country or state.
+                  adult age within the country or state from which you're
+                  accessing our website.
                 </p>
               </div>
             </div>
