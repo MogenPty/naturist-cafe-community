@@ -4,6 +4,12 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  safelist: [
+    'from-nature-50',
+    'to-nature-50',
+    'from-earth-50',
+    'to-earth-50',
+  ],
   theme: {
     extend: {
       colors: {
