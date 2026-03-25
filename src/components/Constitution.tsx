@@ -1,4 +1,4 @@
-import { FileText, Download, Heart } from "lucide-react";
+import { Download, FileText, Heart } from "lucide-react";
 import { ImageLoader } from "./ImageLoader";
 
 const Constitution = () => {
@@ -61,7 +61,7 @@ const Constitution = () => {
                 <li>Non-discrimination</li>
                 <li>Non-racialism</li>
                 <li>Non-sexual</li>
-                <li>Family-friendliness</li>
+                <li>Family-friendly</li>
                 <li>Peace</li>
                 <li>Safety</li>
                 <li>Respect for nature</li>

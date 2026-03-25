@@ -38,9 +38,9 @@ const Login = () => {
         </div>
 
         <div className="max-w-5xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-8 items-start">
+          <div className="grid lg:grid-cols-3 md:grid-cols-5 gap-8 md:gap-4 items-stretch">
             {/* Login Form */}
-            <div className="modern-form-container max-w-md mx-auto">
+            <div className="modern-form-container col-span-1 lg:col-span-1 md:col-span-2 max-w-md mx-auto">
               <div className="text-center mb-6">
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-100 to-green-100 rounded-lg mb-3">
                   <User className="w-6 h-6 text-blue-600" />
@@ -128,11 +128,13 @@ const Login = () => {
                 </button>
               </form>
             </div>
-            <div className="rounded-2xl h-[475px] w-[500px] overflow-hidden">
+            <div className="lg:col-span-2 md:col-span-3 overflow-hidden">
               <ImageLoader
                 className="w-full h-full object-cover rounded-2xl"
                 alt="Community Directors"
-                publicId="ncc_004"
+                publicId="ncc_005"
+                aspectRatio="4:3"
+                width={800}
               />
             </div>
           </div>
