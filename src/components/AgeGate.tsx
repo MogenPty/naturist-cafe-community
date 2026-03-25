@@ -92,11 +92,11 @@ function AgeGate({ children }: { children: React.ReactNode }) {
           </div>
 
           {/* Warning Notice */}
-          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-6">
             <div className="flex items-start">
               <AlertTriangle className="w-8 h-8 text-amber-600 mt-0.5 mr-3 flex-shrink-0" />
               <div>
-                <p className="text-xs text-amber-700">
+                <p className="text-sm text-amber-700">
                   To access this website, you must be over the age of 18 and of
                   adult age within the country or state from which you're
                   accessing our website.
