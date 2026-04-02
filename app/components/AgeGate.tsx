@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { Lock, AlertTriangle } from "lucide-react";
 import { getRequiredAdultAge } from "../utils/age-restrictions";

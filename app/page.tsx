@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import Board from "./components/Board";
 import Constitution from "./components/Constitution";

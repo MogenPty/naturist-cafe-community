@@ -27,6 +27,6 @@
     "forceConsistentCasingInFileNames": true
   },
   "include": [
-    "src"
+    "app"
   ]
 }

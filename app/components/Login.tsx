@@ -1,3 +1,5 @@
+"use client";
+
 import { LockIcon, LogIn, Mail, User } from "lucide-react";
 import { useState } from "react";
 import { ImageLoader } from "./ImageLoader";

@@ -1,3 +1,5 @@
+"use client";
+
 import { Download, FileText, Heart } from "lucide-react";
 import { ImageLoader } from "./ImageLoader";
 

@@ -1,7 +1,4 @@
 import { CalendarIcon } from "lucide-react";
-import MarketIcon from "../assets/market.svg";
-import WalkIcon from "../assets/walk.svg";
-import WorkshopIcon from "../assets/workshop.svg";
 import Calendar from "./Calendar";
 
 const MarketsWalks = () => {
@@ -247,7 +244,7 @@ const MarketsWalks = () => {
             <div className="bg-nature-100 p-8 rounded-xl text-center shadow-sm border border-nature-200">
               <div className="w-16 h-16 bg-nature-500 rounded-full flex items-center justify-center mx-auto mb-6">
                 <img
-                  src={WalkIcon}
+                  src="/assets/walk.svg"
                   alt="Walking people"
                   className="w-8 h-8 filter brightness-0 invert"
                 />
@@ -264,7 +261,7 @@ const MarketsWalks = () => {
             <div className="bg-earth-100 p-8 rounded-xl text-center shadow-sm border border-earth-200">
               <div className="w-16 h-16 bg-earth-500 rounded-full flex items-center justify-center mx-auto mb-6">
                 <img
-                  src={MarketIcon}
+                  src="/assets/market3.svg"
                   alt="Market basket"
                   className="w-8 h-8 filter brightness-0 invert"
                 />
@@ -281,7 +278,7 @@ const MarketsWalks = () => {
             <div className="bg-gray-100 p-8 rounded-xl text-center shadow-sm border border-gray-200">
               <div className="w-16 h-16 bg-gray-500 rounded-full flex items-center justify-center mx-auto mb-6">
                 <img
-                  src={WorkshopIcon}
+                  src="/assets/workshop.svg"
                   alt="Workshop tools"
                   className="w-8 h-8 filter brightness-0 invert"
                 />

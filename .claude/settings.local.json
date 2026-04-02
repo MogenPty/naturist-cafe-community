@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(npm list:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(find . -maxdepth 2 -name next.config.* -o -name next-env.d.ts -o -name app -type d -o -name pages -type d)"
     ]
   }
 }

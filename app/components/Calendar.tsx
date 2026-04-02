@@ -6,8 +6,6 @@ import { parse } from "date-fns/parse";
 import { startOfWeek } from "date-fns/startOfWeek";
 import { Calendar, dateFnsLocalizer, Views } from "react-big-calendar";
 
-import "react-big-calendar/lib/css/react-big-calendar.css";
-
 const locales = {
   "en-ZA": enZA,
 };

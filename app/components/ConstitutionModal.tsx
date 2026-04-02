@@ -1,5 +1,13 @@
+"use client";
+
+import {
+  AlertTriangle,
+  ChevronLeft,
+  ChevronRight,
+  Download,
+  X,
+} from "lucide-react";
 import { useCallback, useState } from "react";
-import { Download, X, AlertTriangle, ChevronLeft, ChevronRight } from "lucide-react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
@@ -25,7 +33,7 @@ const ConstitutionModal = ({ isOpen, onClose }: ConstitutionModalProps) => {
       setLoading(false);
       setError(null);
     },
-    []
+    [],
   );
 
   const onDocumentLoadError = useCallback((error: Error) => {

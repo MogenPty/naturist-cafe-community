@@ -1,3 +1,5 @@
+"use client";
+
 import { Users, BookOpen, ShieldCheck, Globe } from "lucide-react";
 
 const Join = () => {
