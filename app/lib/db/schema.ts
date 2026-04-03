@@ -7,11 +7,7 @@ import {
   timestamp,
   uuid,
 } from "drizzle-orm/pg-core";
-import {
-  createInsertSchema,
-  createSelectSchema,
-  createUpdateSchema,
-} from "drizzle-zod";
+import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
 import type { z } from "zod";
 
 // Events table
@@ -78,17 +74,6 @@ export const users = pgTable("users", {
 // For now, we'll skip the foreign key constraint and just store the UUID
 // The actual user record lives in neon_auth.users
 
-export const selectEventSchema = createSelectSchema(events).pick({
-  id: true,
-  title: true,
-  type: true,
-  startDate: true,
-  endDate: true,
-  startTime: true,
-  endTime: true,
-  location: true,
-});
-
 // Zod schemas for validation
 export const insertEventSchema = createInsertSchema(events).pick({
   id: true,
@@ -116,18 +101,6 @@ export const updateEventSchema = createUpdateSchema(events).pick({
   // recurring: true,
   // recurringPattern: true,
   updatedAt: true,
-});
-
-export const selectBoardMemberSchema = createSelectSchema(boardMembers).pick({
-  name: true,
-  nickname: true,
-  role: true,
-  sortId: true,
-  yearsInNaturism: true,
-  otherOrganizations: true,
-  communityCouncil: true,
-  active: true,
-  profileImageUrl: true,
 });
 
 export const insertBoardMemberSchema = createInsertSchema(boardMembers).pick({

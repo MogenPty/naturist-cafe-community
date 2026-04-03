@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning data-qb-installed="true">
+    <html lang="en" suppressHydrationWarning>
       <body>
         <AgeGate>{children}</AgeGate>
       </body>

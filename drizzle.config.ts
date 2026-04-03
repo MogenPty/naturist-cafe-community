@@ -1,7 +1,7 @@
 import { defineConfig } from "drizzle-kit";
 import dotenv from "dotenv";
 
-// Load .env.local
+// Load .env
 dotenv.config({ path: ".env" });
 
 export default defineConfig({

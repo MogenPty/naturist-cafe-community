@@ -16,8 +16,8 @@ export const setCookie = (name: string, value: string, hours: number) => {
   const expires = new Date();
   expires.setTime(expires.getTime() + hours * 60 * 60 * 1000);
   document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(
-    value
-  )};expires=${expires.toUTCString()};path=/`;
+    value,
+  )};expires=${expires.toUTCString()};path=/;Secure;SameSite=Strict`;
 };
 
 export const getCookie = (name: string): string | null => {

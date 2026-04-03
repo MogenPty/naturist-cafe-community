@@ -17,7 +17,7 @@ export async function getAllEvents() {
 export async function getUpcomingEvents() {
   const now = new Date();
   return db
-    .select({ ...schema.selectEventSchema.array })
+    .select()
     .from(schema.events)
     .where(gte(schema.events.startDate, now))
     .orderBy(asc(schema.events.startDate));
@@ -65,7 +65,7 @@ export async function getEventsByType(type: "walk" | "market" | "workshop") {
  */
 export async function getAllBoardMembers() {
   return db
-    .select({ ...schema.selectBoardMemberSchema.array })
+    .select()
     .from(schema.boardMembers)
     .orderBy(asc(schema.boardMembers.sortId));
 }
@@ -86,7 +86,7 @@ export async function getActiveBoardMembers(): Promise<schema.BoardMember[]> {
  */
 export async function getBoardMemberById(id: string) {
   return db
-    .select({ ...schema.selectBoardMemberSchema.array })
+    .select()
     .from(schema.boardMembers)
     .where(eq(schema.boardMembers.id, id))
     .limit(1)
@@ -130,7 +130,6 @@ export async function isAdmin(userId: string) {
  * Get all admins with user details
  */
 export async function getAllAdmins() {
-  // return db.select().from(schema.admins).orderBy(desc(schema.admins.createdAt));
   return db
     .select()
     .from(schema.admins)

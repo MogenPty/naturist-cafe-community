@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
-import { createEvent, updateEvent } from "@/lib/db/actions";
 import { useRouter } from "next/navigation";
-import { Event } from "@/lib/db/schema";
+import { useState } from "react";
+import { createEvent, updateEvent } from "../../lib/db/actions";
+import type { Event } from "../../lib/db/schema";
 
 interface EventFormProps {
   event?: Event | null;
@@ -31,7 +31,6 @@ export default function EventForm({ event }: EventFormProps) {
       setSuccess(true);
       setTimeout(() => {
         router.push("/admin/events");
-        router.refresh();
       }, 1500);
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -65,7 +64,8 @@ export default function EventForm({ event }: EventFormProps) {
       {success && (
         <div className="rounded-md bg-green-50 p-4">
           <p className="text-sm text-green-800">
-            Event {isEditing ? "updated" : "created"} successfully! Redirecting...
+            Event {isEditing ? "updated" : "created"} successfully!
+            Redirecting...
           </p>
         </div>
       )}
@@ -73,13 +73,16 @@ export default function EventForm({ event }: EventFormProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Title */}
         <div className="md:col-span-2">
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="title"
+            className="block text-sm font-medium text-gray-700"
+          >
             Event Title *
           </label>
           <input
             type="text"
             name="title"
-            id="title"
+            id={`title`}
             required
             defaultValue={event?.title || ""}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-nature-500 focus:border-nature-500 focus:outline-none"
@@ -89,12 +92,15 @@ export default function EventForm({ event }: EventFormProps) {
 
         {/* Type */}
         <div>
-          <label htmlFor="type" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="type"
+            className="block text-sm font-medium text-gray-700"
+          >
             Event Type *
           </label>
           <select
             name="type"
-            id="type"
+            id={"type"}
             required
             defaultValue={event?.type || ""}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-nature-500 focus:border-nature-500 focus:outline-none"
@@ -108,13 +114,16 @@ export default function EventForm({ event }: EventFormProps) {
 
         {/* Location */}
         <div>
-          <label htmlFor="location" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="location"
+            className="block text-sm font-medium text-gray-700"
+          >
             Location *
           </label>
           <input
             type="text"
             name="location"
-            id="location"
+            id={"location"}
             required
             defaultValue={event?.location || ""}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-nature-500 focus:border-nature-500 focus:outline-none"
@@ -124,13 +133,16 @@ export default function EventForm({ event }: EventFormProps) {
 
         {/* Start Date & Time */}
         <div>
-          <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="startDate"
+            className="block text-sm font-medium text-gray-700"
+          >
             Start Date & Time *
           </label>
           <input
             type="datetime-local"
             name="startDate"
-            id="startDate"
+            id={"startDate"}
             required
             defaultValue={formatDateTimeForInput(event?.startDate)}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-nature-500 focus:border-nature-500 focus:outline-none"
@@ -139,13 +151,16 @@ export default function EventForm({ event }: EventFormProps) {
 
         {/* End Date & Time */}
         <div>
-          <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="endDate"
+            className="block text-sm font-medium text-gray-700"
+          >
             End Date & Time *
           </label>
           <input
             type="datetime-local"
             name="endDate"
-            id="endDate"
+            id={"endDate"}
             required
             defaultValue={formatDateTimeForInput(event?.endDate)}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-nature-500 focus:border-nature-500 focus:outline-none"
@@ -157,23 +172,29 @@ export default function EventForm({ event }: EventFormProps) {
           <input
             type="checkbox"
             name="recurring"
-            id="recurring"
+            id={"recurring"}
             defaultChecked={event?.recurring || false}
             className="h-4 w-4 text-nature-600 focus:ring-nature-500 border-gray-300 rounded"
           />
-          <label htmlFor="recurring" className="ml-2 block text-sm text-gray-900">
+          <label
+            htmlFor="recurring"
+            className="ml-2 block text-sm text-gray-900"
+          >
             Recurring Event
           </label>
         </div>
 
         {/* Description */}
         <div className="md:col-span-2">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700"
+          >
             Description
           </label>
           <textarea
             name="description"
-            id="description"
+            id={"description"}
             rows={4}
             defaultValue={event?.description || ""}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-nature-500 focus:border-nature-500 focus:outline-none"
@@ -194,7 +215,13 @@ export default function EventForm({ event }: EventFormProps) {
           disabled={loading || success}
           className="px-4 py-2 bg-nature-600 text-white rounded-md hover:bg-nature-700 font-medium disabled:opacity-50"
         >
-          {loading ? (isEditing ? "Updating..." : "Creating...") : isEditing ? "Update Event" : "Create Event"}
+          {loading
+            ? isEditing
+              ? "Updating..."
+              : "Creating..."
+            : isEditing
+              ? "Update Event"
+              : "Create Event"}
         </button>
       </div>
     </form>
