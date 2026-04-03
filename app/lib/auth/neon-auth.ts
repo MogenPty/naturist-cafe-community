@@ -16,7 +16,7 @@ export async function signIn(
   email: string,
   password: string,
 ): Promise<Session> {
-  "use server";
+  // "use server";
   const { cookies } = await import("next/headers");
 
   // Find user by email
@@ -64,7 +64,7 @@ export async function signIn(
 
 // Server action: Sign out
 export async function signOut(): Promise<void> {
-  "use server";
+  // "use server";
   const { cookies } = await import("next/headers");
   const cookieStore = await cookies();
   cookieStore.delete("session");
@@ -72,7 +72,7 @@ export async function signOut(): Promise<void> {
 
 // Server action: Get current session
 export async function getSession(): Promise<Session | null> {
-  "use server";
+  // "use server";
   const { cookies } = await import("next/headers");
   const cookieStore = await cookies();
   const sessionCookie = cookieStore.get("session");
@@ -93,7 +93,7 @@ export async function getSession(): Promise<Session | null> {
 
 // Server action: Get current user
 export async function getUser(): Promise<Session["user"] | null> {
-  "use server";
+  // "use server";
   const session = await getSession();
   return session?.user ?? null;
 }
@@ -108,7 +108,7 @@ export const neonAuth = {
 
 // Server action: Require admin access
 export async function requireAdmin() {
-  "use server";
+  // "use server";
   const session = await neonAuth.getSession();
 
   if (!session?.user) {
@@ -135,7 +135,7 @@ export async function promoteToAdmin(
   userId: string,
   role: "admin" | "editor" = "editor",
 ) {
-  "use server";
+  // "use server";
   const { user, role: currentRole } = await requireAdmin();
 
   // Only superadmin can promote others
@@ -167,7 +167,7 @@ export async function promoteToAdmin(
 
 // Server action: Demote admin (remove from admins table)
 export async function demoteAdmin(userId: string) {
-  "use server";
+  // "use server";
   const { role: currentRole } = await requireAdmin();
 
   // Only superadmin can demote

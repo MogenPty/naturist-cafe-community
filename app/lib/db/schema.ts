@@ -1,14 +1,44 @@
+import { sql } from "drizzle-orm";
 import {
   boolean,
   integer,
   jsonb,
+  pgSchema,
   pgTable,
   text,
   timestamp,
+  unique,
   uuid,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
 import type { z } from "zod";
+
+/**
+ * Neon Auth Schema (Managed)
+ */
+export const neonAuth = pgSchema("neon_auth");
+
+export const userInNeonAuth = neonAuth.table(
+  "user",
+  {
+    id: uuid().defaultRandom().primaryKey().notNull(),
+    name: text().notNull(),
+    email: text().notNull(),
+    emailVerified: boolean().notNull(),
+    image: text(),
+    createdAt: timestamp({ withTimezone: true, mode: "string" })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp({ withTimezone: true, mode: "string" })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    role: text(),
+    banned: boolean(),
+    banReason: text(),
+    banExpires: timestamp({ withTimezone: true, mode: "string" }),
+  },
+  (table) => [unique("user_email_key").on(table.email)],
+);
 
 // Events table
 export const events = pgTable("events", {

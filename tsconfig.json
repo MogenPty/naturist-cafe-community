@@ -5,8 +5,11 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["app/*"]
-    }
+      "@/*": [
+        "./app/*"
+      ]
+    },
+    "target": "ES2017"
   },
   "references": [
     {
