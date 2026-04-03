@@ -1,60 +1,12 @@
 import { CalendarIcon } from "lucide-react";
-import Calendar from "./Calendar";
+// import MarketIcon from "../assets/market.svg";
+// import WalkIcon from "../assets/walk.svg";
+// import WorkshopIcon from "../assets/workshop.svg";
+import { getUpcomingEvents } from "../lib/db/queries";
+// import type { Event } from "../lib/db/schema";
 
-const MarketsWalks = () => {
-  // Sample events data with dates and types
-  const upcomingEvents = [
-    {
-      id: 1,
-      title: "Weekend Nature Walk",
-      type: "walk",
-      startDate: "2025-09-28",
-      endDate: "2025-09-28",
-      startTime: "09:00",
-      endTime: "12:00",
-      location: "Botanical Gardens",
-    },
-    {
-      id: 2,
-      title: "Community Market Day",
-      type: "market",
-      startDate: "2025-10-05",
-      endDate: "2025-10-05",
-      startTime: "08:00",
-      endTime: "16:00",
-      location: "Community Center",
-    },
-    {
-      id: 3,
-      title: "Wellness Workshop",
-      type: "workshop",
-      startDate: "2025-10-12",
-      endDate: "2025-10-12",
-      startTime: "14:00",
-      endTime: "17:00",
-      location: "NCC Hall",
-    },
-    {
-      id: 4,
-      title: "Weekend Nature Camp",
-      type: "walk",
-      startDate: "2025-10-20",
-      endDate: "2025-10-22",
-      startTime: "17:00",
-      endTime: "14:00",
-      location: "Mountain Resort",
-    },
-    {
-      id: 5,
-      title: "Mindfulness Session",
-      type: "workshop",
-      startDate: "2025-11-15",
-      endDate: "2025-11-15",
-      startTime: "10:00",
-      endTime: "12:00",
-      location: "NCC Hall",
-    },
-  ];
+const MarketsWalks = async () => {
+  const upcomingEvents = await getUpcomingEvents();
 
   // Function to get event type styling
   const getEventTypeStyle = (type: string) => {
@@ -71,7 +23,7 @@ const MarketsWalks = () => {
   };
 
   // Function to get urgency styling based on proximity to current date
-  const getUrgencyStyle = (startDate: string) => {
+  const getUrgencyStyle = (startDate: Date) => {
     const today = new Date();
     const eventDate = new Date(startDate);
     const diffTime = eventDate.getTime() - today.getTime();
@@ -88,10 +40,10 @@ const MarketsWalks = () => {
 
   // Function to format date range
   const formatDateRange = (
-    startDate: string,
-    endDate: string,
-    startTime: string,
-    endTime: string,
+    startDate: Date,
+    endDate: Date,
+    startTime: Date | null | undefined,
+    endTime: Date | null | undefined,
   ) => {
     const start = new Date(startDate);
     const end = new Date(endDate);
@@ -102,20 +54,34 @@ const MarketsWalks = () => {
       weekday: "short",
     };
 
-    if (startDate === endDate) {
+    const startDateText = start.toLocaleDateString("en-US", formatOptions);
+    const endDateText = end.toLocaleDateString("en-US", formatOptions);
+
+    // Format times if available
+    const formatTime = (time: Date | null | undefined) => {
+      if (!time) return "";
+      return time.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    };
+
+    const startTimeStr = formatTime(startTime);
+    const endTimeStr = formatTime(endTime);
+
+    if (start.toDateString() === end.toDateString()) {
       // Single day event
       return {
-        dateText: start.toLocaleDateString("en-US", formatOptions),
-        timeText: `${startTime} - ${endTime}`,
+        dateText: startDateText,
+        timeText:
+          startTimeStr && endTimeStr ? `${startTimeStr} - ${endTimeStr}` : "",
       };
     } else {
-      // Multi-day event - show full start date/time to end date/time
-      const startDateText = start.toLocaleDateString("en-US", formatOptions);
-      const endDateText = end.toLocaleDateString("en-US", formatOptions);
-
+      // Multi-day event
       return {
-        dateText: `${startDateText} ${startTime} - ${endDateText} ${endTime}`,
-        timeText: "", // Empty since time is included in dateText for multi-day events
+        dateText:
+          `${startDateText} ${startTimeStr} - ${endDateText} ${endTimeStr}`.trim(),
+        timeText: "",
       };
     }
   };
@@ -128,7 +94,7 @@ const MarketsWalks = () => {
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-5 z-background">
         <div className="absolute top-10 left-10 w-32 h-32 bg-nature-300 rounded-full"></div>
-        <div className="absolute bottom-10 right-10 w-48 h-48 bg-earth-300 rounded-full"></div>
+        <div className="absolute bottom-10 right-0 w-48 h-48 bg-earth-300 rounded-full"></div>
       </div>
 
       <div className="container-custom relative">
@@ -140,31 +106,25 @@ const MarketsWalks = () => {
           {/* Preamble Quote */}
           <blockquote className="text-lg md:text-xl italic text-nature-700 max-w-4xl mx-auto mb-8 leading-relaxed">
             "our culture is based on going naked in order to delight in the
-            wellness that comes with being in one's natural state, socially or
-            individually, outdoors or indoors, without shame or fear;"
+            wellness that comes with being in one&apos;s natural state, socially
+            or individually, outdoors or indoors, without shame or fear;"
           </blockquote>
         </div>
 
         <div className="max-w-6xl mx-auto">
-          {/* Calendar Container */}
-          <div className="relative bg-white rounded-xl shadow-lg min-h-[600px] border border-gray-200 overflow-hidden">
-            {/* Coming Soon Overlay */}
-            {/* TODO: Implement an interactive calendar and remove the overlay */}
-            <Calendar />
+          {/* Events List (Calendar Placeholder) */}
+          <div className="relative bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+            <div className="text-center p-8">
+              <CalendarIcon className="icon-xl mx-auto mb-4 text-nature-400" />
+              <h3 className="text-2xl font-semibold text-gray-800 mb-3">
+                Upcoming Events
+              </h3>
 
-            <div className="hidden">
-              <div className="text-center p-8">
-                <CalendarIcon className="icon-xl mx-auto mb-4 text-nature-400" />
-                <h3 className="text-2xl font-semibold text-gray-800 mb-3">
-                  Events Calendar
-                </h3>
-
-                {/* Upcoming Events List */}
-                <div className="bg-white/80 border-2 border-dashed border-nature-300 rounded-lg p-4 max-w-lg mx-auto backdrop-blur-sm">
-                  <h4 className="font-semibold text-nature-800 mb-4 text-center">
-                    Upcoming Events
-                  </h4>
-                  <div className="space-y-3 max-h-64 overflow-y-auto">
+              {upcomingEvents.length === 0 ? (
+                <p className="text-gray-500">No upcoming events scheduled.</p>
+              ) : (
+                <div className="bg-white/80 border-2 border-dashed border-nature-300 rounded-lg p-4 max-w-2xl mx-auto backdrop-blur-sm">
+                  <div className="space-y-3 max-h-96 overflow-y-auto">
                     {upcomingEvents.map((event) => {
                       const { dateText, timeText } = formatDateRange(
                         event.startDate,
@@ -234,7 +194,7 @@ const MarketsWalks = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
 
@@ -261,7 +221,7 @@ const MarketsWalks = () => {
             <div className="bg-earth-100 p-8 rounded-xl text-center shadow-sm border border-earth-200">
               <div className="w-16 h-16 bg-earth-500 rounded-full flex items-center justify-center mx-auto mb-6">
                 <img
-                  src="/assets/market3.svg"
+                  src="/assets/market.svg"
                   alt="Market basket"
                   className="w-8 h-8 filter brightness-0 invert"
                 />

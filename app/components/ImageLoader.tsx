@@ -1,3 +1,5 @@
+"use client";
+
 import { AdvancedImage, responsive } from "@cloudinary/react";
 import { Cloudinary } from "@cloudinary/url-gen";
 

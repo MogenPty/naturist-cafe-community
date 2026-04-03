@@ -1,72 +1,9 @@
+import type { BoardMember } from "../lib/db";
+import { getActiveBoardMembers } from "../lib/db/queries";
 import { MemberBlankCard, MemberCard } from "./MemberCard";
 
-const Board = () => {
-  // Sample board member data
-  const boardMembers = [
-    {
-      id: 1,
-      sortId: 5,
-      name: "Vongani (Vonks) Nkuna",
-      yearsInNaturism: 8,
-      otherOrganizations: ["Naturist Café Arthouse Films"],
-      communityCouncil: true,
-      role: "Director",
-    },
-    {
-      id: 2,
-      sortId: 2,
-      name: "Linah (Layla) Mahlomuza",
-      yearsInNaturism: 12,
-      otherOrganizations: ["Naturist Café Arthouse Films"],
-      communityCouncil: true,
-      role: "Director",
-    },
-    {
-      id: 3,
-      sortId: 3,
-      name: "Solly (RealSollyM) Motsoane",
-      yearsInNaturism: 6,
-      otherOrganizations: ["Bare Bliss Naturists Group"],
-      communityCouncil: false,
-      role: "Director",
-    },
-    {
-      id: 4,
-      sortId: 7,
-      name: "Valencia (Miss Vee) Mabika",
-      yearsInNaturism: 15,
-      otherOrganizations: ["Bare Bliss Naturists Group"],
-      communityCouncil: true,
-      role: "Councillor",
-    },
-    {
-      id: 5,
-      sortId: 1,
-      name: "Aobakwe (Buks) Peter",
-      yearsInNaturism: 4,
-      otherOrganizations: [],
-      communityCouncil: true,
-      role: "Director",
-    },
-    {
-      id: 6,
-      sortId: 6,
-      name: "Rethabile (Ree) Oitsile",
-      yearsInNaturism: 10,
-      otherOrganizations: [],
-      communityCouncil: true,
-      role: "Councillor",
-    },
-    {
-      id: 7,
-      sortId: 4,
-      name: "Veronica Mabula",
-      yearsInNaturism: 15,
-      otherOrganizations: [],
-      communityCouncil: true,
-      role: "Director",
-    },
-  ];
+const Board = async () => {
+  const boardMembers = await getActiveBoardMembers();
 
   return (
     <section id={"board"} className="section-padding bg-white">
@@ -87,11 +24,9 @@ const Board = () => {
         {/* Board Members Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 p-4 max-w-6xl mx-auto">
           <MemberBlankCard title="Board Members" />
-          {boardMembers
-            .sort((a, b) => a.sortId - b.sortId)
-            .map((member) => (
-              <MemberCard key={member.id} {...member} />
-            ))}
+          {boardMembers.map((member: BoardMember) => (
+            <MemberCard key={member.id} member={member} />
+          ))}
         </div>
       </div>
     </section>

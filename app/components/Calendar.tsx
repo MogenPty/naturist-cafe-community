@@ -1,3 +1,7 @@
+"use client";
+
+"use client";
+
 import { useState, useMemo } from "react";
 import { format } from "date-fns/format";
 import { getDay } from "date-fns/getDay";

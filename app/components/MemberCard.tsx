@@ -1,12 +1,8 @@
 import { User, Users } from "lucide-react";
+import type { BoardMember } from "../lib/db";
 
 interface MemberCardProps {
-  id: number;
-  name: string;
-  yearsInNaturism: number;
-  otherOrganizations: string[];
-  communityCouncil: boolean;
-  role: string;
+  member: BoardMember;
 }
 
 interface MemberBlankCardProps {
@@ -16,7 +12,8 @@ interface MemberBlankCardProps {
 }
 
 // React Function called MemberCard
-export const MemberCard = (member: MemberCardProps) => {
+export const MemberCard = (props: MemberCardProps) => {
+  const member = props.member;
   return (
     <div className="bg-gray-50 rounded-lg p-6 text-center hover:shadow-lg transition-shadow duration-200">
       {/* Profile Picture Placeholder */}
@@ -31,11 +28,11 @@ export const MemberCard = (member: MemberCardProps) => {
 
       {/* Details */}
       <div className="space-y-2 text-sm">
-        {member.otherOrganizations.length > 0 && (
+        {(member.otherOrganizations as string[])?.length > 0 && (
           <div className="flex items-center justify-center gap-2">
             <Users className="icon-sm text-gray-500" />
             <span className="text-gray-700">
-              {member.otherOrganizations.join(", ")}
+              {(member.otherOrganizations as string[]).join(", ")}
             </span>
           </div>
         )}

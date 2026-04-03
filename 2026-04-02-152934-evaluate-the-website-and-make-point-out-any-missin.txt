@@ -1,0 +1,1030 @@
+ ▐▛███▜▌   Claude Code v2.1.87
+▝▜█████▛▘  Sonnet 4.6 · API Usage Billing
+  ▘▘ ▝▝    C:\Projects\ncc
+
+❯ evaluate the website and make point out any missing   configuaration          
+according to @NEXTJS_MIGRATION_PLAN.md .  DO NOT EDIT ANY FILE but point out    
+any changes that I  can make.                                                   
+  ⎿  Read NEXTJS_MIGRATION_PLAN.md (308 lines)
+
+● I'll evaluate the current state of the project against the migration plan and
+  identify any missing configuration.
+
+  Searched for 2 patterns, read 5 files (ctrl+o to expand)
+
+● Bash(test -f next.config.js || test -f next.config.ts && echo "exists" || echo
+       "missing")
+  ⎿  exists
+
+● Bash(test -f .env.local && echo "exists" || echo "missing")
+  ⎿  exists
+
+  Searched for 1 pattern, read 1 file (ctrl+o to expand)
+
+● Bash(test -f next-env.d.ts && echo "exists" || echo "missing")
+  ⎿  exists
+
+  Searched for 2 patterns, read 4 files (ctrl+o to expand)
+
+● Bash(test -f postcss.config.cjs && echo "exists" || echo "missing")
+  ⎿  exists
+
+● Bash(test -f tailwind.config.js && echo "exists" || echo "missing")
+  ⎿  exists
+
+● Bash(test -f next.config.ts && echo "exists" || echo "missing")
+  ⎿  exists
+
+  Read 8 files (ctrl+o to expand)
+
+● Based on my evaluation of your Next.js migration, here are the missing 
+  configuration and issues that need to be addressed:
+
+  🔴 Critical Issues (Will Cause Build/Runtime Errors)
+
+  1. Missing 'use client' Directives (Next.js App Router Requirement)
+
+  Your page.tsx and several components use React hooks and browser APIs but are
+  missing the 'use client' directive at the top. In Next.js App Router, any
+  component using useState, useEffect, or browser APIs must have this directive.
+
+  Components needing 'use client':
+
+  ┌─────────────────────────────────┬────────────────────────────────────────┐
+  │              File               │                 Reason                 │
+  ├─────────────────────────────────┼────────────────────────────────────────┤
+  │ app/page.tsx                    │ Uses useState, useEffect, window,      │
+  │                                 │ document                               │
+  ├─────────────────────────────────┼────────────────────────────────────────┤
+  │ app/components/Hero.tsx         │ Uses document.getElementById() and     │
+  │                                 │ scrollIntoView()                       │
+  ├─────────────────────────────────┼────────────────────────────────────────┤
+  │ app/components/Join.tsx         │ Uses document.getElementById() and     │
+  │                                 │ scrollIntoView()                       │
+  ├─────────────────────────────────┼────────────────────────────────────────┤
+  │ app/components/Constitution.tsx │ Uses document.createElement()          │
+  ├─────────────────────────────────┼────────────────────────────────────────┤
+  │ app/components/Calendar.tsx     │ Uses useState, useMemo                 │
+  ├─────────────────────────────────┼────────────────────────────────────────┤
+  │ app/components/MarketsWalks.tsx │ Uses useState, useMemo, new Date()     │
+  ├─────────────────────────────────┼────────────────────────────────────────┤
+  │ app/components/Board.tsx        │ Actually fine (no hooks, no browser    │
+  │                                 │ APIs) - can stay server                │
+  ├─────────────────────────────────┼────────────────────────────────────────┤
+  │ app/components/MemberCard.tsx   │ Fine (pure presentational)             │
+  ├─────────────────────────────────┼────────────────────────────────────────┤
+  │ app/components/ImageLoader.tsx  │ Fine (pure presentational)             │
+  └─────────────────────────────────┴────────────────────────────────────────┘
+
+  2. CSS Import from node_modules in Component
+
+  app/components/Calendar.tsx line 9 imports CSS from react-big-calendar:
+  import "react-big-calendar/lib/css/react-big-calendar.css";
+  ❌ This is NOT allowed in Next.js App Router - CSS imports from node_modules
+  can only be done in:
+  - app/layout.tsx (for global styles)
+  - Or by using next-transpile-modules config (complex)
+
+  ✅ Fix: Move this import to app/layout.tsx or app/globals.css:
+  // In app/layout.tsx:
+  import "react-big-calendar/lib/css/react-big-calendar.css";
+
+  ⚠️ Configuration Issues
+
+  3. next.config.ts - TypeScript .cts vs .js Extension
+
+  Your next.config.ts uses module.exports which is CommonJS syntax but with .ts
+  extension, Next.js expects ESM for .ts configs.
+
+  ❌ Current (next.config.ts):
+  module.exports = nextConfig; // CommonJS - incompatible with TS
+
+  ✅ Fix A: Change to ESM syntax:
+  // next.config.ts
+  import type { NextConfig } from "next";
+
+  const nextConfig: NextConfig = {
+    reactStrictMode: true,
+    images: {
+      remotePatterns: [
+        {
+          protocol: "https",
+          hostname: "res.cloudinary.com",
+        },
+      ],
+    },
+  };
+
+  export default nextConfig;
+
+  ✅ Fix B: Rename to next.config.js and keep current syntax.
+
+  4. Stale Vite TypeScript Configuration
+
+  tsconfig.node.json references next.config.ts in its include array, but once
+  you fix the extension issue above, update this:
+  {
+    "include": [
+      "next.config.js"  // or .ts depending on your choice
+    ]
+  }
+
+  5. Legacy Vite File Still Present
+
+  src/vite-env.d.ts should be deleted as it's no longer needed in Next.js.
+
+  6. Unused Asset in public/
+
+  public/vite.svg should be deleted (not used, leftover from Vite template).
+
+  📋 Checklist of Required Changes
+
+  Phase 1: Add 'use client' to all necessary components
+
+  // Add to the TOP of each file (before any imports):
+
+  // app/page.tsx
+  'use client';
+
+  // app/components/Hero.tsx
+  'use client';
+
+  // app/components/Join.tsx
+  'use client';
+
+  // app/components/Constitution.tsx
+  'use client';
+
+  // app/components/Calendar.tsx
+  'use client';
+
+  // app/components/MarketsWalks.tsx
+  'use client';
+
+  Phase 2: Fix Calendar CSS Import
+
+  In app/layout.tsx, add:
+  import "react-big-calendar/lib/css/react-big-calendar.css";
+
+  And remove the import from app/components/Calendar.tsx.
+
+  Phase 3: Fix next.config.ts
+
+  Choose either:
+  - Option A: Rename to next.config.js (keep current CommonJS syntax)
+  - Option B: Convert to ESM syntax (as shown above)
+
+  Phase 4: Clean up Vite leftovers
+
+  Delete:
+  - src/vite-env.d.ts
+  - public/vite.svg
+  - vite.config.ts (if exists)
+
+  Phase 5: Update tsconfig.node.json
+
+  Update include to match your config filename choice.
+
+  📊 Summary Table
+
+  Issue: Missing 'use client' on 6 files
+  Severity: 🔴 Critical
+  File: page.tsx, Hero.tsx, Join.tsx, Constitution.tsx, Calendar.tsx,
+    MarketsWalks.tsx
+  Action: Add directive
+  ────────────────────────────────────────
+  Issue: CSS import in component
+  Severity: 🔴 Critical
+  File: Calendar.tsx
+  Action: Move to layout.tsx
+  ────────────────────────────────────────
+  Issue: next.config.ts syntax mismatch
+  Severity: 🟡 Medium
+  File: next.config.ts
+  Action: Fix ESM/CommonJS
+  ────────────────────────────────────────
+  Issue: Stale Vite files
+  Severity: 🟢 Low
+  File: src/vite-env.d.ts, public/vite.svg
+  Action: Delete
+  ────────────────────────────────────────
+  Issue: tsconfig.node.json reference
+  Severity: 🟢 Low
+  File: tsconfig.node.json
+  Action: Update include
+
+  ---
+  Recommendation: Start with the 'use client' directives (affects 6 files), then
+   fix the CSS import issue, and finally resolve the config file syntax. This
+  will get your app running with pnpm dev.
+
+✻ Cooked for 2m 45s
+❯ It seems like the lint doesn't like how the svg files are linked to the       
+@app/components/MarketsWalks.tsx file (line 2-4). Where can we move the svg     
+files to be loaded on the component? They are currently not being loaded.       
+  ⎿  Read app\components\MarketsWalks.tsx (304 lines)
+
+● Good catch! The issue is that SVG imports in Next.js App Router require 
+  special handling. Let me check your current asset structure:
+
+  Searched for 2 patterns, read 1 file (ctrl+o to expand)
+
+● Perfect! The assets do exist in app/assets/. The problem is that Next.js App 
+  Router doesn't support importing SVG files as React components by default.
+
+  🔴 The Problem
+
+  In Vite, you could import SVGs directly as React components:
+  import MarketIcon from "../assets/market.svg"; // ❌ Not supported in Next.js 
+  by default
+
+  In Next.js App Router, you have 3 options:
+
+  ---
+  ✅ Option 1: Move SVGs to public/ folder (Recommended - Simplest)
+
+  This is the Next.js-idiomatic way for static assets.
+
+  Changes needed:
+
+  1. Move SVG files from app/assets/ → public/assets/
+  2. Update imports in MarketsWalks.tsx to use regular img tags or next/image:
+
+  // Remove these imports:
+  // import MarketIcon from "../assets/market.svg";
+  // import WalkIcon from "../assets/walk.svg";
+  // import WorkshopIcon from "../assets/workshop.svg";
+
+  // Replace inline usage:
+  <div className="w-8 h-8 filter brightness-0 invert">
+    <img src="/assets/market.svg" alt="Market basket" />
+  </div>
+
+  Pros:
+  - Zero config required
+  - Works out of the box
+  - Assets are cached and served efficiently by Next.js
+
+  Cons:
+  - Lose TypeScript type safety for SVG props
+  - Can't inline SVG as React component
+
+  ---
+  ✅ Option 2: Enable SVGR via next.config.js (Keep Component Imports)
+
+  Add @svgr/webpack support to Next.js config:
+
+  Update next.config.js (or .ts):
+
+  /** @type {import('next').NextConfig} */
+  const nextConfig = {
+    reactStrictMode: true,
+    images: {
+      remotePatterns: [
+        {
+          protocol: "https",
+          hostname: "res.cloudinary.com",
+        },
+      ],
+    },
+    webpack(config) {
+      config.module.rules.push({
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        use: ["@svgr/webpack"],
+      });
+      return config;
+    },
+  };
+
+  module.exports = nextConfig;
+
+  Install SVGR:
+  pnpm add -D @svgr/webpack
+
+  Keep your existing imports (they'll work after config change).
+
+  Pros:
+  - Keeps SVG as React components (can pass props like className, width, height)
+  - TypeScript support with proper types
+  - No code changes needed
+
+  Cons:
+  - Requires custom webpack config
+  - Slightly more complex
+
+  ---
+  ✅ Option 3: Use next/image with public assets
+
+  Similar to Option 1 but uses Next.js Image optimization:
+
+  import Image from "next/image";
+
+  // In the component:
+  <Image
+    src="/assets/market.svg"
+    alt="Market basket"
+    width={32}
+    height={32}
+    className="filter brightness-0 invert"
+  />
+
+  Note: next/image has limited SVG support (no width/height props for
+  optimization). It's better for raster images. For SVGs, regular <img> or SVGR
+  is preferred.
+
+  ---
+  🎯 My Recommendation
+
+  Given your project structure and the migration plan's goal of minimal changes,
+   I recommend Option 1:
+
+  1. Move app/assets/ → public/assets/
+  2. Change the 3 import lines to regular img tags using /assets/*.svg
+
+  Why?
+  - You already have a public/ folder with assets
+  - Zero configuration needed
+  - No webpack customizations
+  - Follows Next.js conventions
+  - Clean and simple
+
+  ---
+  📝 Exact Changes to Make
+
+  Step 1: Move SVG files
+
+  # From project root:
+  mv app/assets/*.svg public/assets/
+  rmdir app/assets  # if empty after moving
+
+  Step 2: Update MarketsWalks.tsx
+
+  - import MarketIcon from "../assets/market.svg";
+  - import WalkIcon from "../assets/walk.svg";
+  - import WorkshopIcon from "../assets/workshop.svg";
+
+  // Remove those imports, and replace the <img> tags:
+
+  <img
+    src={WalkIcon}
+    alt="Walking people"
+    className="w-8 h-8 filter brightness-0 invert"
+  />
+
+  // becomes:
+
+  <img
+    src="/assets/walk.svg"
+    alt="Walking people"
+    className="w-8 h-8 filter brightness-0 invert"
+  />
+
+  Do this for all 3 <img> tags (WalkIcon, MarketIcon, WorkshopIcon).
+
+  ---
+  ❓ Which option would you prefer?
+
+  - Option 1: Move to public/ (simple, no config)
+  - Option 2: Enable SVGR in webpack config (keep component imports)
+  - Option 3: Use next/image (not ideal for SVGs)
+
+  Let me know and I can provide the exact code changes!
+
+✻ Churned for 47s
+
+❯ option 1                                                                      
+
+● Perfect! Here's the exact fix:
+
+  Changes Needed
+
+  1. Move SVG files to public/assets/
+
+  mv app/assets public/assets
+
+  (If app/assets/ is empty after moving, you can delete it)
+
+  2. Update MarketsWalks.tsx
+
+  Remove the SVG imports and update the <img> tags:
+
+  - import MarketIcon from "../assets/market.svg";
+  - import WalkIcon from "../assets/walk.svg";
+  - import WorkshopIcon from "../assets/workshop.svg";
+
+  // Keep the rest of the imports as-is
+
+  // Then update the 3 <img> tags:
+
+  - <img src={WalkIcon} alt="Walking people" className="w-8 h-8 filter 
+  brightness-0 invert" />
+  + <img src="/assets/walk.svg" alt="Walking people" className="w-8 h-8 filter 
+  brightness-0 invert" />
+
+  - <img src={MarketIcon} alt="Market basket" className="w-8 h-8 filter 
+  brightness-0 invert" />
+  + <img src="/assets/market.svg" alt="Market basket" className="w-8 h-8 filter 
+  brightness-0 invert" />
+
+  - <img src={WorkshopIcon} alt="Workshop tools" className="w-8 h-8 filter 
+  brightness-0 invert" />
+  + <img src="/assets/workshop.svg" alt="Workshop tools" className="w-8 h-8 
+  filter brightness-0 invert" />
+
+  ---
+  📋 Full Check: Are there any other SVG imports?
+
+  Let me quickly search for other .svg imports in your codebase:would you like
+  me to check for any other SVG imports in your codebase that might need the
+  same fix?
+
+❯ I'd need to have the /admin to manage the website. For now, this will be      
+screens to manage content for the other components, including managing events.  
+Create a plan that will use NeongDB and NeonAuth for authentication.            
+
+● Entered plan mode
+  Claude is now exploring and designing an implementation approach.
+
+● I'll create a comprehensive plan for adding an admin panel with NeonDB and
+  NeonAuth. Let me first explore the codebase to understand existing patterns,
+  then design the implementation.
+
+● Explore(Explore codebase for existing patterns)
+  ⎿  Done (0 tool uses · 0 tokens · 2s)
+  (ctrl+o to expand)
+
+● Let me search directly for existing patterns:
+
+  Searched for 1 pattern, read 1 file (ctrl+o to expand)
+
+● Bash(test -f src/lib || test -f lib || test -f utils && echo "exists" || echo
+      "no lib folder")
+  ⎿  no lib folder
+
+  Searched for 1 pattern (ctrl+o to expand)
+
+● Let me check if there's any NextAuth or auth configuration already:
+
+  Searched for 1 pattern (ctrl+o to expand)
+
+● Bash(test -f .env.local && echo "exists" || echo "missing")
+  ⎿  exists
+
+  Searched for 4 patterns, read 3 files (ctrl+o to expand)
+● Now I'll create a comprehensive plan for the admin panel:
+
+● Updated plan
+  ⎿  /plan to preview
+
+● User approved Claude's plan
+  ⎿  Plan saved to: ~\.claude\plans\swirling-toasting-cookie.md · /plan to edit
+     Admin Panel Implementation Plan: NeonDB + NeonAuth
+
+     Context
+
+     The NCC website is a Next.js 16 App Router application (single-page
+     scrolling SPA). Currently:
+     - Content is hardcoded in components (events in MarketsWalks.tsx, board
+     members in Board.tsx)
+     - No authentication for content management
+     - .env.local already contains NeonAuth credentials and DATABASE_URL (but no
+      tables exist yet)
+     - Forms use Formspree for membership applications (coming soon)
+
+     Goal: Build an admin panel (/admin) where authenticated administrators can:
+     - Manage events (CRUD operations)
+     - Manage board members
+     - Manage other content sections
+     - Secure access using NeonAuth (OAuth with Neon)
+
+     ---
+     Architecture Decisions
+
+     1. Authentication: NeonAuth (Not NextAuth.js)
+
+     Why: Already configured in .env.local, uses Better Auth protocol,
+     integrates with Neon database, provides JWT-based auth.
+
+     Implementation:
+     - Use @neondatabase/neon-auth client library
+     - Server actions for auth operations (login, logout, session check)
+     - JWT validation middleware for protected routes
+     - User role management (admin vs regular users)
+
+     2. Database: PostgreSQL on Neon with Drizzle ORM
+
+     Why:
+     - NeonAuth stores users in neon_auth schema
+     - Drizzle is type-safe, works great with TypeScript/Next.js
+     - Better migration control than Prisma for shared Neon DB
+
+     Schema:
+     - Events table (events)
+     - Board members table (board_members)
+     - Content sections table (content_sections if needed)
+     - Admin roles table (extending NeonAuth users)
+
+     3. Admin Routing: App Router with Server Components
+
+     - /admin - Admin dashboard (protected)
+     - /admin/events - Event management
+     - /admin/board - Board member management
+     - /admin/settings - Site settings (optional)
+     - Use Server Actions for mutations (create, update, delete)
+
+     4. UI Pattern: Form-based CRUD with existing Tailwind styles
+
+     - Reuse existing form components (modern-form-container, modern-input,
+     modern-button)
+     - Client components for interactive forms
+     - Server components for data fetching (with Suspense)
+
+     ---
+     Database Schema Design
+
+     Table: events
+
+     CREATE TABLE events (
+       id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+       title TEXT NOT NULL,
+       description TEXT,
+       type TEXT NOT NULL CHECK (type IN ('walk', 'market', 'workshop')),
+       start_date TIMESTAMPTZ NOT NULL,
+       end_date TIMESTAMPTZ NOT NULL,
+       start_time TIME,
+       end_time TIME,
+       location TEXT NOT NULL,
+       recurring BOOLEAN DEFAULT false,
+       recurring_pattern JSONB, -- { frequency: 'weekly', interval: 1, until: 
+     date }
+       created_at TIMESTAMPTZ DEFAULT NOW(),
+       updated_at TIMESTAMPTZ DEFAULT NOW(),
+       created_by UUID REFERENCES neon_auth.users(id) ON DELETE SET NULL
+     );
+
+     CREATE INDEX events_start_date_idx ON events(start_date);
+     CREATE INDEX events_type_idx ON events(type);
+
+     Table: board_members
+
+     CREATE TABLE board_members (
+       id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+       name TEXT NOT NULL,
+       nickname TEXT, -- Preferred name/nickname
+       role TEXT NOT NULL, -- 'Director' or 'Councillor'
+       sort_id INTEGER NOT NULL,
+       years_in_naturism INTEGER NOT NULL,
+       other_organizations TEXT[], -- Array of strings
+       community_council BOOLEAN DEFAULT false,
+       active BOOLEAN DEFAULT true,
+       profile_image_url TEXT, -- Cloudinary URL or public path
+       created_at TIMESTAMPTZ DEFAULT NOW(),
+       updated_at TIMESTAMPTZ DEFAULT NOW(),
+       created_by UUID REFERENCES neon_auth.users(id) ON DELETE SET NULL
+     );
+
+     CREATE INDEX board_members_sort_id_idx ON board_members(sort_id);
+     CREATE INDEX board_members_active_idx ON board_members(active);
+
+     Table: admins (extends NeonAuth users)
+
+     CREATE TABLE admins (
+       user_id UUID PRIMARY KEY REFERENCES neon_auth.users(id) ON DELETE
+     CASCADE,
+       role TEXT NOT NULL DEFAULT 'editor' CHECK (role IN ('superadmin',
+     'admin', 'editor')),
+       permissions JSONB DEFAULT '{}',
+       last_login TIMESTAMPTZ,
+       created_at TIMESTAMPTZ DEFAULT NOW()
+     );
+
+     -- Index for quick role lookup
+     CREATE INDEX admins_role_idx ON admins(role);
+
+     Note: NeonAuth automatically creates the neon_auth.users table with:
+     - id, email, name, avatar_url, created_at, updated_at
+
+     ---
+     Implementation Phases
+
+     Phase 1: Database Setup & Drizzle ORM
+
+     1. Install Drizzle dependencies:
+     pnpm add drizzle-orm @neondatabase/serverless
+     pnpm add -D drizzle-kit
+     2. Create drizzle.config.ts:
+     import { defineConfig } from "drizzle-kit";
+
+     export default defineConfig({
+       schema: "./src/lib/db/schema.ts",
+       out: "./drizzle",
+       dialect: "postgresql",
+       dbCredentials: {
+         connectionString: process.env.DATABASE_URL!,
+       },
+     });
+     3. Create src/lib/db/index.ts:
+     import { drizzle } from 'drizzle-orm/neon-http';
+     import { neon } from '@neondatabase/serverless';
+     import * as schema from './schema';
+
+     const sql = neon(process.env.DATABASE_URL!);
+     export const db = drizzle(sql);
+
+     export * from './schema';
+     export * from './queries';
+     4. Create src/lib/db/schema.ts with all tables (using Drizzle DSL)
+     5. Create src/lib/db/queries.ts for reusable queries:
+       - getAllEvents()
+       - getEventById(id)
+       - createEvent(data)
+       - updateEvent(id, data)
+       - deleteEvent(id)
+       - Similar for board members
+     6. Run migration:
+     pnpm drizzle-kit push  # Creates tables in Neon DB
+
+     Phase 2: NeonAuth Integration
+
+     1. Install NeonAuth client:
+     pnpm add @neondatabase/neon-auth
+     2. Create src/lib/auth/neon-auth.ts:
+     import { createClient } from '@neondatabase/neon-auth';
+
+     export const neonAuth = createClient({
+       baseUrl: process.env.NEON_AUTH_CLIENT_ID!,
+       secret: process.env.NEON_AUTH_CLIENT_SECRET!,
+     });
+
+     // Server action: login
+     export async function login(email: string, password: string) {
+       return neonAuth.signIn.email({ email, password });
+     }
+
+     // Server action: logout
+     export async function logout() {
+       return neonAuth.signOut();
+     }
+
+     // Server action: get current session
+     export async function getSession() {
+       return neonAuth.getSession();
+     }
+
+     // Server middleware: require admin
+     export async function requireAdmin() {
+       const session = await getSession();
+       if (!session?.user) throw new Error('Unauthorized');
+
+       // Check if user is admin
+       const admin = await db.query.admins.findFirst({
+         where: eq(admins.userId, session.user.id)
+       });
+       if (!admin) throw new Error('Forbidden: Not an admin');
+
+       return { user: session.user, role: admin.role };
+     }
+     3. Create src/lib/auth/middleware.ts for route protection:
+       - Use Next.js middleware or server action guards
+
+     Phase 3: Admin Layout & Navigation
+
+     1. Create app/admin/layout.tsx:
+       - Shared admin navigation/sidebar
+       - Admin header with logout button
+       - Role display
+       - Link to dashboard, events, board, settings
+     2. Create app/admin/page.tsx (Dashboard):
+       - Stats overview (total events, board members, etc.)
+       - Recent activity (if implementing audit log)
+       - Quick actions
+     3. Create app/admin/events/page.tsx:
+       - Server component: fetch events list
+       - Client component: EventTable with edit/delete buttons
+       - "Add Event" button opens modal or separate page
+     4. Create app/admin/board/page.tsx:
+       - Similar to events, for board members
+     5. Create app/admin/events/new/page.tsx and [id]/page.tsx:
+       - Form pages for CRUD
+       - Use existing form patterns
+
+     Phase 4: UI Components
+
+     Reuse existing component patterns:
+     - app/components/Board.tsx - show how data is structured, extract to server
+      component
+     - app/components/MarketsWalks.tsx - extract hardcoded events to database
+
+     New components needed:
+     - app/components/admin/AdminNav.tsx - admin sidebar
+     - app/components/admin/EventForm.tsx - create/edit event form
+     - app/components/admin/BoardMemberForm.tsx - create/edit board member
+     - app/components/admin/ConfirmDelete.tsx - delete confirmation dialog
+     - app/components/admin/DataTable.tsx - reusable table with
+     sorting/pagination
+
+     Phase 5: Server Actions for Mutations
+
+     Create src/lib/db/actions.ts:
+     'use server';
+
+     import { db } from './index';
+     import { eq, sql } from 'drizzle-orm';
+     import * as schema from './schema';
+     import { requireAdmin } from '@/lib/auth/neon-auth';
+
+     export async function createEvent(data: InsertEvent) {
+       const { user } = await requireAdmin();
+       return db.insert(schema.events).values({ ...data, createdBy: user.id });
+     }
+
+     export async function updateEvent(id: string, data: Partial<Event>) {
+       await requireAdmin();
+       return db.update(schema.events).set(data).where(eq(schema.events.id,
+     id));
+     }
+
+     export async function deleteEvent(id: string) {
+       await requireAdmin();
+       return db.delete(schema.events).where(eq(schema.events.id, id));
+     }
+
+     // Similar for board members
+
+     Phase 6: Integration with Public Pages
+
+     1. Replace hardcoded data in MarketsWalks.tsx:
+       - Fetch events from database
+       - Show only future events (filter by start_date > NOW())
+       - Keep the hardcoded fallback if DB empty
+     2. Replace hardcoded board in Board.tsx:
+       - Fetch active board members from DB
+       - Sort by sort_id
+       - Fallback to hardcoded if DB empty
+     3. Future: Add caching (revalidation) for performance
+
+     Phase 7: Seed Data & Admin User Setup
+
+     1. Create seed script scripts/seed-admin.ts:
+       - Takes admin email from env or CLI arg
+       - Creates admin record in admins table
+       - Must run after NeonAuth user signs up
+     2. Documentation: How to create first admin:
+       - Sign up via NeonAuth (need to expose signup endpoint)
+       - Run seed script to promote user to admin
+       - OR create manual SQL insert into admins table
+
+     Phase 8: Security & Hardening
+
+     1. Rate limiting on admin routes (optional: middleware)
+     2. CSRF protection (Next.js has built-in)
+     3. Input validation with Zod for server actions
+     4. Row-level security (RLS) - not needed if using server-side checks
+     5. Audit logging (optional): track changes to events/board members
+
+     Phase 9: Deployment & Environment
+
+     1. Ensure .env.local has:
+       - DATABASE_URL (Neon connection)
+       - NEON_AUTH_CLIENT_ID and NEON_AUTH_CLIENT_SECRET
+       - NEXT_PUBLIC_APP_URL updated to production
+     2. Verify NeonAuth is provisioned in Neon console:
+       - Check neon_auth schema exists
+       - OAuth credentials valid
+     3. Run migrations in production:
+     pnpm drizzle-kit push --config=drizzle.config.ts
+
+     ---
+     Files to Create/Modify
+
+     New Files
+
+     src/lib/db/
+     ├── index.ts          (db connection)
+     ├── schema.ts         (drizzle tables)
+     ├── queries.ts        (read queries)
+     └── actions.ts        (server actions for mutations)
+
+     src/lib/auth/
+     ├── neon-auth.ts      (NeonAuth client + helpers)
+     └── middleware.ts     (route guards)
+
+     app/
+     ├── admin/
+     │   ├── layout.tsx
+     │   ├── page.tsx                 (dashboard)
+     │   ├── events/
+     │   │   ├── page.tsx             (list)
+     │   │   ├── new/
+     │   │   │   └── page.tsx         (create)
+     │   │   └── [id]/
+     │   │       └── page.tsx         (edit)
+     │   ├── board/
+     │   │   ├── page.tsx
+     │   │   ├── new/
+     │   │   └── [id]/
+     │   └── settings/
+     │       └── page.tsx
+     ├── components/
+     │   └── admin/
+     │       ├── AdminNav.tsx
+     │       ├── EventForm.tsx
+     │       ├── BoardMemberForm.tsx
+     │       ├── DataTable.tsx
+     │       └── ConfirmDelete.tsx
+     └── api/
+         └── auth/
+             ├── login/route.ts
+             └── logout/route.ts  (optional: can use server actions)
+
+     Modified Files
+
+     - app/components/MarketsWalks.tsx - fetch events from DB
+     - app/components/Board.tsx - fetch board members from DB
+     - next.config.ts - ensure image domains for Cloudinary
+     - .env.example - add admin setup instructions
+
+     ---
+     Testing Plan
+
+     1. Database Connectivity
+
+     - Run pnpm drizzle-kit push to create tables
+     - Verify Neon connection works
+
+     2. Authentication Flow
+
+     - Create test user via NeonAuth signup
+     - Promote to admin via seed script
+     - Login at /api/auth/login or custom endpoint
+     - Verify session persists
+     - Access /admin - should redirect to login if not authenticated
+     - Non-admin user should get "Forbidden"
+
+     3. CRUD Operations
+
+     - Create event: fill form, submit, verify in DB
+     - Edit event: modify, save, verify update
+     - Delete event: confirm deletion, verify removed from DB
+     - Repeat for board members
+
+     4. Public Page Integration
+
+     - Events appear on homepage MarketsWalks section
+     - Board members appear on /board section
+     - No hardcoded data should override database (unless DB empty)
+
+     5. Error Handling
+
+     - Attempt unauthorized access → redirect/login
+     - Invalid form data → validation errors
+     - Server errors → user-friendly messages
+
+     6. Type Safety
+
+     - TypeScript compiles without errors
+     - Drizzle types match database schema
+
+     ---
+     Migration from Hardcoded Data
+
+     Current State:
+
+     - MarketsWalks.tsx has upcomingEvents array with 5 events (some dates in
+     2025, may be expired)
+     - Board.tsx has boardMembers array with 7 members
+     - These are static, not editable
+
+     After Migration:
+
+     - Add script to seed database with existing hardcoded data
+     - Modify components to prefer database data but fall back to hardcoded if
+     empty
+     - Admin can edit via /admin/events and /admin/board
+
+     Seeding approach:
+     // scripts/seed-db.ts
+     import { db } from '../src/lib/db';
+     import * as schema from '../src/lib/db/schema';
+
+     await db.insert(schema.events).values([
+       { title: 'Weekend Nature Walk', type: 'walk', ... }
+     ]);
+
+     await db.insert(schema.boardMembers).values([
+       { name: 'Vongani Nkuna', role: 'Director', sortId: 5, ... }
+     ]);
+
+     console.log('Seeded initial data');
+
+     Run: tsx scripts/seed-db.ts
+
+     ---
+     Potential Issues & Mitigations
+
+     ┌────────────────────────────┬────────┬───────────────────────────────────┐
+     │           Issue            │  Risk  │            Mitigation             │
+     ├────────────────────────────┼────────┼───────────────────────────────────┤
+     │ NeonAuth not provisioned   │ High   │ Verify in Neon Console first:     │
+     │                            │        │ Auth tab → enabled                │
+     ├────────────────────────────┼────────┼───────────────────────────────────┤
+     │ DATABASE_URL not           │ High   │ Test connection with psql or      │
+     │ accessible                 │        │ Drizzle studio                    │
+     ├────────────────────────────┼────────┼───────────────────────────────────┤
+     │ Schema conflicts with      │ Medium │ Use drizzle-kit push for safe     │
+     │ existing data              │        │ schema changes                    │
+     ├────────────────────────────┼────────┼───────────────────────────────────┤
+     │ Hardcoded dates are        │ Low    │ Seed fresh events in future dates │
+     │ expired                    │        │                                   │
+     ├────────────────────────────┼────────┼───────────────────────────────────┤
+     │ Type mismatch in DB fields │ Low    │ Use Drizzle type inference, test  │
+     │                            │        │ with dev data                     │
+     ├────────────────────────────┼────────┼───────────────────────────────────┤
+     │ Admin panel UX             │ Low    │ Reuse Tailwind classes from       │
+     │ inconsistent               │        │ existing forms                    │
+     └────────────────────────────┴────────┴───────────────────────────────────┘
+
+     ---
+     Implementation Order
+
+     1. Setup Drizzle ORM + config
+     2. Create database schema (schema.ts)
+     3. Push schema to Neon DB
+     4. Integrate NeonAuth client
+     5. Create auth middleware + server actions
+     6. Build admin layout & navigation
+     7. Create Event CRUD pages
+     8. Create Board Member CRUD pages
+     9. Replace hardcoded data with DB fetch
+     10. Seed initial data
+     11. Test auth, CRUD, public pages
+     12. Deploy & verify
+
+     ---
+     Success Criteria
+
+     - Admin can login via NeonAuth
+     - Admin can access /admin dashboard
+     - Admin can create/edit/delete events
+     - Admin can create/edit/delete board members
+     - Changes reflect on public homepage instantly
+     - Non-admin users cannot access /admin/*
+     - All TypeScript compiles without errors
+     - Database tables created in Neon
+     - No hardcoded data in production (all from DB)
+
+     ---
+     Next Steps
+
+     Approve this plan → Begin implementation with Phase 1 (Drizzle setup).
+
+     Would you like me to:
+     1. Add any additional content types (news, announcements, etc.)?
+     2. Extend admin roles beyond binary admin/editor?
+     3. Add image upload for board members?
+     4. Include audit logging of changes?
+     5. Add pagination/infinite scroll for large datasets?
+
+● Perfect! I've created a comprehensive plan for the admin panel with NeonDB and
+   NeonAuth. The plan is saved here:
+
+  📄 Plan File: C:\Users\Solly\.claude\plans\swirling-toasting-cookie.md
+
+  ---
+  Summary of the Proposed Architecture:
+
+  ✅ Authentication: NeonAuth (already configured in your .env.local)
+  ✅ Database: Drizzle ORM + PostgreSQL on Neon
+  ✅ Admin Routes: /admin/, /admin/events, /admin/board
+  ✅ Content Management: Events & Board Members (with easy extension)
+  ✅ Security: Server-side admin checks, JWT validation
+  ✅ UI: Reuses your existing Tailwind form patterns
+
+  ---
+  Key Implementation Phases:
+
+  1. Drizzle Setup - Install, configure, create schema
+  2. NeonAuth Integration - Client + server actions + middleware
+  3. Admin Layout & Navigation - Shared UI for admin pages
+  4. CRUD Components - Forms and tables for events/board
+  5. Database Migration - Push schema to Neon, seed initial data
+  6. Public Page Updates - Fetch from DB instead of hardcoded arrays
+
+  ---
+  Your Current Assets:
+
+  - ✅ NeonAuth credentials already in .env.local
+  - ✅ DATABASE_URL configured
+  - ✅ Next.js 16 + App Router ready
+  - ✅ Tailwind CSS with form components ready to reuse
+
+  ---
+  The plan includes detailed schema design, file structure, testing checklist,
+  and potential pitfalls.
+
+  Would you like me to start implementing the admin panel now? I can begin with
+  Phase 1 (Drizzle ORM setup) and work through each phase systematically, or you
+   can review the plan first and let me know any adjustments you'd like.
+
+✻ Crunched for 3m 16s
