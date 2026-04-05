@@ -1,11 +1,12 @@
 "use client";
 
+import { AlertTriangle, Lock } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Lock, AlertTriangle } from "lucide-react";
 import { getRequiredAdultAge } from "../utils/age-restrictions";
 import { calculateAge } from "../utils/age-utils";
 
-const REDIRECT_URL = "https://web.mogen.co.za";
+const REDIRECT_URL =
+  process.env.NEXT_PUBLIC_REDIRECT_URL || "https://www.mogen.co.za";
 const SESSION_KEY = "ageVerified";
 
 function AgeGate({ children }: { children: React.ReactNode }) {
