@@ -1,8 +1,6 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm list:*)",
-      "Bash(npm run:*)",
       "Bash(find . -maxdepth 2 -name next.config.* -o -name next-env.d.ts -o -name app -type d -o -name pages -type d)",
       "Bash(pnpm add:*)",
       "Bash(pnpm drizzle-kit:*)",
@@ -14,8 +12,13 @@
       "Bash(pnpm install:*)",
       "WebSearch",
       "Bash(npx drizzle-kit:*)",
-      "Bash(npm install:*)",
-      "Bash(npx tsx:*)"
+      "Bash(npx tsx:*)",
+      "Bash(pnpm dev:*)",
+      "Bash(npx tsc:*)",
+      "Bash(jobs -l)",
+      "Bash(pkill -f \"next\")",
+      "Bash(echo \"Dev server started in background, PID: $!\")",
+      "Read(//tmp/**)"
     ]
   }
 }

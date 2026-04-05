@@ -1,9 +1,9 @@
+import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { Card, Divider } from "../../components/ui";
 import { auth } from "../../lib/auth";
 import { db } from "../../lib/db";
 import * as schema from "../../lib/db/schema";
-import { eq } from "drizzle-orm";
 
 // Force dynamic rendering since this page uses cookies via auth.getSession()
 export const dynamic = "force-dynamic";
@@ -48,7 +48,7 @@ export default async function LoginPage() {
 
           <a
             href="/auth/sign-in"
-            className="btn-gold w-full flex items-center justify-center block text-center"
+            className="btn-gold w-full flex items-center justify-center text-center"
           >
             Sign In
           </a>
@@ -66,7 +66,7 @@ export default async function LoginPage() {
 
           <a
             href="/auth/sign-up"
-            className="btn-outline-cream w-full flex items-center justify-center block text-center"
+            className="btn-outline-cream w-full flex items-center justify-center text-center"
           >
             Create Account
           </a>

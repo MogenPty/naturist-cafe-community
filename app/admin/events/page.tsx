@@ -1,26 +1,43 @@
-import { getAllEvents } from "@/lib/db/queries";
-import DeleteButton from "./components/DeleteButton";
 import { revalidatePath } from "next/cache";
+import { isAdmin } from "../../lib/db";
+import { deleteEvent as deleteEventAction } from "../../lib/db/actions";
+import { getAllEvents } from "../../lib/db/queries";
+import { getCurrentUserSession } from "../../lib/session/actions";
+import DeleteButton from "./components/DeleteButton";
 
 export default async function AdminEventsPage() {
   const events = await getAllEvents();
 
   async function deleteEvent(formData: FormData) {
     "use server";
-    const id = formData.get("id") as string;
-    if (!id) throw new Error("Event ID required");
 
-    const { deleteEvent } = await import("@/lib/db/actions");
-    await deleteEvent(id);
-    revalidatePath("/admin/events");
+    // Add auth check
+    const user = await getCurrentUserSession();
+    try {
+      const isAdminUser = await isAdmin(user?.id);
+      if (!isAdminUser) {
+        throw new Error("Unauthorized");
+      }
+      const id = formData.get("id") as string;
+      if (!id) throw new Error("Event ID required");
+
+      await deleteEventAction(id);
+      revalidatePath("/admin/events");
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Events Management</h1>
-          <p className="mt-1 text-gray-600">Create and manage community events</p>
+          <h1 className="text-3xl font-bold text-gray-900">
+            Events Management
+          </h1>
+          <p className="mt-1 text-gray-600">
+            Create and manage community events
+          </p>
         </div>
         <a
           href="/admin/events/new"
@@ -83,13 +100,15 @@ export default async function AdminEventsPage() {
                       )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                        event.type === "walk"
-                          ? "bg-nature-100 text-nature-800"
-                          : event.type === "market"
-                          ? "bg-earth-100 text-earth-800"
-                          : "bg-gray-100 text-gray-800"
-                      }`}>
+                      <span
+                        className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                          event.type === "walk"
+                            ? "bg-nature-100 text-nature-800"
+                            : event.type === "market"
+                              ? "bg-earth-100 text-earth-800"
+                              : "bg-gray-100 text-gray-800"
+                        }`}
+                      >
                         {event.type}
                       </span>
                     </td>

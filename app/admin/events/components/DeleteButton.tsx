@@ -33,7 +33,7 @@ export default function DeleteButton<T extends string>({
     <>
       {showConfirm ? (
         <div className="flex items-center gap-2">
-          <span className="text-xs text-gray-500">Are you sure?</span>
+          <span className="text-xs text-gray-500">Delete "{title}"?</span>
           <button
             type="button"
             onClick={() => {
@@ -47,7 +47,8 @@ export default function DeleteButton<T extends string>({
           <button
             type="button"
             onClick={() => setShowConfirm(false)}
-            className="text-gray-600 hover:text-gray-800 text-sm"
+            disabled={isDeleting}
+            className="text-gray-600 hover:text-gray-800 text-sm disabled:opacity-50"
           >
             Cancel
           </button>

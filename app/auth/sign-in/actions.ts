@@ -14,18 +14,18 @@ export async function signInWithEmail(
     return { error: "Email address must be provided." };
   }
 
-  const session = await auth.signIn.email({
+  const { data, error } = await auth.signIn.email({
     email,
     password: formData.get("password") as string,
   });
 
-  if (session.error) {
-    return { error: session.error.message || "Failed to sign in" };
+  if (error) {
+    return { error: error.message || "Failed to sign in" };
   }
 
   // After successful sign-in, check if user is admin to redirect appropriately
   const admin = await db.query.admins.findFirst({
-    where: eq(schema.admins.userId, session.user.id),
+    where: eq(schema.admins.userId, data.user.id),
   });
 
   if (admin) {
