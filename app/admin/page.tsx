@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { auth } from "../lib/auth";
 import { getActiveBoardMembers, getAllEvents } from "../lib/db/queries";
+import { getCurrentUserSession } from "../lib/session/actions";
 
 export default async function AdminDashboard() {
-  const session = await auth.getSession();
+  const user = await getCurrentUserSession();
   const [events, boardMembers] = await Promise.all([
     getAllEvents(),
     getActiveBoardMembers(),
@@ -42,8 +42,7 @@ export default async function AdminDashboard() {
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
           <p className="mt-1 text-gray-600">
-            Welcome back,{" "}
-            {session?.data?.user.name || session?.data?.user.email}
+            Welcome back, {user.name || user.email}
           </p>
         </div>
         <div className="flex gap-3">

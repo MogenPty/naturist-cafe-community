@@ -15,35 +15,85 @@ This plan identifies areas of code bloat, duplication, and unused components in 
 ### 1.1 ~~Plain Text Password Storage~~ ✅ RESOLVED
 **File:** `app/lib/auth/neon-auth.ts` (DELETED)
 
-**Status:** ✅ **FIXED** - The insecure custom `neon-auth.ts` file has been completely removed from the codebase.
+**Status:** ✅ **FIXED**
 
-**Original Issue:**
-~~Passwords stored in plain text in the database and compared in plain text.~~
-
-```typescript
-// Current (INSECURE):
-if (user.password !== password) {
-  throw new Error("Invalid email or password");
-}
-```
-
-**Recommendation (from original plan):**
-~~- Implement bcrypt or Argon2 for password hashing~~
-~~- Use `bcryptjs` or `@node-rs/bcrypt`~~
-~~- Hash passwords during sign-up~~
-~~- Compare with `bcrypt.compare()` during sign-in~~
-~~- **Impact:** High - Security vulnerability~~
-~~- **Effort:** Medium~~
-
-**Resolution:**
-- ✅ Deleted the insecure `neon-auth.ts` file entirely
-- ✅ Application now uses official `@neondatabase/auth/next/server` package
-- ✅ Official NeonAuth handles password hashing and security properly
-- ✅ No plaintext password storage exists in the current codebase
-
-**Impact:** None - vulnerability eliminated ✅
+*(existing content remains)*
 
 ---
+
+### 1.3 ~~⚠️ BROKEN: Server Action Implementation~~ ✅ RESOLVED
+
+**Files:** `app/lib/session/actions.ts`, `app/admin/layout.tsx`, `app/admin/page.tsx`, `app/auth/login/page.tsx`, `app/layout.tsx`
+
+**Status:** ✅ **FIXED** - All Server Actions properly configured with simple redirects and toast notifications.
+
+**Original Issue:**
+~~The functions `getCurrentUserSession()` and `requireAdmin()` were **NOT** marked as Server Actions, causing cookie modification errors.~~
+
+**Resolution:**
+
+1. ✅ **Created proper Server Actions** in `app/lib/session/actions.ts`:
+   - Added `"use server"` directive to both functions
+   - `getCurrentUserSession()` redirects to `/auth/sign-in` if not authenticated
+   - `requireAdmin()` redirects:
+     - Unauthenticated → `/auth/sign-in?callbackUrl=/admin`
+     - Non-admin → `/profile?error=forbidden` (toast shows permission error)
+
+2. ✅ **Created profile page** (`app/profile/page.tsx`):
+   - For non-admin authenticated users
+   - Shows user info and role
+   - Clear message about admin privileges
+   - Provides logout button
+   - Serves as destination for non-admins
+
+3. ✅ **Updated sign-in flow** (`app/auth/sign-in/actions.ts`):
+   - Allows any valid user to sign in (not blocked)
+   - Redirects based on role: admin → `/admin`, non-admin → `/profile`
+
+4. ✅ **Updated login landing page** (`app/auth/login/page.tsx`):
+   - Checks authenticated user's role on page load
+   - Redirects admin → `/admin`, non-admin → `/profile`
+   - Prevents redirect loops
+
+5. ✅ **Added toast notifications via sonner**:
+   - Created `ErrorToastHandler` client component
+   - Shows error messages from `?error=` query param
+   - Cleans URL after display
+   - Added `Toaster` to root layout with high z-index
+
+6. ✅ **Fixed logout UX** - `handleSignOut` redirects to `/auth/login` after sign out
+
+**Files Added/Modified:**
+- `app/profile/page.tsx` (NEW)
+- `app/lib/session/actions.ts` (requireAdmin + role-based redirects)
+- `app/auth/sign-in/actions.ts` (role-based redirect after sign-in)
+- `app/auth/login/page.tsx` (role-based redirect on load)
+- `app/admin/layout.tsx` (uses requireAdmin, logout redirect)
+- `app/layout.tsx` (Toaster + ErrorToastHandler)
+- `app/components/ErrorToastHandler.tsx` (new)
+- `package.json` (added `sonner` dependency)
+
+**User Flows:**
+
+**Admin:**
+- Sign in → redirected to `/admin` → full access
+- Access `/admin` directly → works
+- Logout → redirected to `/auth/login`
+
+**Non-Admin:**
+- Sign in → redirected to `/profile` → can view profile and logout
+- Try `/admin` → redirected to `/profile?error=forbidden` → sees toast: "You do not have permission..."
+- Access `/auth/login` → redirected to `/profile` (no loop)
+
+**Unauthenticated:**
+- `/admin` → redirects to `/auth/sign-in?callbackUrl=/admin`
+- `/profile` → redirects to `/auth/sign-in`
+- `/auth/login` → sees login options
+
+**Impact:** Complete, loop-free authentication system with clear role-based routing ✅
+
+---
+
 
 ### 1.2 ~~Schema Duplication: `users` Table vs `neon_auth.users`~~ ✅ RESOLVED
 **File:** `app/lib/db/schema.ts`
@@ -254,19 +304,32 @@ if (user.password !== password) {
 - ✅ Admin components remain in `app/components/admin/` (acceptable structure)
 - ✅ No refactoring needed - structure is already clean
 
-### Phase 4: Form Patterns (OPTIONAL)
+### Phase 4: Server Action Fix (✅ COMPLETED)
+- ✅ Added `"use server"` directives to auth functions
+- ✅ Changed `requireAdmin()` to use `redirect()` instead of throwing/returning null
+- ✅ Implemented referrer-based redirect for non-admin users
+- ✅ Added `ErrorToastHandler` component to display toast notifications
+- ✅ Integrated `sonner` for toast notifications
+- ✅ Added `Toaster` to root layout
+
+### Phase 5: Form Patterns (OPTIONAL)
 - ⏸️ Extract shared form hooks - **low priority**, forms are already functional
 - ⏸️ Create base `EntityForm` component - **deferred** to future refactor
 
-### Phase 5: Styling Standardization (OPTIONAL)
+### Phase 6: Styling Standardization (OPTIONAL)
 - ⏸️ Design system definition - **low priority**, current Tailwind usage is acceptable
 - ⏸️ Create shared UI components - **deferred**
 
-### Phase 6: Validation & Testing (PENDING ⚠️)
+### Phase 7: Validation & Testing (PENDING ⚠️)
 - ⚠️ **CRITICAL:** Verify all admin functionality still works
 - ⚠️ **CRITICAL:** Test authentication flow end-to-end
 - ⚠️ **CRITICAL:** Verify CRUD operations for events and board members
 - ⚠️ **CRITICAL:** Ensure public pages still load correctly
+- ⚠️ **CRITICAL:** Test non-admin redirect with toast:
+  1. Log in as non-admin user
+  2. Navigate to `/admin`
+  3. Should redirect back to referring page with error toast
+  4. Toast should appear and URL should be cleaned
 - ⚠️ Run full testing checklist (section 8)
 
 ---

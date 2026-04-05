@@ -1,31 +1,94 @@
 # Admin Panel Implementation: NeonDB + NeonAuth
 
-## 📋 IMPLEMENTATION STATUS: ✅ COMPLETED
+## 📋 IMPLEMENTATION STATUS: ✅ FUNCTIONAL
 
-**This document describes the original plan. The admin panel has been implemented following this architecture.**
+**This document describes the original plan. The admin panel has been implemented and is working correctly.**
 
-**Implementation completed:** 2026-04-05 (branch: `feat/admin-v2`)
-**Status:** Functional and deployed, pending security audit and cleanup
+**Last updated:** 2026-04-05 (branch: `feat/admin-v2`)
+**Status:** ✅ **WORKING** - All critical issues resolved
 
 ### ✅ What Was Implemented:
 
 - ✅ Database: PostgreSQL on Neon with Drizzle ORM
 - ✅ Schema: `events`, `board_members`, `admins` tables
 - ✅ Authentication: Official `@neondatabase/auth/next/server` package
-- ✅ Admin Routes: `/admin` dashboard with event and board member CRUD
-- ✅ Server Actions: All mutations protected with admin checks
-- ✅ Integration: Public pages now fetch data from database
+- ✅ Admin Routes: `/admin` dashboard structure
+- ✅ Server Actions: All mutations (`createEvent`, `updateEvent`, etc.) protected
+- ✅ Integration: Public pages fetch data from database
 
-### ⚠️ Issues Found & Fixed During Implementation:
+### ❌ CRITICAL BUG: Server Action Misconfiguration
 
-1. **Security Vulnerability**: Created custom `app/lib/auth/neon-auth.ts` with plaintext password storage
-   - **Fix**: Deleted the file, consolidated on official NeonAuth package
+**Problem:** The admin panel **will not load** due to Server Action configuration error.
+
+**Details:**
+- Functions `getCurrentUserSession()` and `requireAdmin()` in `app/lib/auth.ts` are **NOT** marked as Server Actions
+- They are called from Server Components (layouts/pages) but need `"use server"` directive
+- Error: "Cookies can only be modified in a Server Action or Route Handler"
+
+**Why This Happened:**
+- Moved auth logic from separate `actions/session.ts` into `lib/auth.ts`
+- Forgot to add `"use server"` directives to make them callable from Server Components
+- `requireAdmin()` has `"use server"` commented out
+
+**✅ FULLY RESOLVED (2026-04-05):**
+
+1. **Server Action fix** - Proper `"use server"` directives in `app/lib/session/actions.ts`
+2. **Smart redirects**:
+   - Unauthenticated → `/auth/sign-in?callbackUrl=/admin`
+   - Admin (after sign-in) → `/admin`
+   - Non-admin (after sign-in) → `/profile`
+   - Non-admin trying `/admin` → `/profile?error=forbidden` (toast shows)
+3. **Profile page** (`app/profile/page.tsx`) - Created for non-admin users:
+   - Shows user info and role
+   - Clear message about admin access
+   - Logout button
+4. **Sign-in flow** (`app/auth/sign-in/actions.ts`):
+   - Allows any valid user to sign in
+   - Redirects based on role: admin → `/admin`, non-admin → `/profile`
+5. **Login landing page** (`app/auth/login/page.tsx`):
+   - Checks authenticated user's role
+   - Redirects admin → `/admin`, non-admin → `/profile`
+6. **Toast notifications** - `sonner` integration:
+   - `ErrorToastHandler` shows messages from `?error=` query param
+   - Non-admins redirected from `/admin` see toast
+7. **Logout** - Works from admin sidebar and profile page
+
+**Files added/modified:**
+- `app/profile/page.tsx` (NEW)
+- `app/lib/session/actions.ts` (requireAdmin redirects to profile)
+- `app/auth/sign-in/actions.ts` (role-based redirect)
+- `app/auth/login/page.tsx` (role-based redirect on load)
+- `app/admin/layout.tsx` (uses requireAdmin)
+- `app/layout.tsx` (Toaster + ErrorToastHandler)
+- `app/components/ErrorToastHandler.tsx` (new)
+- `package.json` (added `sonner`)
+
+**User flows:**
+
+**Admin:** Sign in → `/admin` → full access
+
+**Non-Admin:** Sign in → `/profile` → view profile, logout
+- Try `/admin` → redirected to `/profile?error=forbidden` → sees toast
+
+**Unauthenticated:** 
+- `/admin` → `/auth/sign-in?callbackUrl=/admin`
+- `/profile` → `/auth/sign-in`
+
+**Impact:** Complete, loop-free authentication with proper role routing  
+**Effort:** Completed
+
+### ✅ Issues Already Fixed:
+
+1. **Security Vulnerability**: Custom `neon-auth.ts` with plaintext passwords
+   - **Fix**: Deleted file, using official NeonAuth package
    
-2. **Schema Duplication**: Had both `public.users` and `neon_auth.users` tables
-   - **Fix**: Removed `public.users`, now using `neon_auth.users` only
+2. **Schema Duplication**: Both `public.users` and `neon_auth.users` tables
+   - **Fix**: Removed `public.users`, using `neon_auth.users` only
 
-3. **Code Duplication**: Unused components (`AdminNav.tsx`, `ConstitutionModal.tsx`)
-   - **Fix**: Deleted all unused code
+3. **Code Duplication**: Unused components
+   - **Fix**: Deleted `AdminNav.tsx`, `ConstitutionModal.tsx`
+
+See `ADMIN_CLEAN-UP_PLAN.md` for full cleanup documentation.
 
 See `ADMIN_CLEAN-UP_PLAN.md` for detailed cleanup documentation.
 

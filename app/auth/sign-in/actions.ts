@@ -1,6 +1,9 @@
 "use server";
 import { redirect } from "next/navigation";
 import { auth } from "../../lib/auth";
+import { db } from "../../lib/db";
+import * as schema from "../../lib/db/schema";
+import { eq } from "drizzle-orm";
 
 export async function signInWithEmail(
   _prevState: { error: string } | null,
@@ -10,13 +13,24 @@ export async function signInWithEmail(
   if (!email) {
     return { error: "Email address must be provided." };
   }
+
   const session = await auth.signIn.email({
     email,
     password: formData.get("password") as string,
   });
+
   if (session.error) {
     return { error: session.error.message || "Failed to sign in" };
   }
 
-  redirect("/admin");
+  // After successful sign-in, check if user is admin to redirect appropriately
+  const admin = await db.query.admins.findFirst({
+    where: eq(schema.admins.userId, session.user.id),
+  });
+
+  if (admin) {
+    redirect("/admin");
+  } else {
+    redirect("/profile");
+  }
 }

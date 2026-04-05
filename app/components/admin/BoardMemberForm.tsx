@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { createBoardMember, updateBoardMember } from "@/lib/db/actions";
 import { useRouter } from "next/navigation";
-import { BoardMember } from "@/lib/db/schema";
+import { useState } from "react";
+import { createBoardMember, updateBoardMember } from "../../lib/db/actions";
+import type { BoardMember } from "../../lib/db/schema";
 
 interface BoardMemberFormProps {
   member?: BoardMember | null;
@@ -55,7 +55,8 @@ export default function BoardMemberForm({ member }: BoardMemberFormProps) {
       {success && (
         <div className="rounded-md bg-green-50 p-4">
           <p className="text-sm text-green-800">
-            Board member {isEditing ? "updated" : "created"} successfully! Redirecting...
+            Board member {isEditing ? "updated" : "created"} successfully!
+            Redirecting...
           </p>
         </div>
       )}
@@ -63,13 +64,16 @@ export default function BoardMemberForm({ member }: BoardMemberFormProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Name */}
         <div className="md:col-span-2">
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="name"
+            className="block text-sm font-medium text-gray-700"
+          >
             Full Name *
           </label>
           <input
             type="text"
             name="name"
-            id="name"
+            id={"name"}
             required
             defaultValue={member?.name || ""}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-earth-500 focus:border-earth-500 focus:outline-none"
@@ -79,13 +83,16 @@ export default function BoardMemberForm({ member }: BoardMemberFormProps) {
 
         {/* Nickname */}
         <div>
-          <label htmlFor="nickname" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="nickname"
+            className="block text-sm font-medium text-gray-700"
+          >
             Nickname / Preferred Name
           </label>
           <input
             type="text"
             name="nickname"
-            id="nickname"
+            id={"nickname"}
             defaultValue={member?.nickname || ""}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-earth-500 focus:border-earth-500 focus:outline-none"
             placeholder="Vonks"
@@ -94,12 +101,15 @@ export default function BoardMemberForm({ member }: BoardMemberFormProps) {
 
         {/* Role */}
         <div>
-          <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="role"
+            className="block text-sm font-medium text-gray-700"
+          >
             Role *
           </label>
           <select
             name="role"
-            id="role"
+            id={"role"}
             required
             defaultValue={member?.role || ""}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-earth-500 focus:border-earth-500 focus:outline-none"
@@ -112,13 +122,16 @@ export default function BoardMemberForm({ member }: BoardMemberFormProps) {
 
         {/* Sort Order */}
         <div>
-          <label htmlFor="sortId" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="sortId"
+            className="block text-sm font-medium text-gray-700"
+          >
             Sort Order *
           </label>
           <input
             type="number"
             name="sortId"
-            id="sortId"
+            id={"sortId"}
             required
             min={1}
             defaultValue={member?.sortId || 1}
@@ -141,7 +154,7 @@ export default function BoardMemberForm({ member }: BoardMemberFormProps) {
           <input
             type="number"
             name="yearsInNaturism"
-            id="yearsInNaturism"
+            id={"yearsInNaturism"}
             required
             min={0}
             defaultValue={member?.yearsInNaturism || 0}
@@ -161,7 +174,7 @@ export default function BoardMemberForm({ member }: BoardMemberFormProps) {
           <input
             type="text"
             name="otherOrganizations"
-            id="otherOrganizations"
+            id={"otherOrganizations"}
             defaultValue={member?.otherOrganizations?.join(", ") || ""}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-earth-500 focus:border-earth-500 focus:outline-none"
             placeholder="Naturist Café Arthouse Films, Bare Bliss Naturists Group"
@@ -176,11 +189,14 @@ export default function BoardMemberForm({ member }: BoardMemberFormProps) {
           <input
             type="checkbox"
             name="communityCouncil"
-            id="communityCouncil"
+            id={"communityCouncil"}
             defaultChecked={member?.communityCouncil || false}
             className="h-4 w-4 text-earth-600 focus:ring-earth-500 border-gray-300 rounded"
           />
-          <label htmlFor="communityCouncil" className="ml-2 block text-sm text-gray-900">
+          <label
+            htmlFor="communityCouncil"
+            className="ml-2 block text-sm text-gray-900"
+          >
             Member of Community Council
           </label>
         </div>
@@ -190,7 +206,7 @@ export default function BoardMemberForm({ member }: BoardMemberFormProps) {
           <input
             type="checkbox"
             name="active"
-            id="active"
+            id={"active"}
             defaultChecked={member?.active !== false}
             className="h-4 w-4 text-earth-600 focus:ring-earth-500 border-gray-300 rounded"
           />
@@ -210,7 +226,7 @@ export default function BoardMemberForm({ member }: BoardMemberFormProps) {
           <input
             type="text"
             name="profileImageUrl"
-            id="profileImageUrl"
+            id={"profileImageUrl"}
             defaultValue={member?.profileImageUrl || ""}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-earth-500 focus:border-earth-500 focus:outline-none"
             placeholder="/images/profile.jpg or Cloudinary URL"
@@ -230,7 +246,13 @@ export default function BoardMemberForm({ member }: BoardMemberFormProps) {
           disabled={loading || success}
           className="px-4 py-2 bg-earth-600 text-white rounded-md hover:bg-earth-700 font-medium disabled:opacity-50"
         >
-          {loading ? (isEditing ? "Updating..." : "Creating...") : isEditing ? "Update Member" : "Create Member"}
+          {loading
+            ? isEditing
+              ? "Updating..."
+              : "Creating..."
+            : isEditing
+              ? "Update Member"
+              : "Create Member"}
         </button>
       </div>
     </form>

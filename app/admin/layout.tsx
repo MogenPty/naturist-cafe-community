@@ -1,34 +1,27 @@
-import { eq } from "drizzle-orm";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+
 import { auth } from "../lib/auth";
-import { db } from "../lib/db";
-import * as schema from "../lib/db/schema";
+import { requireAdmin } from "../lib/session/actions";
 
 const handleSignOut = async () => {
   "use server";
   await auth.signOut();
+  redirect("/auth/login");  // Redirect after logout
 };
+
+// Force dynamic rendering since layout uses cookies via requireAdmin()
+export const dynamic = "force-dynamic";
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // Check if user is authenticated
-  const session = await auth.getSession();
-  if (!session?.data?.user) {
-    redirect("/auth/login");
-  }
-
-  // Check if user is admin
-  const admin = await db.query.admins.findFirst({
-    where: eq(schema.admins.userId, session.data.user.id),
-  });
-
-  if (!admin) {
-    redirect("/?error=Forbidden: Admin access required");
-  }
+  // This will redirect if:
+  // - User is not logged in → /auth/login
+  // - User is not admin → /?error=forbidden (toast will show)
+  const { user } = await requireAdmin();
 
   return (
     <div className="min-h-screen bg-charcoal-700 flex">
@@ -56,10 +49,10 @@ export default async function AdminLayout({
 
         {/* Footer */}
         <div className="px-4 py-4 border-t border-cream-200/10">
-          {session.data.user && (
+          {user && (
             <>
               <p className="font-body font-light text-cream-200/40 text-xs truncate">
-                {session.data.user.email}
+                {user.email}
               </p>
               <form action={handleSignOut}>
                 <button
@@ -85,11 +78,6 @@ export default async function AdminLayout({
         <div className="max-w-7xl mx-auto px-8 py-8">{children}</div>
       </main>
     </div>
-
-    // <div className="min-h-screen bg-gray-50">
-    //   <AdminNav user={{ email: session.user.email, name: session.user.name }} />
-    //   <main className="container-custom py-8">{children}</main>
-    // </div>
   );
 }
 

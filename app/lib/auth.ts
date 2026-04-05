@@ -47,26 +47,3 @@ export async function getCurrentUser() {
 
   return dbUser;
 }
-
-// Server action: Require admin access
-export async function requireAdmin() {
-  // "use server";
-  const session = await getSession();
-
-  const sessionUser = session?.data?.user;
-
-  if (!sessionUser) {
-    throw new Error("Unauthorized: Please log in");
-  }
-
-  // Check if user is admin
-  const admin = await db.query.admins.findFirst({
-    where: eq(schema.admins.userId, sessionUser.id),
-  });
-
-  if (!admin) {
-    throw new Error("Forbidden: Admin access required");
-  }
-
-  return { user: sessionUser, role: admin.role };
-}

@@ -1,10 +1,31 @@
 import { redirect } from "next/navigation";
 import { Card, Divider } from "../../components/ui";
 import { auth } from "../../lib/auth";
+import { db } from "../../lib/db";
+import * as schema from "../../lib/db/schema";
+import { eq } from "drizzle-orm";
+
+// Force dynamic rendering since this page uses cookies via auth.getSession()
+export const dynamic = "force-dynamic";
 
 export default async function LoginPage() {
+  // Check if user is authenticated and get their role
   const session = await auth.getSession();
-  if (session?.data?.user) redirect("/");
+  const user = session?.data?.user;
+
+  if (user) {
+    // Check if user is admin
+    const admin = await db.query.admins.findFirst({
+      where: eq(schema.admins.userId, user.id),
+    });
+
+    if (admin) {
+      redirect("/admin");
+    } else {
+      // Non-admin users go to profile page
+      redirect("/profile");
+    }
+  }
 
   return (
     <div className="min-h-screen bg-charcoal-700 flex items-center justify-center px-4">
