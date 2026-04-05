@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
 import { Card, Divider } from "../../components/ui";
-import { neonAuth } from "../../lib/auth/neon-auth";
+import { auth } from "../../lib/auth";
 
 export default async function LoginPage() {
-  const session = await neonAuth.getSession();
-  if (session?.user) redirect("/");
+  const session = await auth.getSession();
+  if (session?.data?.user) redirect("/");
 
   return (
     <div className="min-h-screen bg-charcoal-700 flex items-center justify-center px-4">

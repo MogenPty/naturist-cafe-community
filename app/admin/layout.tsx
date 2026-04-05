@@ -1,14 +1,13 @@
 import { eq } from "drizzle-orm";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { neonAuth, signOut } from "../lib/auth/neon-auth";
 import { auth } from "../lib/auth";
 import { db } from "../lib/db";
 import * as schema from "../lib/db/schema";
 
 const handleSignOut = async () => {
   "use server";
-  await signOut();
+  await auth.signOut();
 };
 
 export default async function AdminLayout({
@@ -23,12 +22,9 @@ export default async function AdminLayout({
   }
 
   // Check if user is admin
-  const admin = await db
-    .select()
-    .from(schema.admins)
-    .where(eq(schema.admins.userId, session.data.user.id))
-    .limit(1)
-    .then((rows) => rows[0] ?? null);
+  const admin = await db.query.admins.findFirst({
+    where: eq(schema.admins.userId, session.data.user.id),
+  });
 
   if (!admin) {
     redirect("/?error=Forbidden: Admin access required");

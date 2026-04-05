@@ -1,9 +1,9 @@
-import { getAllEvents, getActiveBoardMembers } from "@/lib/db/queries";
-import { neonAuth } from "@/lib/auth/neon-auth";
 import Link from "next/link";
+import { auth } from "../lib/auth";
+import { getActiveBoardMembers, getAllEvents } from "../lib/db/queries";
 
 export default async function AdminDashboard() {
-  const session = await neonAuth.getSession();
+  const session = await auth.getSession();
   const [events, boardMembers] = await Promise.all([
     getAllEvents(),
     getActiveBoardMembers(),
@@ -42,7 +42,8 @@ export default async function AdminDashboard() {
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
           <p className="mt-1 text-gray-600">
-            Welcome back, {session?.user.name || session?.user.email}
+            Welcome back,{" "}
+            {session?.data?.user.name || session?.data?.user.email}
           </p>
         </div>
         <div className="flex gap-3">
@@ -94,7 +95,9 @@ export default async function AdminDashboard() {
           </Link>
         </div>
         {events.length === 0 ? (
-          <p className="text-gray-500">No events yet. Create your first event!</p>
+          <p className="text-gray-500">
+            No events yet. Create your first event!
+          </p>
         ) : (
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">

@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
 import { db } from "./index";
 import * as schema from "./schema";
-import { requireAdmin } from "../auth/neon-auth";
+import { requireAdmin } from "../auth";
 
 // ==================== EVENTS ====================
 
