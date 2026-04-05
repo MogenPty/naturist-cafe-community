@@ -4,9 +4,9 @@ import { db } from "./db";
 import * as schema from "./db/schema";
 
 export const auth = createNeonAuth({
-  baseUrl: process.env.NEON_AUTH_CLIENT_URL!,
+  baseUrl: process.env.NEON_AUTH_BASE_URL!,
   cookies: {
-    secret: process.env.NEON_AUTH_CLIENT_SECRET!,
+    secret: process.env.NEON_AUTH_COOKIE_SECRET!,
   },
 });
 
