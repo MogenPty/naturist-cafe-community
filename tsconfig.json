@@ -2,7 +2,14 @@
   "files": [],
   "compilerOptions": {
     "forceConsistentCasingInFileNames": true,
-    "strict": true
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./app/*"
+      ]
+    },
+    "target": "ES2017"
   },
   "references": [
     {
