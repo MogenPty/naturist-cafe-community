@@ -10,8 +10,8 @@ const Login = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Placeholder for login logic
-    console.log("Login attempt:", { email, password });
+    // TODO: Implement secure login using signInWithEmail server action
+    // For now, this form is disabled pending implementation
   };
 
   return (

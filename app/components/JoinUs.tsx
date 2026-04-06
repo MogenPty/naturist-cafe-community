@@ -1,7 +1,7 @@
 "use client";
 
 import { type FormEvent, useForm, ValidationError } from "@formspree/react";
-import { useState } from "react";
+import { useId, useState } from "react";
 
 const JoinUs = () => {
   return (
@@ -24,6 +24,7 @@ const JoinUs = () => {
 export default JoinUs;
 
 const MembershipForm = () => {
+  const id = useId();
   const [formData, setFormData] = useState({
     // Required fields
     firstName: "",
@@ -119,13 +120,14 @@ const MembershipForm = () => {
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <label
-                htmlFor="firstName"
+                htmlFor={`firstName-${id}`}
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
                 First Name *
               </label>
               <input
                 type="text"
+                id={`firstName-${id}`}
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleInputChange}
@@ -146,13 +148,14 @@ const MembershipForm = () => {
 
             <div>
               <label
-                htmlFor="lastName"
+                htmlFor={`lastName-${id}`}
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
                 Last Name
               </label>
               <input
                 type="text"
+                id={`lastName-${id}`}
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleInputChange}
@@ -163,13 +166,14 @@ const MembershipForm = () => {
 
             <div>
               <label
-                htmlFor="nickname"
+                htmlFor={`nickname-${id}`}
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
                 Nickname/Preferred Name *
               </label>
               <input
                 type="text"
+                id={`nickname-${id}`}
                 name="nickname"
                 value={formData.nickname}
                 onChange={handleInputChange}
@@ -189,13 +193,14 @@ const MembershipForm = () => {
             </div>
             <div>
               <label
-                htmlFor="dateOfBirth"
+                htmlFor={`dateOfBirth-${id}`}
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
                 Date of Birth *
               </label>
               <input
                 type="date"
+                id={`dateOfBirth-${id}`}
                 name="dateOfBirth"
                 value={formData.dateOfBirth}
                 onChange={handleInputChange}
@@ -225,7 +230,7 @@ const MembershipForm = () => {
 
           <div className="mt-4">
             <label
-              htmlFor="email"
+              htmlFor={`email-${id}`}
               className="block text-sm font-medium text-gray-700 mb-2"
             >
               Email *
@@ -234,6 +239,7 @@ const MembershipForm = () => {
             <div>
               <input
                 type="email"
+                id={`email-${id}`}
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
@@ -262,12 +268,13 @@ const MembershipForm = () => {
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <label
-                htmlFor="gender"
+                htmlFor={`gender-${id}`}
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
                 Gender Identity
               </label>
               <select
+                id={`gender-${id}`}
                 name="gender"
                 value={formData.gender}
                 onChange={handleInputChange}
@@ -284,12 +291,13 @@ const MembershipForm = () => {
 
             <div>
               <label
-                htmlFor="naturismExperience"
+                htmlFor={`naturismExperience-${id}`}
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
                 Naturism Experience
               </label>
               <select
+                id={`naturismExperience-${id}`}
                 name="naturismExperience"
                 value={formData.naturismExperience}
                 onChange={handleInputChange}
@@ -308,13 +316,14 @@ const MembershipForm = () => {
 
             <div>
               <label
-                htmlFor="city"
+                htmlFor={`city-${id}`}
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
                 City
               </label>
               <input
                 type="text"
+                id={`city-${id}`}
                 name="city"
                 value={formData.city}
                 onChange={handleInputChange}
@@ -325,12 +334,13 @@ const MembershipForm = () => {
 
             <div>
               <label
-                htmlFor="province"
+                htmlFor={`province-${id}`}
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
                 Province
               </label>
               <select
+                id={`province-${id}`}
                 name="province"
                 value={formData.province}
                 onChange={handleInputChange}

@@ -25,14 +25,13 @@ export async function signUpWithEmail(
     return { error: error.message || "Failed to create account" };
   }
 
-  // insert the account into the users table
+  // insert the account into the users table (profile data only - auth handled by Neon Auth)
   await db
     .insert(users)
     .values({
       id: data.user.id,
       email,
       name: formData.get("name") as string,
-      password: formData.get("password") as string,
       createdAt: new Date(),
     })
     .onConflictDoNothing();
