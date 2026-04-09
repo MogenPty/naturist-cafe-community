@@ -1,6 +1,6 @@
-import { getAllBoardMembers } from "@/lib/db/queries";
-import DeleteButton from "../events/components/DeleteButton";
 import { revalidatePath } from "next/cache";
+import DeleteButton from "../../components/admin/DeleteButton";
+import { getAllBoardMembers } from "../../lib/db/queries";
 
 export default async function AdminBoardPage() {
   const boardMembers = await getAllBoardMembers();
@@ -10,7 +10,7 @@ export default async function AdminBoardPage() {
     const id = formData.get("id") as string;
     if (!id) throw new Error("Board member ID required");
 
-    const { deleteBoardMember } = await import("@/lib/db/actions");
+    const { deleteBoardMember } = await import("../../lib/db/actions");
     await deleteBoardMember(id);
     revalidatePath("/admin/board");
   }
@@ -81,18 +81,21 @@ export default async function AdminBoardPage() {
                           &ldquo;{member.nickname}&rdquo;
                         </div>
                       )}
-                      {member.otherOrganizations && member.otherOrganizations.length > 0 && (
-                        <div className="text-xs text-gray-500">
-                          {member.otherOrganizations.join(", ")}
-                        </div>
-                      )}
+                      {member.otherOrganizations &&
+                        member.otherOrganizations.length > 0 && (
+                          <div className="text-xs text-gray-500">
+                            {member.otherOrganizations.join(", ")}
+                          </div>
+                        )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                        member.role === "Director"
-                          ? "bg-nature-100 text-nature-800"
-                          : "bg-gray-100 text-gray-800"
-                      }`}>
+                      <span
+                        className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                          member.role === "Director"
+                            ? "bg-nature-100 text-nature-800"
+                            : "bg-gray-100 text-gray-800"
+                        }`}
+                      >
                         {member.role}
                       </span>
                     </td>

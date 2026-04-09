@@ -1,6 +1,6 @@
-import { getAllContent } from "@/lib/db/queries";
-import DeleteButton from "../events/components/DeleteButton";
 import { revalidatePath } from "next/cache";
+import DeleteButton from "../../components/admin/DeleteButton";
+import { getAllContent } from "../../lib/db/queries";
 
 export default async function AdminContentPage() {
   const contents = await getAllContent();
@@ -10,7 +10,7 @@ export default async function AdminContentPage() {
     const id = formData.get("id") as string;
     if (!id) throw new Error("Content ID required");
 
-    const { deleteContent } = await import("@/lib/db/actions");
+    const { deleteContent } = await import("../../lib/db/actions");
     await deleteContent(id);
     revalidatePath("/admin/content");
   }
@@ -19,7 +19,9 @@ export default async function AdminContentPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Content Management</h1>
+          <h1 className="text-3xl font-bold text-gray-900">
+            Content Management
+          </h1>
           <p className="mt-1 text-gray-600">
             Manage text and images displayed on the website
           </p>
@@ -77,20 +79,24 @@ export default async function AdminContentPage() {
                       </code>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                        content.contentType === "image"
-                          ? "bg-purple-100 text-purple-800"
-                          : content.contentType === "html"
-                          ? "bg-blue-100 text-blue-800"
-                          : "bg-gray-100 text-gray-800"
-                      }`}>
+                      <span
+                        className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                          content.contentType === "image"
+                            ? "bg-purple-100 text-purple-800"
+                            : content.contentType === "html"
+                              ? "bg-blue-100 text-blue-800"
+                              : "bg-gray-100 text-gray-800"
+                        }`}
+                      >
                         {content.contentType}
                       </span>
                     </td>
                     <td className="px-6 py-4">
                       <div className="text-sm text-gray-900 max-w-xs truncate">
                         {content.contentType === "image" ? (
-                          <span className="text-gray-500">Image: {content.imagePublicId || "No ID"}</span>
+                          <span className="text-gray-500">
+                            Image: {content.imagePublicId || "No ID"}
+                          </span>
                         ) : (
                           content.textValue || "(empty)"
                         )}

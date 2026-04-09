@@ -4,7 +4,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { createContent, updateContent } from "../../lib/db/actions";
 import type { PagesContent } from "../../lib/db/schema";
-import Image from "next/image";
+
+// import Image from "next/image";
 
 interface ContentFormProps {
   content?: PagesContent | null;
