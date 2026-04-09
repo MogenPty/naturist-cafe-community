@@ -7,11 +7,9 @@ import SettingsForm from "../../components/auth/SettingsForm";
 export default function AdminSettingsPage() {
   const router = useRouter();
   const [success, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const handleSuccess = () => {
     setSuccess(true);
-    setLoading(true);
     setTimeout(() => {
       router.push("/admin");
     }, 1500);
