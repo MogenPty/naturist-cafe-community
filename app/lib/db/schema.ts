@@ -98,6 +98,21 @@ export const users = pgTable("users", {
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 });
 
+// Pages Content - Manage static content for website pages
+export const pagesContent = pgTable("pages_content", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  section: text("section").notNull(), // Unique identifier for content section (e.g., 'hero_title', 'constitution_values')
+  contentType: text("content_type").notNull().$type<"text" | "html" | "image" | "json">(),
+  textValue: text("text_value"),
+  imagePublicId: text("image_public_id"),
+  imageAlt: text("image_alt"),
+  sortOrder: integer("sort_order").default(0),
+  active: boolean("active").default(true),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow(),
+  createdBy: uuid("created_by"),
+}, (table) => [unique("pages_content_section_unique").on(table.section)]);
+
 // NeonAuth users table reference (created by NeonAuth in neon_auth schema)
 // We don't define it in Drizzle, but we can reference it with raw SQL
 // For now, we'll skip the foreign key constraint and just store the UUID
@@ -162,8 +177,33 @@ export type UpdateEvent = z.infer<typeof updateEventSchema>;
 export type InsertBoardMember = z.infer<typeof insertBoardMemberSchema>;
 export type UpdateBoardMember = z.infer<typeof updateBoardMemberSchema>;
 
+export const insertPagesContentSchema = createInsertSchema(pagesContent).pick({
+  section: true,
+  contentType: true,
+  textValue: true,
+  imagePublicId: true,
+  imageAlt: true,
+  sortOrder: true,
+  active: true,
+});
+
+export const updatePagesContentSchema = createUpdateSchema(pagesContent).pick({
+  section: true,
+  contentType: true,
+  textValue: true,
+  imagePublicId: true,
+  imageAlt: true,
+  sortOrder: true,
+  active: true,
+  updatedAt: true,
+});
+
+export type InsertPagesContent = z.infer<typeof insertPagesContentSchema>;
+export type UpdatePagesContent = z.infer<typeof updatePagesContentSchema>;
+
 // Helper type inferences
 export type Event = typeof events.$inferSelect;
 export type BoardMember = typeof boardMembers.$inferSelect;
 export type Admin = typeof admins.$inferSelect;
 export type User = typeof users.$inferSelect;
+export type PagesContent = typeof pagesContent.$inferSelect;

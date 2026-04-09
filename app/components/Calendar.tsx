@@ -52,7 +52,7 @@ type CalendarView = (typeof Views)[keyof typeof Views];
 //   },
 // ];
 
-const MyCalendar = () => {
+const MyCalendar = (events: Event[]) => {
   const [view, setView] = useState<CalendarView>(Views.MONTH);
   const [date, setDate] = useState(new Date());
 
@@ -80,6 +80,7 @@ const MyCalendar = () => {
       <Calendar
         localizer={localizer}
         // events={myEventsList}
+        events={events}
         startAccessor="start"
         endAccessor="end"
         style={{ height: 500 }}

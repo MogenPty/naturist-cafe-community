@@ -28,22 +28,27 @@ export async function getCurrentUserSession() {
  * Redirects to homepage with error toast if not admin
  */
 export async function requireAdmin() {
-  const session = await getSession();
-  const sessionUser = session?.data?.user;
+  try {
+    const session = await getSession();
+    const sessionUser = session?.data?.user;
 
-  if (!sessionUser) {
+    if (!sessionUser) {
+      redirect("/auth/sign-in?callbackUrl=/admin");
+    }
+
+    // Check if user is admin
+    const admin = await db.query.admins.findFirst({
+      where: eq(schema.admins.userId, sessionUser.id),
+    });
+
+    if (!admin) {
+      // Redirect to profile page with error toast
+      redirect("/profile?error=forbidden");
+    }
+
+    return { user: sessionUser, role: admin.role };
+  } catch (e) {
+    console.log("Error", e);
     redirect("/auth/sign-in?callbackUrl=/admin");
   }
-
-  // Check if user is admin
-  const admin = await db.query.admins.findFirst({
-    where: eq(schema.admins.userId, sessionUser.id),
-  });
-
-  if (!admin) {
-    // Redirect to profile page with error toast
-    redirect("/profile?error=forbidden");
-  }
-
-  return { user: sessionUser, role: admin.role };
 }

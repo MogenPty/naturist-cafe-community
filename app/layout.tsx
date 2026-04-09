@@ -1,14 +1,23 @@
+import { NeonAuthUIProvider } from "@neondatabase/auth/react";
 import type { Metadata } from "next";
-import "./globals.css";
-import AgeGate from "./components/AgeGate";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import { Toaster } from "sonner";
-import ErrorToastHandler from "./components/ErrorToastHandler";
 import { Suspense } from "react";
+import { Toaster } from "sonner";
+import AgeGate from "./components/AgeGate";
+import ErrorToastHandler from "./components/ErrorToastHandler";
+import { authClient } from "./lib/auth-client";
+
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Naturist Cafe Community",
-  description: "Official website of the Naturist Cafe Community",
+  title: "Naturist Café Community",
+  description: "Official website of the Naturist Café Community.",
+  keywords: ["naturist", "arthouse", "films", "community", "naturism"],
+  openGraph: {
+    title: "Naturist Café Community",
+    description: "Official website of the Naturist Café Community.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -20,6 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
+        {/* <NeonAuthUIProvider authClient={authClient} > */}
         <AgeGate>{children}</AgeGate>
         <Suspense fallback={null}>
           <ErrorToastHandler />
@@ -34,6 +44,7 @@ export default function RootLayout({
             },
           }}
         />
+        {/* </NeonAuthUIProvider> */}
       </body>
     </html>
   );

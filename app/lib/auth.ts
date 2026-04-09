@@ -10,7 +10,16 @@ export const auth = createNeonAuth({
   },
 });
 
+export const neonAuth = createNeonAuth({
+  baseUrl: process.env.NEON_AUTH_BASE_URL!,
+  cookies: {
+    secret: process.env.NEON_AUTH_COOKIE_SECRET!,
+  },
+});
+
 export const { getSession, signIn, signOut, verifyEmail, emailOtp } = auth;
+
+export const { changePassword, resetPassword, accountInfo } = neonAuth;
 
 export function getIsSystemHost(hostname: string) {
   const [hostWithoutPort] = hostname.split(":");
@@ -47,3 +56,8 @@ export async function getCurrentUser() {
 
   return dbUser;
 }
+
+// export async function updateDisplayName(displayName: string) {
+//   accountInfo()
+//   return true;
+// }

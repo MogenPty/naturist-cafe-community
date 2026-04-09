@@ -1,5 +1,7 @@
+import { LogOutIcon, SettingsIcon } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import Script from "next/script";
 
 import { auth } from "../lib/auth";
 import { requireAdmin } from "../lib/session/actions";
@@ -7,7 +9,7 @@ import { requireAdmin } from "../lib/session/actions";
 const handleSignOut = async () => {
   "use server";
   await auth.signOut();
-  redirect("/auth/login");  // Redirect after logout
+  redirect("/auth/login"); // Redirect after logout
 };
 
 // Force dynamic rendering since layout uses cookies via requireAdmin()
@@ -25,6 +27,12 @@ export default async function AdminLayout({
 
   return (
     <div className="min-h-screen bg-charcoal-700 flex">
+      {/* Cloudinary Widget Script */}
+      <Script
+        src="https://widget.cloudinary.com/v2.0/global/all.js"
+        strategy="afterInteractive"
+      />
+
       {/* ── Sidebar ─────────────────────────────── */}
       <aside className="w-60 shrink-0 bg-charcoal-600/50 border-r border-cream-200/10 flex flex-col">
         {/* Brand */}
@@ -40,37 +48,32 @@ export default async function AdminLayout({
         {/* Nav */}
         <nav className="flex-1 py-4 px-2 space-y-1">
           <NavItem href="/admin" icon="⊞" label="Dashboard" />
-          <NavItem href="/admin/applications" icon="◈" label="Applications" />
+          {/* <NavItem href="/profile" icon="◉" label="My Profile" />
+          <NavItem href="/admin/applications" icon="◫" label="Applications" /> */}
           <NavItem href="/admin/events" icon="◇" label="Events" />
           <NavItem href="/admin/content" icon="◻" label="Content" />
-          <NavItem href="/admin/gallery" icon="◫" label="Gallery" />
+          {/* <NavItem href="/admin/gallery" icon="◫" label="Gallery" /> */}
           <NavItem href="/admin/board" icon="◯" label="Board Members" />
         </nav>
 
         {/* Footer */}
-        <div className="px-4 py-4 border-t border-cream-200/10">
-          {user && (
-            <>
+        {user && (
+          <div className="px-4 py-4 border-t border-cream-200/10">
+            <div className="flex flex-row items-center justify-between">
               <p className="font-body font-light text-cream-200/40 text-xs truncate">
-                {user.email}
+                {user.name}
               </p>
-              <form action={handleSignOut}>
-                <button
-                  type="submit"
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-nature-500"
-                >
-                  Sign Out
-                </button>
-              </form>
-            </>
-          )}
-          <Link
-            href="/"
-            className="font-body font-light text-cream-200/50 hover:text-cream-200 text-xs mt-1 block transition-colors"
-          >
-            ← View Site
-          </Link>
-        </div>
+              <div className="flex flex-row items-center gap-2">
+                <Link href="/admin/settings">
+                  <SettingsIcon />
+                </Link>
+                <Link href="#" onClick={handleSignOut}>
+                  <LogOutIcon />
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
       </aside>
 
       {/* ── Main ────────────────────────────────── */}

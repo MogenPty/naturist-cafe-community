@@ -3,7 +3,28 @@
 import { Download, FileText, Heart } from "lucide-react";
 import { ImageLoader } from "./ImageLoader";
 
-const Constitution = () => {
+interface ConstitutionProps {
+  values?: string;
+  imagePublicId?: string;
+  imageAlt?: string;
+}
+
+const Constitution = ({
+  values = `<ul>
+    <li>Respect for others</li>
+    <li>Respect for ourselves</li>
+    <li>Non-judgmentalism</li>
+    <li>Non-discrimination</li>
+    <li>Non-racialism</li>
+    <li>Non-sexual</li>
+    <li>Family-friendly</li>
+    <li>Peace</li>
+    <li>Safety</li>
+    <li>Respect for nature</li>
+  </ul>`,
+  imagePublicId = "ncc_002",
+  imageAlt = "Three Naturists",
+}: ConstitutionProps) => {
   const handleDownload = () => {
     // Create a link to download the PDF
     const link = document.createElement("a");
@@ -56,25 +77,17 @@ const Constitution = () => {
               <h4 className="text-xl font-semibold text-nature-800 mb-3">
                 Our Values
               </h4>
-              <ul className="list-disc list-inside text-nature-700 leading-relaxed">
-                <li>Respect for others</li>
-                <li>Respect for ourselves</li>
-                <li>Non-judgmentalism</li>
-                <li>Non-discrimination</li>
-                <li>Non-racialism</li>
-                <li>Non-sexual</li>
-                <li>Family-friendly</li>
-                <li>Peace</li>
-                <li>Safety</li>
-                <li>Respect for nature</li>
-              </ul>
+              <ul
+                className="list-disc list-inside text-nature-700 leading-relaxed"
+                // biome-ignore lint/security/noDangerouslySetInnerHtml: Will have to work on the List Component
+                dangerouslySetInnerHTML={{ __html: values }}
+              />
             </div>
-
             <div className="bg-earth-100 p-0 rounded-xl border border-earth-200 shadow-sm md:col-span-2 overflow-hidden">
               <ImageLoader
                 className="w-full h-full md:h-full object-cover rounded-xl"
-                alt="Three Naturists"
-                publicId="ncc_002"
+                alt={imageAlt}
+                publicId={imagePublicId}
                 width={800}
               />
             </div>
