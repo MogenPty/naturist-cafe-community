@@ -347,3 +347,64 @@ export async function deleteContent(id: string) {
 
   return { success: true };
 }
+
+export async function updateAdminRole(
+  id: string,
+  role: "admin" | "editor" | "superadmin" | undefined,
+) {
+  await requireAdmin();
+
+  const result = await db
+    .update(schema.admins)
+    .set({ role })
+    .where(eq(schema.admins.userId, id))
+    .returning();
+
+  if (result.length === 0) {
+    throw new Error("Admin not found");
+  }
+
+  revalidatePath("/admin/admins");
+
+  return { success: true, admin: result[0] };
+}
+
+export async function removeAdmin(id: string) {
+  await requireAdmin();
+
+  const getAdmin = await db.query.admins.findFirst({
+    where: eq(schema.admins.userId, id),
+  });
+
+  if (!getAdmin) {
+    throw new Error("Admin not found");
+  }
+
+  if (getAdmin.role === "superadmin") {
+    throw new Error("Superadmin cannot be removed");
+  }
+
+  if (getAdmin.role !== "none") {
+    const result = await db
+      .update(schema.admins)
+      .set({ role: "none" })
+      .where(eq(schema.admins.userId, id))
+      .returning();
+
+    revalidatePath("/admin/admins");
+    return { success: true, admin: result[0] };
+  }
+
+  const result = await db
+    .delete(schema.admins)
+    .where(eq(schema.admins.userId, id))
+    .returning();
+
+  if (result.length === 0) {
+    throw new Error("Admin not found");
+  }
+
+  revalidatePath("/admin/admins");
+
+  return { success: true };
+}

@@ -81,10 +81,12 @@ export const admins = pgTable("admins", {
   role: text("role")
     .notNull()
     .default("editor")
-    .$type<"superadmin" | "admin" | "editor">(),
+    .$type<"superadmin" | "admin" | "editor" | "none">(),
   permissions: jsonb("permissions").default({}),
   lastLogin: timestamp("last_login", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow(),
+  createdBy: uuid("created_by"), // References neon_auth.users.id (no FK constraint)
 });
 
 export const users = pgTable("users", {
@@ -99,19 +101,25 @@ export const users = pgTable("users", {
 });
 
 // Pages Content - Manage static content for website pages
-export const pagesContent = pgTable("pages_content", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  section: text("section").notNull(), // Unique identifier for content section (e.g., 'hero_title', 'constitution_values')
-  contentType: text("content_type").notNull().$type<"text" | "html" | "image" | "json">(),
-  textValue: text("text_value"),
-  imagePublicId: text("image_public_id"),
-  imageAlt: text("image_alt"),
-  sortOrder: integer("sort_order").default(0),
-  active: boolean("active").default(true),
-  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow(),
-  createdBy: uuid("created_by"),
-}, (table) => [unique("pages_content_section_unique").on(table.section)]);
+export const pagesContent = pgTable(
+  "pages_content",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    section: text("section").notNull(), // Unique identifier for content section (e.g., 'hero_title', 'constitution_values')
+    contentType: text("content_type")
+      .notNull()
+      .$type<"text" | "html" | "image" | "json">(),
+    textValue: text("text_value"),
+    imagePublicId: text("image_public_id"),
+    imageAlt: text("image_alt"),
+    sortOrder: integer("sort_order").default(0),
+    active: boolean("active").default(true),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow(),
+    createdBy: uuid("created_by"),
+  },
+  (table) => [unique("pages_content_section_unique").on(table.section)],
+);
 
 // NeonAuth users table reference (created by NeonAuth in neon_auth schema)
 // We don't define it in Drizzle, but we can reference it with raw SQL
@@ -207,3 +215,4 @@ export type BoardMember = typeof boardMembers.$inferSelect;
 export type Admin = typeof admins.$inferSelect;
 export type User = typeof users.$inferSelect;
 export type PagesContent = typeof pagesContent.$inferSelect;
+export type NeonUser = typeof userInNeonAuth.$inferSelect;

@@ -1,8 +1,11 @@
 import { revalidatePath } from "next/cache";
 import DeleteButton from "../../components/admin/DeleteButton";
 import { getAllContent } from "../../lib/db/queries";
+import { getUserWithRole } from "../../lib/session/actions";
 
 export default async function AdminContentPage() {
+  const { role } = await getUserWithRole();
+
   const contents = await getAllContent();
 
   async function deleteContentItem(formData: FormData) {
@@ -26,12 +29,14 @@ export default async function AdminContentPage() {
             Manage text and images displayed on the website
           </p>
         </div>
-        <a
-          href="/admin/content/new"
-          className="px-4 py-2 bg-nature-600 text-white rounded-md hover:bg-nature-700 font-medium"
-        >
-          Add Content
-        </a>
+        {role === "superadmin" && (
+          <a
+            href="/admin/content/new"
+            className="px-4 py-2 bg-nature-600 text-white rounded-md hover:bg-nature-700 font-medium"
+          >
+            Add Content
+          </a>
+        )}
       </div>
 
       <div className="bg-white shadow-sm border border-gray-200 rounded-lg overflow-hidden">
@@ -97,9 +102,7 @@ export default async function AdminContentPage() {
                           <span className="text-gray-500">
                             Image: {content.imagePublicId || "No ID"}
                           </span>
-                        ) : (
-                          content.textValue || "(empty)"
-                        )}
+                        ) : (content.textValue || "(empty)")}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -123,11 +126,13 @@ export default async function AdminContentPage() {
                       >
                         Edit
                       </a>
-                      <DeleteButton
-                        id={content.id}
-                        title={content.section}
-                        deleteAction={deleteContentItem}
-                      />
+                      {role === "admin" && (
+                        <DeleteButton
+                          id={content.id}
+                          title={content.section}
+                          deleteAction={deleteContentItem}
+                        />
+                      )}
                     </td>
                   </tr>
                 ))}

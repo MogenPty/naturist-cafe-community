@@ -122,17 +122,37 @@ export async function getAdminByUserId(userId: string) {
  */
 export async function isAdmin(userId: string) {
   const admin = await getAdminByUserId(userId);
-  return !!admin;
+
+  if (!admin) return false;
+
+  return ["superadmin", "admin", "editor"].includes(admin.role);
 }
 
 /**
- * Get all admins with user details
+ * Get all admins with user details from neonAuth
  */
 export async function getAllAdmins() {
   return db
-    .select()
+    .select({
+      id: schema.admins.userId,
+      userId: schema.admins.userId,
+      role: schema.admins.role,
+      permissions: schema.admins.permissions,
+      lastLogin: schema.admins.lastLogin,
+      createdAt: schema.admins.createdAt,
+      updatedAt: schema.admins.updatedAt,
+      // NeonAuth user fields
+      neonAuthId: schema.userInNeonAuth.id,
+      name: schema.userInNeonAuth.name,
+      email: schema.userInNeonAuth.email,
+      emailVerified: schema.userInNeonAuth.emailVerified,
+      image: schema.userInNeonAuth.image,
+    })
     .from(schema.admins)
-    .innerJoin(schema.users, eq(schema.admins.userId, schema.users.id))
+    .innerJoin(
+      schema.userInNeonAuth,
+      eq(schema.admins.userId, schema.userInNeonAuth.id),
+    )
     .orderBy(desc(schema.admins.createdAt));
 }
 

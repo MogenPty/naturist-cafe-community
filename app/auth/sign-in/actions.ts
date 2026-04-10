@@ -1,9 +1,8 @@
 "use server";
+
 import { redirect } from "next/navigation";
 import { auth } from "../../lib/auth";
-import { db } from "../../lib/db";
-import * as schema from "../../lib/db/schema";
-import { eq } from "drizzle-orm";
+import { isAdmin } from "../../lib/db";
 
 export async function signInWithEmail(
   _prevState: { error: string } | null,
@@ -24,9 +23,7 @@ export async function signInWithEmail(
   }
 
   // After successful sign-in, check if user is admin to redirect appropriately
-  const admin = await db.query.admins.findFirst({
-    where: eq(schema.admins.userId, data.user.id),
-  });
+  const admin = await isAdmin(data.user.id);
 
   if (admin) {
     redirect("/admin");

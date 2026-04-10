@@ -1,7 +1,16 @@
-import { LogOutIcon, SettingsIcon } from "lucide-react";
+import {
+  CalendarPlusIcon,
+  FormIcon,
+  LayoutDashboardIcon,
+  LogOutIcon,
+  SettingsIcon,
+  ShieldUserIcon,
+  UserPenIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import Script from "next/script";
+import { UsersIcon } from "lucide-react";
 
 import { auth } from "../lib/auth";
 import { requireAdmin } from "../lib/session/actions";
@@ -23,7 +32,7 @@ export default async function AdminLayout({
   // This will redirect if:
   // - User is not logged in → /auth/login
   // - User is not admin → /?error=forbidden (toast will show)
-  const { user } = await requireAdmin();
+  const { user, role } = await requireAdmin();
 
   return (
     <div className="min-h-screen bg-charcoal-700 flex">
@@ -47,30 +56,55 @@ export default async function AdminLayout({
 
         {/* Nav */}
         <nav className="flex-1 py-4 px-2 space-y-1">
-          <NavItem href="/admin" icon="⊞" label="Dashboard" />
-          {/* <NavItem href="/profile" icon="◉" label="My Profile" />
-          <NavItem href="/admin/applications" icon="◫" label="Applications" /> */}
-          <NavItem href="/admin/events" icon="◇" label="Events" />
-          <NavItem href="/admin/content" icon="◻" label="Content" />
+          <NavItem
+            href="/admin"
+            icon={<LayoutDashboardIcon />}
+            label="Dashboard"
+          />
+          <NavItem
+            href="/admin/applications"
+            icon={<UserPenIcon />}
+            label="Applications"
+          />
+          <NavItem
+            href="/admin/events"
+            icon={<CalendarPlusIcon />}
+            label="Events"
+          />
+          <NavItem href="/admin/content" icon={<FormIcon />} label="Content" />
           {/* <NavItem href="/admin/gallery" icon="◫" label="Gallery" /> */}
-          <NavItem href="/admin/board" icon="◯" label="Board Members" />
+          <NavItem
+            href="/admin/board"
+            icon={<UsersIcon />}
+            label="Board Members"
+          />
+          <NavItem
+            href="/admin/admins"
+            icon={<ShieldUserIcon />}
+            label="Admins"
+          />
+          <NavItem
+            href="/admin/settings"
+            icon={<SettingsIcon />}
+            label="Settings"
+          />
         </nav>
 
         {/* Footer */}
         {user && (
           <div className="px-4 py-4 border-t border-cream-200/10">
             <div className="flex flex-row items-center justify-between">
-              <p className="font-body font-light text-cream-200/40 text-xs truncate">
-                {user.name}
-              </p>
-              <div className="flex flex-row items-center gap-2">
-                <Link href="/admin/settings">
-                  <SettingsIcon />
-                </Link>
-                <Link href="#" onClick={handleSignOut}>
-                  <LogOutIcon />
-                </Link>
+              <div className="flex flex-col">
+                <p className="font-body text-cream-200/40 text-sm font-semibold truncate">
+                  {user.name}
+                </p>
+                <p className="font-body text-cream-200/40 text-xs truncate">
+                  {role}
+                </p>
               </div>
+              <Link href="#" onClick={handleSignOut}>
+                <LogOutIcon />
+              </Link>
             </div>
           </div>
         )}
@@ -90,7 +124,7 @@ function NavItem({
   label,
 }: {
   href: string;
-  icon: string;
+  icon: React.ReactNode;
   label: string;
 }) {
   return (

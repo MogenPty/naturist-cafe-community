@@ -1,8 +1,11 @@
 import { revalidatePath } from "next/cache";
 import DeleteButton from "../../components/admin/DeleteButton";
 import { getAllBoardMembers } from "../../lib/db/queries";
+import { getUserWithRole } from "../../lib/session/actions";
 
 export default async function AdminBoardPage() {
+  const { role } = await getUserWithRole();
+
   const boardMembers = await getAllBoardMembers();
 
   async function deleteBoardMember(formData: FormData) {
@@ -81,12 +84,11 @@ export default async function AdminBoardPage() {
                           &ldquo;{member.nickname}&rdquo;
                         </div>
                       )}
-                      {member.otherOrganizations &&
-                        member.otherOrganizations.length > 0 && (
-                          <div className="text-xs text-gray-500">
-                            {member.otherOrganizations.join(", ")}
-                          </div>
-                        )}
+                      {member.otherOrganizations?.length > 0 && (
+                        <div className="text-xs text-gray-500">
+                          {member.otherOrganizations.join(", ")}
+                        </div>
+                      )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span
@@ -118,11 +120,13 @@ export default async function AdminBoardPage() {
                       >
                         Edit
                       </a>
-                      <DeleteButton
-                        id={member.id}
-                        title={member.name}
-                        deleteAction={deleteBoardMember}
-                      />
+                      {role === "admin" && (
+                        <DeleteButton
+                          id={member.id}
+                          title={member.name}
+                          deleteAction={deleteBoardMember}
+                        />
+                      )}
                     </td>
                   </tr>
                 ))}

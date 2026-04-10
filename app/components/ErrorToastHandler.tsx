@@ -14,10 +14,8 @@ export default function ErrorToastHandler() {
 
   useEffect(() => {
     const error = searchParams.get("error");
-    console.log("ErrorToastHandler: Checking for error param:", error);
     if (error) {
       const message = ERROR_MESSAGES[error] || decodeURIComponent(error);
-      console.log("ErrorToastHandler: Showing toast:", message);
       toast.error(message, {
         duration: 5000,
         position: "bottom-right",

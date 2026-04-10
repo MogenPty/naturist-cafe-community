@@ -1,12 +1,17 @@
 import Link from "next/link";
-import { getActiveBoardMembers, getAllEvents } from "../lib/db/queries";
-import { getCurrentUserSession } from "../lib/session/actions";
+import {
+  getActiveBoardMembers,
+  getAllAdmins,
+  getAllEvents,
+} from "../lib/db/queries";
+import { getUserWithRole } from "../lib/session/actions";
 
 export default async function AdminDashboard() {
-  const user = await getCurrentUserSession();
-  const [events, boardMembers] = await Promise.all([
-    getAllEvents(),
+  const { user, role } = await getUserWithRole();
+  const [boardMembers, admins, events] = await Promise.all([
     getActiveBoardMembers(),
+    getAllAdmins(),
+    getAllEvents(),
   ]);
 
   const stats = [
@@ -30,8 +35,8 @@ export default async function AdminDashboard() {
     },
     {
       name: "Active Admins",
-      value: "N/A", // TODO: count admins
-      href: "#",
+      value: admins.length,
+      href: "/admin/admins",
       color: "bg-blue-500",
     },
   ];
@@ -52,12 +57,14 @@ export default async function AdminDashboard() {
           >
             Add Event
           </Link>
-          <Link
-            href="/admin/board/new"
-            className="px-4 py-2 bg-earth-600 text-white rounded-md hover:bg-earth-700 font-medium"
-          >
-            Add Board Member
-          </Link>
+          {role === "admin" && (
+            <Link
+              href="/admin/board/new"
+              className="px-4 py-2 bg-earth-600 text-white rounded-md hover:bg-earth-700 font-medium"
+            >
+              Add Board Member
+            </Link>
+          )}
         </div>
       </div>
 
