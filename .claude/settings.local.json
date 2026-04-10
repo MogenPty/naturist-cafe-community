@@ -18,7 +18,10 @@
       "Bash(jobs -l)",
       "Bash(pkill -f \"next\")",
       "Bash(echo \"Dev server started in background, PID: $!\")",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Bash(pnpm dlx:*)",
+      "Bash(head -50 /c/Projects/ncc/drizzle/migrations/*.sql)",
+      "Bash(pnpm tsx:*)"
     ]
   }
 }

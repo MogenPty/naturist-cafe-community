@@ -1,11 +1,22 @@
 import { CalendarIcon } from "lucide-react";
+import Image from "next/image";
+import { getUpcomingEvents } from "../lib/db/queries";
+import Calendar from "./Calendar";
+
 // import MarketIcon from "../assets/market.svg";
 // import WalkIcon from "../assets/walk.svg";
 // import WorkshopIcon from "../assets/workshop.svg";
-import { getUpcomingEvents } from "../lib/db/queries";
 // import type { Event } from "../lib/db/schema";
 
-const MarketsWalks = async () => {
+interface MarketsWalksProps {
+  title?: string;
+  quote?: string;
+}
+
+const MarketsWalks = async ({
+  title = "Markets & Walks",
+  quote = "our culture is based on going naked in order to delight in the wellness that comes with being in one's natural state, socially or individually, outdoors or indoors, without shame or fear;",
+}: MarketsWalksProps) => {
   const upcomingEvents = await getUpcomingEvents();
 
   // Function to get event type styling
@@ -100,14 +111,12 @@ const MarketsWalks = async () => {
       <div className="container-custom relative">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-6">
-            Markets & Walks
+            {title}
           </h2>
 
           {/* Preamble Quote */}
           <blockquote className="text-lg md:text-xl italic text-nature-700 max-w-4xl mx-auto mb-8 leading-relaxed">
-            "our culture is based on going naked in order to delight in the
-            wellness that comes with being in one&apos;s natural state, socially
-            or individually, outdoors or indoors, without shame or fear;"
+            {quote}
           </blockquote>
         </div>
 
@@ -125,57 +134,7 @@ const MarketsWalks = async () => {
               ) : (
                 <div className="bg-white/80 border-2 border-dashed border-nature-300 rounded-lg p-4 max-w-2xl mx-auto backdrop-blur-sm">
                   <div className="space-y-3 max-h-96 overflow-y-auto">
-                    {upcomingEvents.map((event) => {
-                      const { dateText, timeText } = formatDateRange(
-                        event.startDate,
-                        event.endDate,
-                        event.startTime,
-                        event.endTime,
-                      );
-
-                      return (
-                        <div
-                          key={event.id}
-                          className={`p-3 rounded-lg border-2 ${getUrgencyStyle(
-                            event.startDate,
-                          )} transition-all hover:shadow-sm`}
-                        >
-                          <div className="flex items-start justify-between gap-3">
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 mb-1">
-                                <span
-                                  className={`px-2 py-1 rounded-full text-xs font-medium ${getEventTypeStyle(
-                                    event.type,
-                                  )}`}
-                                >
-                                  {event.type === "walk"
-                                    ? "Walk"
-                                    : event.type === "market"
-                                      ? "Market"
-                                      : "Workshop"}
-                                </span>
-                              </div>
-                              <h5 className="font-medium text-gray-900 text-sm truncate">
-                                {event.title}
-                              </h5>
-                              <p className="text-xs text-gray-600 mt-1">
-                                {dateText}
-                              </p>
-                              {timeText && (
-                                <p className="text-xs text-gray-500">
-                                  {timeText} • {event.location}
-                                </p>
-                              )}
-                              {!timeText && (
-                                <p className="text-xs text-gray-500">
-                                  {event.location}
-                                </p>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
+                    <Calendar events={upcomingEvents} />
                   </div>
                   <div className="mt-4 pt-3 border-t border-gray-200">
                     <div className="flex justify-center items-center gap-4 text-xs text-gray-600">
@@ -203,10 +162,12 @@ const MarketsWalks = async () => {
             {/* Nature Walks */}
             <div className="bg-nature-100 p-8 rounded-xl text-center shadow-sm border border-nature-200">
               <div className="w-16 h-16 bg-nature-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                <img
+                <Image
                   src="/assets/walk.svg"
                   alt="Walking people"
                   className="w-8 h-8 filter brightness-0 invert"
+                  width={32}
+                  height={32}
                 />
               </div>
               <h4 className="text-xl font-semibold text-nature-800 mb-3">
@@ -220,10 +181,12 @@ const MarketsWalks = async () => {
             {/* Community Markets */}
             <div className="bg-earth-100 p-8 rounded-xl text-center shadow-sm border border-earth-200">
               <div className="w-16 h-16 bg-earth-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                <img
+                <Image
                   src="/assets/market.svg"
                   alt="Market basket"
                   className="w-8 h-8 filter brightness-0 invert"
+                  width={32}
+                  height={32}
                 />
               </div>
               <h4 className="text-xl font-semibold text-earth-800 mb-3">
@@ -237,10 +200,12 @@ const MarketsWalks = async () => {
             {/* Wellness Workshops */}
             <div className="bg-gray-100 p-8 rounded-xl text-center shadow-sm border border-gray-200">
               <div className="w-16 h-16 bg-gray-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                <img
+                <Image
                   src="/assets/workshop.svg"
                   alt="Workshop tools"
                   className="w-8 h-8 filter brightness-0 invert"
+                  width={32}
+                  height={32}
                 />
               </div>
               <h4 className="text-xl font-semibold text-gray-800 mb-3">

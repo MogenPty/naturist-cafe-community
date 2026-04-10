@@ -74,11 +74,10 @@ export async function getAllBoardMembers() {
  * Get active board members only
  */
 export async function getActiveBoardMembers(): Promise<schema.BoardMember[]> {
-  return db
-    .select()
-    .from(schema.boardMembers)
-    .where(eq(schema.boardMembers.active, true))
-    .orderBy(asc(schema.boardMembers.sortId));
+  return db.query.boardMembers.findMany({
+    where: eq(schema.boardMembers.active, true),
+    orderBy: asc(schema.boardMembers.sortId),
+  });
 }
 
 /**
@@ -123,16 +122,80 @@ export async function getAdminByUserId(userId: string) {
  */
 export async function isAdmin(userId: string) {
   const admin = await getAdminByUserId(userId);
-  return !!admin;
+
+  if (!admin) return false;
+
+  return ["superadmin", "admin", "editor"].includes(admin.role);
 }
 
 /**
- * Get all admins with user details
+ * Get all admins with user details from neonAuth
  */
 export async function getAllAdmins() {
   return db
-    .select()
+    .select({
+      id: schema.admins.userId,
+      userId: schema.admins.userId,
+      role: schema.admins.role,
+      permissions: schema.admins.permissions,
+      lastLogin: schema.admins.lastLogin,
+      createdAt: schema.admins.createdAt,
+      updatedAt: schema.admins.updatedAt,
+      // NeonAuth user fields
+      neonAuthId: schema.userInNeonAuth.id,
+      name: schema.userInNeonAuth.name,
+      email: schema.userInNeonAuth.email,
+      emailVerified: schema.userInNeonAuth.emailVerified,
+      image: schema.userInNeonAuth.image,
+    })
     .from(schema.admins)
-    .innerJoin(schema.users, eq(schema.admins.userId, schema.users.id))
+    .innerJoin(
+      schema.userInNeonAuth,
+      eq(schema.admins.userId, schema.userInNeonAuth.id),
+    )
     .orderBy(desc(schema.admins.createdAt));
+}
+
+// ==================== PAGES CONTENT ====================
+
+/**
+ * Get all content items, sorted by section
+ */
+export async function getAllContent() {
+  return db
+    .select()
+    .from(schema.pagesContent)
+    .orderBy(schema.pagesContent.sortOrder);
+}
+
+/**
+ * Get content by section (unique)
+ */
+export async function getContentBySection(section: string) {
+  return db
+    .select()
+    .from(schema.pagesContent)
+    .where(eq(schema.pagesContent.section, section))
+    .limit(1)
+    .then((rows) => rows[0] ?? null);
+}
+
+/**
+ * Get content by ID
+ */
+export async function getContentById(id: string) {
+  return db.query.pagesContent.findFirst({
+    where: eq(schema.pagesContent.id, id),
+  });
+}
+
+/**
+ * Get active content items only
+ */
+export async function getActiveContent() {
+  return db
+    .select()
+    .from(schema.pagesContent)
+    .where(eq(schema.pagesContent.active, true))
+    .orderBy(schema.pagesContent.sortOrder);
 }

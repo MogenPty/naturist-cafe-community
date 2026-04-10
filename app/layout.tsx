@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import AgeGate from "./components/AgeGate";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import { Toaster } from "sonner";
-import ErrorToastHandler from "./components/ErrorToastHandler";
 import { Suspense } from "react";
+import { Toaster } from "sonner";
+import AgeGate from "./components/AgeGate";
+import ErrorToastHandler from "./components/ErrorToastHandler";
+
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Naturist Cafe Community",
-  description: "Official website of the Naturist Cafe Community",
+  title: "Naturist Café Community",
+  description: "Official website of the Naturist Café Community.",
+  keywords: ["naturist", "arthouse", "films", "community", "naturism"],
+  openGraph: {
+    title: "Naturist Café Community",
+    description: "Official website of the Naturist Café Community.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -16,7 +23,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log("RootLayout rendering with children:", !!children);
   return (
     <html lang="en" suppressHydrationWarning>
       <body>

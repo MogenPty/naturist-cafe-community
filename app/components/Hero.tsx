@@ -3,7 +3,21 @@
 import { ChevronDown } from "lucide-react";
 import { ImageLoader } from "./ImageLoader";
 
-const Hero = () => {
+interface HeroProps {
+  title?: string;
+  subtitle?: string;
+  imagePublicId?: string;
+  imageAlt?: string;
+  ctaText?: string;
+}
+
+const Hero = ({
+  title = "The Naturist Café Community",
+  subtitle = "A cultural association of naturists and nudists in terms of sections 30 and 31 of the Constitution of the Republic of South Africa.",
+  imagePublicId = "ncc_001",
+  imageAlt = "Community Directors",
+  ctaText = "Learn About Us",
+}: HeroProps) => {
   return (
     <section id={"home"} className="hero-section mt-4 lg:mt-12">
       <div className="container-custom">
@@ -11,15 +25,10 @@ const Hero = () => {
           {/* Content */}
           <div className="hero-content">
             <h1 className="hero-title">
-              The <span className="nature-highlight">Naturist Café</span>{" "}
-              Community
+              <span className="nature-highlight">{title}</span>
             </h1>
 
-            <p className="hero-subtitle">
-              A cultural association of naturists and nudists in terms of
-              sections 30 and 31 of the Constitution of the Republic of South
-              Africa.
-            </p>
+            <p className="hero-subtitle">{subtitle}</p>
 
             <div className="hero-buttons">
               {/* <button
@@ -41,7 +50,7 @@ const Hero = () => {
                 }
                 className="btn-primary"
               >
-                Learn About Us
+                {ctaText}
               </button>
             </div>
           </div>
@@ -51,8 +60,8 @@ const Hero = () => {
             <div>
               <ImageLoader
                 className="hero-image"
-                alt="Community Directors"
-                publicId="ncc_001"
+                alt={imageAlt}
+                publicId={imagePublicId}
                 aspectRatio="4:3"
               />
             </div>

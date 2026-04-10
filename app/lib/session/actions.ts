@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 import { auth, getSession } from "../auth";
 import { db } from "../db";
@@ -22,28 +22,81 @@ export async function getCurrentUserSession() {
   return session.data.user;
 }
 
+export async function getUserWithRole() {
+  const session = await auth.getSession();
+
+  if (!session?.data?.user) {
+    redirect("/auth/sign-in");
+  }
+
+  const admin = await db.query.admins.findFirst({
+    where: eq(schema.admins.userId, session.data.user.id),
+  });
+
+  return { user: session.data.user, role: admin?.role };
+}
+
 /**
  * Server Action to require admin access
  * Redirects to login if not authenticated
  * Redirects to homepage with error toast if not admin
  */
 export async function requireAdmin() {
-  const session = await getSession();
-  const sessionUser = session?.data?.user;
+  try {
+    const session = await getSession();
+    const sessionUser = session?.data?.user;
 
-  if (!sessionUser) {
+    if (!sessionUser) {
+      redirect("/auth/sign-in?callbackUrl=/admin");
+    }
+
+    // Check if user is admin
+    const admin = await db.query.admins.findFirst({
+      where: eq(schema.admins.userId, sessionUser.id),
+    });
+
+    if (!admin) {
+      // Redirect to profile page with error toast
+      redirect("/profile?error=forbidden");
+    }
+
+    return { user: sessionUser, role: admin.role };
+  } catch (e) {
+    console.log("Error", e);
     redirect("/auth/sign-in?callbackUrl=/admin");
   }
+}
 
-  // Check if user is admin
-  const admin = await db.query.admins.findFirst({
-    where: eq(schema.admins.userId, sessionUser.id),
-  });
+/**
+ * Server Action to require admin access
+ * Redirects to login if not authenticated
+ * Redirects to homepage with error toast if not admin
+ */
+export async function requireSuperAdmin() {
+  try {
+    const session = await getSession();
+    const sessionUser = session?.data?.user;
 
-  if (!admin) {
-    // Redirect to profile page with error toast
-    redirect("/profile?error=forbidden");
+    if (!sessionUser) {
+      redirect("/auth/sign-in?callbackUrl=/admin");
+    }
+
+    // Check if user is admin
+    const admin = await db.query.admins.findFirst({
+      where: and(
+        eq(schema.admins.userId, sessionUser.id),
+        eq(schema.admins.role, "superadmin"),
+      ),
+    });
+
+    if (!admin) {
+      // Redirect to profile page with error toast
+      redirect("/profile?error=forbidden");
+    }
+
+    return { user: sessionUser, role: admin.role };
+  } catch (e) {
+    console.log("Error", e);
+    redirect("/auth/sign-in?callbackUrl=/admin");
   }
-
-  return { user: sessionUser, role: admin.role };
 }

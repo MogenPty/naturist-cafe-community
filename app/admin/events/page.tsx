@@ -3,7 +3,7 @@ import { isAdmin } from "../../lib/db";
 import { deleteEvent as deleteEventAction } from "../../lib/db/actions";
 import { getAllEvents } from "../../lib/db/queries";
 import { getCurrentUserSession } from "../../lib/session/actions";
-import DeleteButton from "./components/DeleteButton";
+import DeleteButton from "../../components/admin/DeleteButton";
 
 export default async function AdminEventsPage() {
   const events = await getAllEvents();

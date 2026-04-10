@@ -272,7 +272,6 @@ const UNIFORM_AGE_COUNTRIES: Record<string, number> = {
   MD: 18, // Moldova
 };
 
-
 /**
  * Get the legal adult age for a given country/state/province code
  * Supports state-level granularity for USA, Canada, Australia, Mexico
@@ -661,8 +660,5 @@ export function detectUserLocation(): { country: string; state?: string } {
 export function getRequiredAdultAge(): number {
   const location = detectUserLocation();
   const age = getAdultAgeForCountry(location.country, location.state);
-  console.log(
-    `[AgeGate] Detected location: ${location.country}${location.state ? "/" + location.state : ""}, required age: ${age}`,
-  );
   return age;
 }

@@ -61,7 +61,7 @@ export default function SignInForm() {
               href="/auth/sign-up"
               className="text-brand-gold hover:text-earth-300 transition-colors"
             >
-              Sign in
+              Sign up
             </a>
           </p>
         </div>
