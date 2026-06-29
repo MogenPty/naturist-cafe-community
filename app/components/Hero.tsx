@@ -62,7 +62,7 @@ const Hero = ({
                 className="hero-image"
                 alt={imageAlt}
                 publicId={imagePublicId}
-                aspectRatio="4:3"
+                width={800}
               />
             </div>
           </div>

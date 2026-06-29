@@ -6,7 +6,7 @@ import JoinUs from "./components/JoinUs";
 import Login from "./components/Login";
 import MarketsWalks from "./components/MarketsWalks";
 
-import { getContentBySection } from "./lib/db/queries";
+import { getContentBySection, getContentTextBySection } from "./lib/db/queries";
 
 import "./public.css";
 
@@ -21,15 +21,17 @@ export default async function App() {
     constitutionImageContent,
     marketsWalksTitleContent,
     marketsWalksQuoteContent,
+    memberAreaImageContent,
   ] = await Promise.all([
-    getContentBySection("hero_title"),
-    getContentBySection("hero_subtitle"),
-    getContentBySection("hero_cta"),
+    getContentTextBySection("hero_title"),
+    getContentTextBySection("hero_subtitle"),
+    getContentTextBySection("hero_cta"),
     getContentBySection("hero_image"),
-    getContentBySection("constitution_values"),
+    getContentTextBySection("constitution_values"),
     getContentBySection("constitution_image"),
-    getContentBySection("markets_walks_title"),
-    getContentBySection("markets_walks_quote"),
+    getContentTextBySection("markets_walks_title"),
+    getContentTextBySection("markets_walks_quote"),
+    getContentBySection("member_area_image"),
   ]);
 
   return (
@@ -37,18 +39,18 @@ export default async function App() {
       <Header />
       <main className="pt-16">
         <Hero
-          title={heroTitleContent?.textValue || "The Naturist Café Community"}
+          title={heroTitleContent ?? "The Naturist Café Community"}
           subtitle={
-            heroSubtitleContent?.textValue ||
+            heroSubtitleContent ??
             "A cultural association of naturists and nudists in terms of sections 30 and 31 of the Constitution of the Republic of South Africa."
           }
           imagePublicId={heroImageContent?.imagePublicId || "ncc_001"}
           imageAlt={heroImageContent?.imageAlt || "Community Directors"}
-          ctaText={heroCtaText?.textValue || "Learn About Us"}
+          ctaText={heroCtaText ?? "Learn About Us"}
         />
         <Constitution
           values={
-            constitutionValuesContent?.textValue ||
+            constitutionValuesContent ??
             `<ul>
           <li>Respect for others</li>
           <li>Respect for ourselves</li>
@@ -66,21 +68,25 @@ export default async function App() {
           imageAlt={constitutionImageContent?.imageAlt || "Three Naturists"}
         />
         <MarketsWalks
-          title={marketsWalksTitleContent?.textValue || "Markets & Walks"}
+          title={marketsWalksTitleContent ?? "Markets & Walks"}
           quote={
-            marketsWalksQuoteContent?.textValue ||
+            marketsWalksQuoteContent ??
             "our culture is based on going naked in order to delight in the wellness that comes with being in one's natural state, socially or individually, outdoors or indoors, without shame or fear;"
           }
         />
         <Board />
         <JoinUs />
-        <Login />
+        <Login
+          imagePublicId={memberAreaImageContent?.imagePublicId || "os2s3i"}
+          imageAlt={memberAreaImageContent?.imageAlt || "Three Naturists"}
+        />
       </main>
       <footer className="bg-gray-800 text-white py-8">
         <div className="container-custom">
           <div className="text-center">
             <p className="text-sm">
-              &copy; 2025 Naturist Café Community. All rights reserved.
+              &copy; 2025-{new Date().getFullYear()} Naturist Café Community.
+              All rights reserved.
             </p>
             <p className="text-xs text-gray-400 mt-2">
               Based in South Africa • Preserving, promoting, and developing the
