@@ -2,23 +2,46 @@
 
 import { AlertTriangle, Lock } from "lucide-react";
 import { useEffect, useState } from "react";
-import { getRequiredAdultAge } from "../utils/age-restrictions";
+import {
+  getAdultAgeForCountry,
+  getRequiredAdultAge,
+} from "../utils/age-restrictions";
 import { calculateAge } from "../utils/age-utils";
 
 const REDIRECT_URL =
   process.env.NEXT_PUBLIC_REDIRECT_URL || "https://www.mogen.co.za";
 const SESSION_KEY = "ageVerified";
 
-function AgeGate({ children }: { children: React.ReactNode }) {
+interface Props {
+  country: string | null;
+  region: string | null;
+  primaryText: string | null;
+  secondaryText: string | null;
+  privacyNotice: string | null;
+  children: React.ReactNode;
+}
+
+function AgeGate({
+  country,
+  region,
+  primaryText = "Welcome to the official website of the Naturist Café Community. This site is dedicated to the culture of naturism and contains nonsexual nudity in accordance with our cultural code of conduct.",
+  secondaryText = "To access this website, you must be over the age of 18 and of adult age within the country or state from which you're accessing our website.",
+  privacyNotice = "Your date of birth is stored on your device for age verification purposes only. We respect your privacy and do not share this information.",
+  children,
+}: Props) {
   const [verified, setVerified] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
-  const [requiredAge, setRequiredAge] = useState<number>(18);
+  const [requiredAge, setRequiredAge] = useState<number | null>(null);
+
+  console.log("Country: ", country, ". Region: ", region);
 
   useEffect(() => {
     // Detect user's location and get required age automatically
-    const age = getRequiredAdultAge();
+    const age = country
+      ? getAdultAgeForCountry(country, region)
+      : getRequiredAdultAge();
     setRequiredAge(age);
 
     // Check if user has already verified their age in this session
@@ -49,9 +72,9 @@ function AgeGate({ children }: { children: React.ReactNode }) {
 
     const age = calculateAge(birthDate);
 
-    if (age < requiredAge) {
+    if (!requiredAge || age < requiredAge) {
       // Redirect minors away
-      window.location.href = REDIRECT_URL;
+      window.location.replace(REDIRECT_URL);
       return;
     }
 
@@ -61,12 +84,12 @@ function AgeGate({ children }: { children: React.ReactNode }) {
   };
 
   const handleRedirect = () => {
-    window.location.href = REDIRECT_URL;
+    window.location.replace(REDIRECT_URL);
   };
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gradient-to-br from-sky-100 to-amber-50">
+      <div className="flex items-center justify-center h-screen bg-linear-to-br from-sky-100 to-amber-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-nature-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading...</p>
@@ -77,7 +100,7 @@ function AgeGate({ children }: { children: React.ReactNode }) {
 
   if (!verified) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-sky-100 to-amber-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-linear-to-br from-sky-100 to-amber-50 flex items-center justify-center p-4">
         <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
           {/* Header */}
           <div className="text-center mb-8">
@@ -87,23 +110,15 @@ function AgeGate({ children }: { children: React.ReactNode }) {
             <h1 className="text-2xl font-bold text-gray-900 mb-2">
               Age Verification Required
             </h1>
-            <p className="text-gray-600 leading-relaxed">
-              Welcome to the official website of the Naturist Café Community.
-              This site is dedicated to the culture of naturism and contains
-              nonsexual nudity in accordance with our cultural code of conduct.
-            </p>
+            <p className="text-gray-600 leading-relaxed">{primaryText}</p>
           </div>
 
           {/* Warning Notice */}
           <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-6">
             <div className="flex items-start">
-              <AlertTriangle className="w-8 h-8 text-amber-600 mt-0.5 mr-3 flex-shrink-0" />
+              <AlertTriangle className="w-8 h-8 text-amber-600 mt-0.5 mr-3 shrink-0" />
               <div>
-                <p className="text-sm text-amber-700">
-                  To access this website, you must be over the age of 18 and of
-                  adult age within the country or state from which you're
-                  accessing our website.
-                </p>
+                <p className="text-sm text-amber-700">{secondaryText}</p>
               </div>
             </div>
           </div>
@@ -151,11 +166,7 @@ function AgeGate({ children }: { children: React.ReactNode }) {
 
           {/* Privacy Notice */}
           <div className="mt-6 pt-6 border-t border-gray-200">
-            <p className="text-xs text-gray-500 text-center">
-              Your date of birth is stored on your device for age verification
-              purposes only. We respect your privacy and do not share this
-              information.
-            </p>
+            <p className="text-xs text-gray-500 text-center">{privacyNotice}</p>
           </div>
         </div>
       </div>

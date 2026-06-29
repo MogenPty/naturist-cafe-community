@@ -180,6 +180,15 @@ export async function getContentBySection(section: string) {
     .then((rows) => rows[0] ?? null);
 }
 
+export async function getContentTextBySection(section: string) {
+  return db
+    .select()
+    .from(schema.pagesContent)
+    .where(eq(schema.pagesContent.section, section))
+    .limit(1)
+    .then((rows) => rows[0].textValue ?? null);
+}
+
 /**
  * Get content by ID
  */

@@ -4,7 +4,15 @@ import { LockIcon, LogIn, Mail, User } from "lucide-react";
 import { useState } from "react";
 import { ImageLoader } from "./ImageLoader";
 
-const Login = () => {
+interface Props {
+  imagePublicId?: string;
+  imageAlt?: string;
+}
+
+const Login = ({
+  imagePublicId = "ncc_002",
+  imageAlt = "Three Naturists",
+}: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -133,9 +141,8 @@ const Login = () => {
             <div className="lg:col-span-2 md:col-span-3 overflow-hidden">
               <ImageLoader
                 className="w-full h-full object-cover rounded-2xl"
-                alt="Community Directors"
-                publicId="ncc_005"
-                aspectRatio="4:3"
+                alt={imageAlt}
+                publicId={imagePublicId}
                 width={800}
               />
             </div>

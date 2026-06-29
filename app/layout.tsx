@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Toaster } from "sonner";
-import AgeGate from "./components/AgeGate";
+import AgeGateEntry from "./components/AgeGateEntry";
 import ErrorToastHandler from "./components/ErrorToastHandler";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./globals.css";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const metadata: Metadata = {
   title: "Naturist Café Community",
   description: "Official website of the Naturist Café Community.",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -26,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <AgeGate>{children}</AgeGate>
+        <AgeGateEntry>{children}</AgeGateEntry>
         <Suspense fallback={null}>
           <ErrorToastHandler />
         </Suspense>
