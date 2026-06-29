@@ -21,6 +21,7 @@ export default async function App() {
     constitutionImageContent,
     marketsWalksTitleContent,
     marketsWalksQuoteContent,
+    memberAreaImageContent,
   ] = await Promise.all([
     getContentTextBySection("hero_title"),
     getContentTextBySection("hero_subtitle"),
@@ -30,6 +31,7 @@ export default async function App() {
     getContentBySection("constitution_image"),
     getContentTextBySection("markets_walks_title"),
     getContentTextBySection("markets_walks_quote"),
+    getContentBySection("member_area_image"),
   ]);
 
   return (
@@ -75,8 +77,8 @@ export default async function App() {
         <Board />
         <JoinUs />
         <Login
-          imagePublicId={constitutionImageContent?.imagePublicId || "os2s3i"}
-          imageAlt={constitutionImageContent?.imageAlt || "Three Naturists"}
+          imagePublicId={memberAreaImageContent?.imagePublicId || "os2s3i"}
+          imageAlt={memberAreaImageContent?.imageAlt || "Three Naturists"}
         />
       </main>
       <footer className="bg-gray-800 text-white py-8">
