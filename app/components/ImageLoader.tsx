@@ -4,6 +4,7 @@ import { AdvancedImage, responsive } from "@cloudinary/react";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { quality } from "@cloudinary/url-gen/actions/delivery";
 import { auto } from "@cloudinary/url-gen/actions/resize";
+import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity";
 import type React from "react";
 
 export interface ImageLoaderProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -35,7 +36,7 @@ export const ImageLoader = ({
   myImage.delivery(quality("auto:best"));
 
   if (aspectRatio === "none") {
-    const resizeTransform = auto();
+    const resizeTransform = auto().gravity(autoGravity());
     if (typeof width === "number") resizeTransform.width(width);
     if (typeof height === "number") resizeTransform.height(height);
     if (typeof width === "number" || typeof height === "number") {
