@@ -2,11 +2,9 @@
 
 import { AdvancedImage, responsive } from "@cloudinary/react";
 import { Cloudinary } from "@cloudinary/url-gen";
-
-// Import required actions.
 import { quality } from "@cloudinary/url-gen/actions/delivery";
-import { fill } from "@cloudinary/url-gen/actions/resize";
-
+import { auto } from "@cloudinary/url-gen/actions/resize";
+import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity";
 import type React from "react";
 
 export interface ImageLoaderProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -26,7 +24,6 @@ export const ImageLoader = ({
   width = "auto",
   ...rest
 }: ImageLoaderProps) => {
-  // Create and configure your Cloudinary instance.
   const cld = new Cloudinary({
     cloud: {
       cloudName,
@@ -39,14 +36,14 @@ export const ImageLoader = ({
   myImage.delivery(quality("auto:best"));
 
   if (aspectRatio === "none") {
-    const resizeTransform = fill();
+    const resizeTransform = auto().gravity(autoGravity());
     if (typeof width === "number") resizeTransform.width(width);
     if (typeof height === "number") resizeTransform.height(height);
     if (typeof width === "number" || typeof height === "number") {
       myImage.resize(resizeTransform);
     }
   } else {
-    myImage.resize(fill().aspectRatio(aspectRatio));
+    myImage.resize(auto().aspectRatio(aspectRatio));
   }
   // Render the transformed image in a React component.
   return (
